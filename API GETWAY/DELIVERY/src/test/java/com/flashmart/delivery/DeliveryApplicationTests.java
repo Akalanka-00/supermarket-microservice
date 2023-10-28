@@ -2,6 +2,7 @@ package com.flashmart.delivery;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.flashmart.delivery.Consts.DELIVER_AVAILABILITY;
 import com.flashmart.delivery.dto.DeliverUserRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ class DeliveryApplicationTests {
 
         DeliverUserRequest deliverUserRequest = DeliverUserRequest.builder()
                 .id("D0001")
-                .availability(false)
+                .availability(DELIVER_AVAILABILITY.UNAVAILABLE)
                 .longitude(0)
                 .latitude(0)
                 .build();

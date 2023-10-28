@@ -12,6 +12,8 @@
 	<artifactId>API_GETWAY</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>API GETWAY</name>
+
+
 	<description>API GETWAY</description>
 	<properties>
 		<java.version>17</java.version>
@@ -33,6 +35,18 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.testcontainers</groupId>
+				<artifactId>testcontainers-bom</artifactId>
+				<version>1.19.1</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<plugins>
