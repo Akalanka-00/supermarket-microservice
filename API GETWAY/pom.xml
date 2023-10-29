@@ -12,9 +12,24 @@
 	<artifactId>API_GETWAY</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>API GETWAY</name>
+	<packaging>pom</packaging>
+	<modules>
+		<module>DELIVERY</module>
+		<module>CUSTOMER</module>
+		<module>AUTH</module>
+		<module>ORDER</module>
+		<module>INVENTORY</module>
+		<module>DISCOVERY SERVER</module>
+
+
+	</modules>
+
 	<description>API GETWAY</description>
 	<properties>
 		<java.version>17</java.version>
+		<testcontainers.version>1.17.6</testcontainers.version>
+		<spring-cloud.version>2022.0.4</spring-cloud.version>
+
 	</properties>
 	<dependencies>
 		<dependency>
@@ -28,11 +43,37 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-dependencies</artifactId>
+			<version>${spring-cloud.version}</version>
+			<type>pom</type>
+			<scope>import</scope>
 		</dependency>
 	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.testcontainers</groupId>
+				<artifactId>testcontainers-bom</artifactId>
+				<version>1.19.1</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+	<repositories>
+		<repository>
+			<id>netflix-candidates</id>
+			<name>Netflix Candidates</name>
+			<url>https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
 	<build>
 		<plugins>
