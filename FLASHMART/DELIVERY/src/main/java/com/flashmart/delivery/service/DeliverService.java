@@ -35,9 +35,14 @@ public class DeliverService {
 
 
     public List<DeliverUserResponse> getAllDeliverUsers() {
-        List<DeliverModel> model = deliverRepository.findAll();
+       try {
+           List<DeliverModel> model = deliverRepository.findAll();
 
-       return model.stream().map(this::mapToDeliverResponse).toList();
+           return model.stream().map(this::mapToDeliverResponse).toList();
+       }catch (Error error){
+           System.out.println(error);
+       }
+       return null;
     }
 
     private DeliverUserResponse mapToDeliverResponse(DeliverModel user) {
