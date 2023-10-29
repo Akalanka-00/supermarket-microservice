@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.flashmart</groupId>
-	<artifactId>API_GETWAY</artifactId>
+	<artifactId>FLASHMART</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>API GETWAY</name>
+	<name>FLASHMART</name>
 	<packaging>pom</packaging>
 	<modules>
 		<module>DELIVERY</module>
@@ -24,7 +24,7 @@
 
 	</modules>
 
-	<description>API GETWAY</description>
+	<description>FLASHMART</description>
 	<properties>
 		<java.version>17</java.version>
 		<testcontainers.version>1.17.6</testcontainers.version>
