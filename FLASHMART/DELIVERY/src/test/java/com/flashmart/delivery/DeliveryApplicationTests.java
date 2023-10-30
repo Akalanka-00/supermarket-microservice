@@ -46,7 +46,7 @@ class DeliveryApplicationTests {
                 .latitude(0)
                 .build();
         String requestDeliveryUserString = objectMapper.writeValueAsString(deliverUserRequest);
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/deliver/user")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/delivery/user")
                 .contentType(MediaType.APPLICATION_JSON).content(requestDeliveryUserString)
         ).andExpect(status().isCreated());
     }
