@@ -14,12 +14,15 @@
 	<name>FLASHMART</name>
 	<packaging>pom</packaging>
 	<modules>
+		<module>DISCOVERY SERVER</module>
+		<module>API GATEWAY</module>
 		<module>DELIVERY</module>
 		<module>CUSTOMER</module>
 		<module>AUTH</module>
 		<module>ORDER</module>
 		<module>INVENTORY</module>
-		<module>DISCOVERY SERVER</module>
+
+		<module>KAFKA SERVICE</module>
 
 
 	</modules>

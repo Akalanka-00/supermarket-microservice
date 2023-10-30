@@ -1,12 +1,15 @@
 package com.flashmart.delivery.service;
 
+import com.flashmart.delivery.Consts.KAFKA_HEADERS;
 import com.flashmart.delivery.dto.DeliverUserResponse;
 import com.flashmart.delivery.dto.DeliveryEntryRequest;
 import com.flashmart.delivery.dto.DeliveryEntryResponse;
+import com.flashmart.delivery.event.NotificationBuilder;
 import com.flashmart.delivery.model.DeliveryModel;
 import com.flashmart.delivery.repository.DeliveryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +20,7 @@ import java.util.List;
 public class DeliveryService {
 
     private final DeliveryRepository deliveryRepository;
+    private final KafkaTemplate<String, NotificationBuilder> kafkaTemplate;
     public void createDeliveryEntry(DeliveryEntryRequest deliveryEntry){
         DeliveryModel model = DeliveryModel.builder()
 
@@ -28,6 +32,7 @@ public class DeliveryService {
                 .build();
 
         deliveryRepository.save(model);
+        kafkaTemplate.send(KAFKA_HEADERS.NOTIFICATION, new NotificationBuilder("New delivery added","This notification is send for update in the delivery system.","/"));
         log.info("Delivery Entity has been added", model.getId());
     }
 
