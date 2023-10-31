@@ -1,6 +1,6 @@
 package com.flashmart.kafka;
 
-import com.flashmart.kafka.Consts.KAFKA_HEADERS;
+import com.flashmart.kafka.consts.KAFKA_HEADERS;
 import com.flashmart.kafka.event.NotificationBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;

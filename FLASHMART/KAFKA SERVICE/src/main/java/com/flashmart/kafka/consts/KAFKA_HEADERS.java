@@ -1,4 +1,4 @@
-package com.flashmart.kafka.Consts;
+package com.flashmart.kafka.consts;
 
 public class KAFKA_HEADERS {
 

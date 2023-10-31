@@ -1,4 +1,4 @@
-package com.flashmart.kafka.Consts;
+package com.flashmart.kafka.consts;
 
 public class USER_TYPES {
     public static final int CUSTOMER = 1010;

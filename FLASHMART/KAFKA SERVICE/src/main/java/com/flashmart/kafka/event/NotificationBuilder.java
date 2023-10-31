@@ -1,11 +1,7 @@
 package com.flashmart.kafka.event;
 
-import com.flashmart.kafka.Consts.NOTIFICATION_TYPE;
-import com.flashmart.kafka.Consts.NOTIFICATION_TYPE;
-import com.flashmart.kafka.event.EmailBuilder;
-import lombok.AllArgsConstructor;
+import com.flashmart.kafka.consts.NOTIFICATION_TYPE;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 

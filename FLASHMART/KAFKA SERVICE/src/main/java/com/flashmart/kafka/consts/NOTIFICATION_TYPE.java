@@ -1,4 +1,4 @@
-package com.flashmart.kafka.Consts;
+package com.flashmart.kafka.consts;
 
 public class NOTIFICATION_TYPE {
     public static final int BROADCAST = 3030;
