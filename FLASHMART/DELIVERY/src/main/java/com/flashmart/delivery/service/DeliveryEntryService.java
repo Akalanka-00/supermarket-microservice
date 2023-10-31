@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class DeliveryEntryService {
 
         DeliveryEntryModel model = DeliveryEntryModel.builder()
                 .orderId("O0001")
-                .pickedUpTime(Instant.now())
+                .pickedUpTime(new Date())
                 .deliveredTime(null)
                 .build();
 

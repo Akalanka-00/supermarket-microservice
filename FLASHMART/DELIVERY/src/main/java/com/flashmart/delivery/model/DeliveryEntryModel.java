@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Document(value = "Delivery")
 @AllArgsConstructor
@@ -22,7 +23,7 @@ public class DeliveryEntryModel {
     @Id
     private String id;
     private String orderId;
-    private Instant pickedUpTime;
-    private Instant deliveredTime;
+    private Date pickedUpTime;
+    private Date deliveredTime;
 
 }

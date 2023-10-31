@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,8 +16,8 @@ import java.time.LocalDateTime;
 @Data
 public class DeliveryEntryRequest {
     private String orderId;
-    private Instant pickedUpTime;
-    private Instant deliveredTime;
+    private Date pickedUpTime;
+    private date deliveredTime;
 
 
 }
