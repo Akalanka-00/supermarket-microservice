@@ -1,9 +1,8 @@
 package com.flashmart.delivery;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flashmart.delivery.Consts.DELIVER_AVAILABILITY;
-import com.flashmart.delivery.dto.DeliverUserRequest;
+import com.flashmart.delivery.dto.DeliveryPersonRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -39,11 +38,10 @@ class DeliveryApplicationTests {
     @Test
     void shouldCreateDeliverUser() throws Exception {
 
-        DeliverUserRequest deliverUserRequest = DeliverUserRequest.builder()
+        DeliveryPersonRequest deliverUserRequest = DeliveryPersonRequest.builder()
                 .id("D0001")
                 .availability(DELIVER_AVAILABILITY.UNAVAILABLE)
-                .longitude(0)
-                .latitude(0)
+                .vehicleID("V1101")
                 .build();
         String requestDeliveryUserString = objectMapper.writeValueAsString(deliverUserRequest);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/delivery/user")

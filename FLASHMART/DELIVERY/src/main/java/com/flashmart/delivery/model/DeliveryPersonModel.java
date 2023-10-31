@@ -13,11 +13,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Builder
 @Data
-public class DeliverModel {
+public class DeliveryPersonModel {
 
     @Id
     private String id;
-    private double latitude;
-    private double longitude;
     private int availability;
+    private int rating;
+    private String vehicleID;
+
 }
