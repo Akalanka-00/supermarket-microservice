@@ -1,9 +1,11 @@
 package com.flashmart.delivery.service;
 
 import com.flashmart.delivery.Consts.KAFKA_HEADERS;
+import com.flashmart.delivery.Consts.USER_TYPES;
 import com.flashmart.delivery.dto.DeliverUserResponse;
 import com.flashmart.delivery.dto.DeliveryEntryRequest;
 import com.flashmart.delivery.dto.DeliveryEntryResponse;
+import com.flashmart.delivery.event.EmailBuilder;
 import com.flashmart.delivery.event.NotificationBuilder;
 import com.flashmart.delivery.model.DeliveryModel;
 import com.flashmart.delivery.repository.DeliveryRepository;
@@ -12,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -32,7 +35,12 @@ public class DeliveryService {
                 .build();
 
         deliveryRepository.save(model);
-        kafkaTemplate.send(KAFKA_HEADERS.NOTIFICATION, new NotificationBuilder("New delivery added","This notification is send for update in the delivery system.","/"));
+
+        kafkaTemplate.send(KAFKA_HEADERS.NOTIFICATION, NotificationBuilder.create().BroadcastNotification("delivery broadcast","This is a broadcast message from delivery","/", List.of(USER_TYPES.DELIVERY_PERSON)));
+        kafkaTemplate.send(KAFKA_HEADERS.NOTIFICATION, NotificationBuilder.create().UserNotification("delivery notification","This is a notification message from delivery","/",Arrays.asList("D0001", "D0002")));
+        kafkaTemplate.send(KAFKA_HEADERS.NOTIFICATION, NotificationBuilder.create().SendEmail("delivery broadcast", new EmailBuilder("shenalakalanka513@gmail.com", "email from delivery", "This is a Email from the delivery system.")));
+
+
         log.info("Delivery Entity has been added", model.getId());
     }
 
