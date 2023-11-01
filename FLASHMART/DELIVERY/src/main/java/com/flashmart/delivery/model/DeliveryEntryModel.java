@@ -13,7 +13,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-@Document(value = "Delivery")
+@Document(value = "DeliveryCollection")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
