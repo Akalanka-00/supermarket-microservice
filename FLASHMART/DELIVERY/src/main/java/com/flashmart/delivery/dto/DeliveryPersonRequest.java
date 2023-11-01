@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class DeliveryPersonRequest {
 
-    private String id;
+
     private int availability;
     private int rating;
     private String vehicleID;
