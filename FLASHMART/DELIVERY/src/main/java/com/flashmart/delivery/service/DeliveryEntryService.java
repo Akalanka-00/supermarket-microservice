@@ -23,7 +23,7 @@ public class DeliveryEntryService {
         DeliveryEntryModel model = DeliveryEntryModel.builder()
                 .orderId("O0001")
                 .pickedUpTime(new Date())
-                .deliveredTime(null)
+                .deliveredTime(new Date())
                 .build();
 
         deliveryEntryRepository.save(model);

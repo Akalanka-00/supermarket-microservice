@@ -17,7 +17,7 @@ import java.util.Date;
 public class DeliveryEntryRequest {
     private String orderId;
     private Date pickedUpTime;
-    private date deliveredTime;
+    private Date deliveredTime;
 
 
 }
