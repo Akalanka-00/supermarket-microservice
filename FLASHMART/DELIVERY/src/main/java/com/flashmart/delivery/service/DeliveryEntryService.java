@@ -5,7 +5,6 @@ import com.flashmart.delivery.model.DeliveryEntryModel;
 import com.flashmart.delivery.repository.DeliveryEntryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -17,7 +16,7 @@ public class DeliveryEntryService {
 
     private final DeliveryEntryRepository deliveryEntryRepository;
 
-    public void createDeliveryEntry(@NotNull DeliveryEntryRequest request){
+    public void createDeliveryEntry(DeliveryEntryRequest request){
 
         DeliveryEntryModel model = DeliveryEntryModel.builder()
                 .orderId(request.getOrderId())
