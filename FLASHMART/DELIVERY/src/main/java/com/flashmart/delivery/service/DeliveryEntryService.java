@@ -1,14 +1,18 @@
 package com.flashmart.delivery.service;
 
+import com.flashmart.delivery.Consts.KAFKA_HEADERS;
+import com.flashmart.delivery.Consts.USER_TYPES;
 import com.flashmart.delivery.dto.DeliveryEntryRequest;
+import com.flashmart.delivery.event.NotificationBuilder;
 import com.flashmart.delivery.model.DeliveryEntryModel;
 import com.flashmart.delivery.repository.DeliveryEntryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -16,8 +20,9 @@ import java.util.Date;
 public class DeliveryEntryService {
 
     private final DeliveryEntryRepository deliveryEntryRepository;
+    private final KafkaTemplate<String, NotificationBuilder> kafkaTemplate;
 
-    public void createDeliveryEntry(@NotNull DeliveryEntryRequest request){
+    public void createDeliveryEntry(DeliveryEntryRequest request){
 
         DeliveryEntryModel model = DeliveryEntryModel.builder()
                 .orderId(request.getOrderId())
@@ -26,6 +31,7 @@ public class DeliveryEntryService {
                 .build();
 
         deliveryEntryRepository.save(model);
+        kafkaTemplate.send(KAFKA_HEADERS.NOTIFICATION, NotificationBuilder.create().BroadcastNotification("delivery broadcast","This is a broadcast message from delivery","/", List.of(USER_TYPES.DELIVERY_PERSON)));
     }
 
     
