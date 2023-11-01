@@ -18,7 +18,6 @@ public class DeliveryPersonModel {
     @Id
     private String id;
     private int availability;
-    private int rating;
     private String vehicleID;
 
 }

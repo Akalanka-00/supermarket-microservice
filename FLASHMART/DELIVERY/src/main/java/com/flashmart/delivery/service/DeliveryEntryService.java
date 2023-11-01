@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Date;
 import java.util.List;
@@ -20,9 +21,9 @@ import java.util.List;
 public class DeliveryEntryService {
 
     private final DeliveryEntryRepository deliveryEntryRepository;
-    private final KafkaTemplate<String, NotificationBuilder> kafkaTemplate;
+//    private final KafkaTemplate<String, NotificationBuilder> kafkaTemplate;
 
-    public void createDeliveryEntry(DeliveryEntryRequest request){
+    public void createDeliveryEntry( DeliveryEntryRequest request){
 
         DeliveryEntryModel model = DeliveryEntryModel.builder()
                 .orderId(request.getOrderId())
@@ -31,7 +32,7 @@ public class DeliveryEntryService {
                 .build();
 
         deliveryEntryRepository.save(model);
-        kafkaTemplate.send(KAFKA_HEADERS.NOTIFICATION, NotificationBuilder.create().BroadcastNotification("delivery broadcast","This is a broadcast message from delivery","/", List.of(USER_TYPES.DELIVERY_PERSON)));
+//        kafkaTemplate.send(KAFKA_HEADERS.NOTIFICATION, NotificationBuilder.create().BroadcastNotification("delivery broadcast","This is a broadcast message from delivery","/", List.of(USER_TYPES.DELIVERY_PERSON)));
     }
 
     

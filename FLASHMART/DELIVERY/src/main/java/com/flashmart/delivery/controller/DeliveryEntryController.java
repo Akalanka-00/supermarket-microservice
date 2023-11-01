@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.*;
 
 public class DeliveryEntryController {
 
-    private  final DeliveryEntryService deliveryService;
+    private  final DeliveryEntryService deliveryEntryService;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping()
-    public void createDeliveryEntry(DeliveryEntryRequest request){
-        deliveryService.createDeliveryEntry(request);
+    public void createDeliveryEntry(@RequestBody DeliveryEntryRequest request){
+        deliveryEntryService.createDeliveryEntry(request);
     }
 
 }

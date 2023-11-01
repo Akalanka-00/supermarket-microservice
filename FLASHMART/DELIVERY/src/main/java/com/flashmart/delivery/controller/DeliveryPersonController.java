@@ -15,7 +15,9 @@ public class DeliveryPersonController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping()
-    public void newDeliveryPerson(DeliveryPersonRequest request){
+    public void newDeliveryPerson(@RequestBody DeliveryPersonRequest request){
+        deliveryPersonService.newDeliveryPerson(request);
+
     }
 
 }
