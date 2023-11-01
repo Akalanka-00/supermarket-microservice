@@ -1,6 +1,7 @@
 package com.flashmart.delivery.model;
 
 
+import com.mongodb.internal.connection.Time;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,16 +9,21 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(value = "deliver")
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Date;
+
+@Document(value = "Delivery")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
-public class DeliverModel {
+public class DeliveryEntryModel {
 
     @Id
     private String id;
-    private double latitude;
-    private double longitude;
-    private int availability;
+    private String orderId;
+    private Date pickedUpTime;
+    private Date deliveredTime;
+
 }
