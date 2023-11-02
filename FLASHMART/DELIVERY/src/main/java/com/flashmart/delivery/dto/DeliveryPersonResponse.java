@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Data
-public class DeliverUserRequest {
+public class DeliveryPersonResponse {
 
     private String id;
-    private double latitude;
-    private double longitude;
     private int availability;
+    private int rating;
+    private String vehicleID;
 }

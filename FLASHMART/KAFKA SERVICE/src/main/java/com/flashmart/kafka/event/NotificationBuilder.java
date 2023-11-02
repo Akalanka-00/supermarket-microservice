@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class NotificationBuilder {
    private String title;
-   private String description;
+   private String body;
    private int type;
    private String url;
    private boolean broadcast;
@@ -24,18 +24,18 @@ public class NotificationBuilder {
       return new NotificationBuilder();
    }
 
-   public NotificationBuilder BroadcastNotification(String title, String description, String url, List<Integer> targetAudience){
+   public NotificationBuilder BroadcastNotification(String title, String body, String url, List<Integer> targetAudience){
       this.title = title;
-      this.description = description;
+      this.body = body;
       this.url = url;
       this.targetAudience = targetAudience;
       this.type = NOTIFICATION_TYPE.BROADCAST;
       return this;
    }
 
-   public NotificationBuilder UserNotification (String title, String description, String url, List<String> targetUsers) {
+   public NotificationBuilder UserNotification (String title, String body, String url, List<String> targetUsers) {
       this.title = title;
-      this.description = description;
+      this.body = body;
       this.url = url;
       this.targetUsers = targetUsers;
       this.type = NOTIFICATION_TYPE.USER_DRIVEN;
