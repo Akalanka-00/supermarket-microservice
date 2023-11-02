@@ -3,6 +3,7 @@ package com.flashmart.delivery.service;
 import com.flashmart.delivery.Consts.KAFKA_HEADERS;
 import com.flashmart.delivery.Consts.USER_TYPES;
 import com.flashmart.delivery.dto.DeliveryEntryRequest;
+import com.flashmart.delivery.event.EmailBuilder;
 import com.flashmart.delivery.event.NotificationBuilder;
 import com.flashmart.delivery.model.DeliveryEntryModel;
 import com.flashmart.delivery.repository.DeliveryEntryRepository;
@@ -32,6 +33,8 @@ public class DeliveryEntryService {
 
         deliveryEntryRepository.save(model);
         kafkaTemplate.send(KAFKA_HEADERS.NOTIFICATION, NotificationBuilder.create().BroadcastNotification("delivery broadcast","This is a broadcast message from delivery","/", List.of(USER_TYPES.DELIVERY_PERSON)));
+        kafkaTemplate.send(KAFKA_HEADERS.NOTIFICATION, NotificationBuilder.create().UserNotification("User broadcast","This is a broadcast message from delivery","/", List.of("D0001","D0002")));
+        kafkaTemplate.send(KAFKA_HEADERS.NOTIFICATION, NotificationBuilder.create().SendEmail("delivery broadcast",new EmailBuilder("shenalakalanka513@gmail.com","Test Email","Hello user! this is a test mail")));
     }
 
     
