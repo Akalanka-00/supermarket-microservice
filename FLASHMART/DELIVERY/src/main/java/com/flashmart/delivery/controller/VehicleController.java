@@ -17,6 +17,11 @@ public class VehicleController {
     @PostMapping()
     public void addVehicle(@RequestBody VehicleRequest request){
         vehicleService.addVehicle(request);
+    }
 
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("color/{id}")
+    public String updateVehicleColor(@PathVariable String id, @RequestBody VehicleRequest request){
+        return vehicleService.updateVehicleColor(id, request);
     }
 }

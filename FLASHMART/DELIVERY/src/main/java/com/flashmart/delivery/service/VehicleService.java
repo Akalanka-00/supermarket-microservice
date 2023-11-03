@@ -26,5 +26,15 @@ public class VehicleService {
         vehicleRepository.save(model);
     }
 
-    
+    public String updateVehicleColor(String id, VehicleRequest request){
+        VehicleModel model = vehicleRepository.findById(id).orElse(null);
+        if(model!=null){
+            if (request.getColor()!=null){
+                model.setColor(request.getColor());
+            }
+            vehicleRepository.save(model);
+            return ("Vehicle color is Changed to "+request.getColor());
+        }
+        return "Error occurred";
+    }
 }
