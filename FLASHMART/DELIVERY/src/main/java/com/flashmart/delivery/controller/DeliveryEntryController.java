@@ -21,4 +21,16 @@ public class DeliveryEntryController {
         deliveryEntryService.createDeliveryEntry(request);
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/setAsPicked/{id}")
+    public String MarkAsPicked(@PathVariable String id){
+        return deliveryEntryService.markAsPicked(id);
+    }
+
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/setAsDelivered/{id}")
+    public String MarkAsDelivered(@PathVariable String id){
+        return deliveryEntryService.markAsDelivered(id);
+    }
 }

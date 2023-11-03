@@ -3,6 +3,7 @@ package com.flashmart.delivery.service;
 import com.flashmart.delivery.Consts.KAFKA_HEADERS;
 import com.flashmart.delivery.Consts.USER_TYPES;
 import com.flashmart.delivery.dto.DeliveryEntryRequest;
+import com.flashmart.delivery.dto.DeliveryEntryResponse;
 import com.flashmart.delivery.event.NotificationBuilder;
 import com.flashmart.delivery.model.DeliveryEntryModel;
 import com.flashmart.delivery.repository.DeliveryEntryRepository;
@@ -27,16 +28,33 @@ public class DeliveryEntryService {
 
         DeliveryEntryModel model = DeliveryEntryModel.builder()
                 .orderId(request.getOrderId())
-                .pickedUpTime(new Date())
-                .deliveredTime(new Date())
+                .pickedUpTime(null)
+                .deliveredTime(null)
                 .build();
 
         deliveryEntryRepository.save(model);
 //        kafkaTemplate.send(KAFKA_HEADERS.NOTIFICATION, NotificationBuilder.create().BroadcastNotification("delivery broadcast","This is a broadcast message from delivery","/", List.of(USER_TYPES.DELIVERY_PERSON)));
     }
 
-    
+    public String markAsPicked(String id){
+        DeliveryEntryModel model = deliveryEntryRepository.findById(id).orElse(null);
+        if(model!=null){
+            model.setPickedUpTime(new Date());
+            deliveryEntryRepository.save(model);
+            return ("Package is picked up by "+id);
 
+        }
+        return ("Error occurred at pickedTime");
+    }
 
+    public String markAsDelivered(String id){
+        DeliveryEntryModel model = deliveryEntryRepository.findById(id).orElse(null);
+        if(model!=null){
+            model.setDeliveredTime(new Date());
+            deliveryEntryRepository.save(model);
+            return ("Package is Delivered up by "+id);
 
+        }
+        return ("Error occurred");
+    }
 }

@@ -1,11 +1,14 @@
 package com.flashmart.delivery.service;
 
 import com.flashmart.delivery.dto.VehicleRequest;
+import com.flashmart.delivery.dto.VehicleResponse;
 import com.flashmart.delivery.model.VehicleModel;
 import com.flashmart.delivery.repository.VehicleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,4 +25,6 @@ public class VehicleService {
 
         vehicleRepository.save(model);
     }
+
+    
 }
