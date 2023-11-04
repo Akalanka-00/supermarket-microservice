@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="ORDER" />
+        <module name="API_GATEWAY" />
+        <module name="INVENTORY" />
+        <module name="AUTH" />
+        <module name="KAFKA_SERVICE" />
+        <module name="CUSTOMER" />
+        <module name="DISCOVERY_SERVER" />
+        <module name="DELIVERY" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="API_GATEWAY" target="17" />
+      <module name="AUTH" target="17" />
+      <module name="CUSTOMER" target="17" />
+      <module name="DELIVERY" target="17" />
+      <module name="DISCOVERY_SERVER" target="17" />
+      <module name="FLASHMART" target="1.5" />
+      <module name="INVENTORY" target="17" />
+      <module name="KAFKA_SERVICE" target="17" />
+      <module name="ORDER" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="API_GATEWAY" options="-parameters" />
+      <module name="AUTH" options="-parameters" />
+      <module name="CUSTOMER" options="-parameters" />
+      <module name="DELIVERY" options="-parameters" />
+      <module name="DISCOVERY_SERVER" options="-parameters" />
+      <module name="INVENTORY" options="-parameters" />
+      <module name="KAFKA_SERVICE" options="-parameters" />
+      <module name="ORDER" options="-parameters" />
+    </option>
+  </component>
+</project>
