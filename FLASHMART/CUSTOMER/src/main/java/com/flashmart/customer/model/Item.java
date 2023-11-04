@@ -27,7 +27,7 @@ public class Item implements Serializable {
 
     private String category;
 
-    @ManyToMany(mappedBy = "releases")
+    @ManyToMany(mappedBy = "items")
     private Set<Cart> cart = new HashSet<>();
 
 }
