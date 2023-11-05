@@ -60,7 +60,6 @@ public class DeliveryPersonService {
                  return "Vehicle is not Registered";
              }
              return "Vehicle is not found";
-
          }
          return "Error occurred";
      }
