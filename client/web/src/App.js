@@ -8,6 +8,10 @@ import Cart from "./pages/Cart";
 import Payment from "./components/customer/Payment";
 import AdminLogin from "./components/admin/regeistration/AdminLogin";
 import AdminDashBoard from "./pages/AdminDashBoard";
+import Category from "./components/admin/dashboard/content/Category";
+import Products from "./components/admin/dashboard/content/Products";
+import Delivery from "./components/admin/dashboard/content/Delivery";
+import Dashboard from "./components/admin/dashboard/content/Dashboard";
 
 function App() {
   return (
@@ -24,7 +28,13 @@ function App() {
         <Route path="/customer/cart/payment" element={<Payment/>}/>
 
         <Route path="/admin/login" element={<AdminLogin/>}/>
-        <Route path="/admin/dashboard" element={<AdminDashBoard/>}/>
+        <Route path="/admin/dashboard/*" element={<AdminDashBoard/>}>
+        <Route index element={<Dashboard/>}/>
+        <Route path="category/" element={<Category/>}/>
+        <Route path="category/:id" element={<Products/>}/>
+        <Route path="delivery/" element={<Delivery/>}/>
+        </Route>
+       
 
 
 

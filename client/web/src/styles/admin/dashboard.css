@@ -1,0 +1,72 @@
+.admin-dashboard{
+    display: grid;
+    grid-template-columns: 14rem 82rem;
+}
+
+.category-container{
+    margin: 4rem 5rem;
+}
+
+.category-container .header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;    
+}
+
+.category-container .header .title{
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-secondary-v3);
+
+}
+
+.category-container .category-list{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 3rem;
+}
+
+.category-container .category-list .category-item{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem;
+    background-color: #f9f9ff;
+    border-radius: 20px;
+}
+
+.category-container .category-list .category-item img{
+    width: 7rem;
+    border-radius: 20px;
+}
+
+.category-container .category-list .category-item .info{
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+.category-container .category-list .category-item .data{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+.category-container .category-list .category-item .options{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: center;
+}
+.category-container .category-list .category-item .option{
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: space-between;
+}
