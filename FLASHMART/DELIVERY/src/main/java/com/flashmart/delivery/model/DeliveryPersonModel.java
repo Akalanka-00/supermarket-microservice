@@ -19,5 +19,4 @@ public class DeliveryPersonModel {
     private String id;
     private int availability;
     private String vehicleID;
-
 }

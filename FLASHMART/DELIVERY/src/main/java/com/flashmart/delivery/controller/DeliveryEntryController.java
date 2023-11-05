@@ -22,14 +22,14 @@ public class DeliveryEntryController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/setAsPicked/{id}")
+    @PutMapping("/setAsPicked/{id}")
     public String MarkAsPicked(@PathVariable String id){
         return deliveryEntryService.markAsPicked(id);
     }
 
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/setAsDelivered/{id}")
+    @PutMapping("/setAsDelivered/{id}")
     public String MarkAsDelivered(@PathVariable String id){
         return deliveryEntryService.markAsDelivered(id);
     }

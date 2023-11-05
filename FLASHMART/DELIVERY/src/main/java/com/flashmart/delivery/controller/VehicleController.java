@@ -24,4 +24,5 @@ public class VehicleController {
     public String updateVehicleColor(@PathVariable String id, @RequestBody VehicleRequest request){
         return vehicleService.updateVehicleColor(id, request);
     }
+
 }

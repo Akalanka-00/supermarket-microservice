@@ -25,7 +25,6 @@ public class DeliveryEntryService {
 //    private final KafkaTemplate<String, NotificationBuilder> kafkaTemplate;
 
     public void createDeliveryEntry( DeliveryEntryRequest request){
-
         DeliveryEntryModel model = DeliveryEntryModel.builder()
                 .orderId(request.getOrderId())
                 .pickedUpTime(null)
@@ -42,7 +41,6 @@ public class DeliveryEntryService {
             model.setPickedUpTime(new Date());
             deliveryEntryRepository.save(model);
             return ("Package is picked up by "+id);
-
         }
         return ("Error occurred at pickedTime");
     }
@@ -53,7 +51,6 @@ public class DeliveryEntryService {
             model.setDeliveredTime(new Date());
             deliveryEntryRepository.save(model);
             return ("Package is Delivered up by "+id);
-
         }
         return ("Error occurred");
     }
