@@ -1,5 +1,6 @@
 package com.flashmart.customer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,4 +26,9 @@ public class Feedback implements Serializable {
     @JoinColumn(name = "customerId")
     private Customer customer;
 
+    @JsonIgnore
+    public Customer getCustomer() { return customer; }
+
+    @JsonIgnore
+    public void setCustomer(Customer customer) { this.customer = customer; }
 }

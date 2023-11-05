@@ -1,15 +1,15 @@
 package com.flashmart.customer.model;
 
-import com.flashmart.customer.dto.CartDTO;
-import com.flashmart.customer.dto.ItemDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -31,16 +31,20 @@ public class Cart implements Serializable {
 
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
-            name = "item",
+            name = "cartItems",
             joinColumns = { @JoinColumn(name = "cartId") },
             inverseJoinColumns = { @JoinColumn(name = "itemCode") })
     private List<Item> items;
 
-    public Cart(int noOfItem, double totalPrice, Customer customer, List<Item> items) {
-        this.noOfItem = noOfItem;
-        this.totalPrice = totalPrice;
-        this.customer = customer;
-        this.items = items;
-    }
+    @JsonIgnore
+    public Customer getCustomer() { return customer; }
 
+    @JsonIgnore
+    public void setCustomer(Customer customer) { this.customer = customer; }
+
+    @JsonIgnore
+    public List<Item> getItems() { return items; }
+
+    @JsonIgnore
+    public void setItems(List<Item> items) { this.items = items; }
 }
