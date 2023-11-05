@@ -5,6 +5,9 @@ import CustomerLogin from "./components/customer/regeistration/CustomerLogin";
 import CustomerRegister from "./components/customer/regeistration/CustomerRegister";
 import OTPVerification from "./components/customer/regeistration/OTPVerification";
 import Cart from "./pages/Cart";
+import Payment from "./components/customer/Payment";
+import AdminLogin from "./components/admin/regeistration/AdminLogin";
+import AdminDashBoard from "./pages/AdminDashBoard";
 
 function App() {
   return (
@@ -18,6 +21,11 @@ function App() {
         <Route path="/customer/otp" element={<OTPVerification/>}/>
 
         <Route path="/customer/cart" element={<Cart/>}/>
+        <Route path="/customer/cart/payment" element={<Payment/>}/>
+
+        <Route path="/admin/login" element={<AdminLogin/>}/>
+        <Route path="/admin/dashboard" element={<AdminDashBoard/>}/>
+
 
 
       </Route>

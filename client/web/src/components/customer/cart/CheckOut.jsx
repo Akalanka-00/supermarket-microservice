@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const CheckOut = () => {
+    const navigate = useNavigate();
   return (
     <div className="checkout-section">
       <div className="checkout-container">
@@ -37,7 +39,7 @@ const CheckOut = () => {
             <div className="value">Rs. 900</div>
         </div>
 
-        <div className="btn pay-btn">Pay Now</div>
+        <div className="btn pay-btn" onClick={()=>navigate("/customer/cart/payment")}>Pay Now</div>
       </div>
     </div>
   );
