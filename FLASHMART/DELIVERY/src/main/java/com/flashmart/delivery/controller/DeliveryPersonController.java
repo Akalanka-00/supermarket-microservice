@@ -1,10 +1,13 @@
 package com.flashmart.delivery.controller;
 
 import com.flashmart.delivery.dto.DeliveryPersonRequest;
+import com.flashmart.delivery.model.DeliveryPersonModel;
 import com.flashmart.delivery.service.DeliveryPersonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/delivery/user")
@@ -30,5 +33,11 @@ public class DeliveryPersonController {
     @PutMapping("addVehicle/{id}")
     public String addVehicleToDeliveryPerson(@PathVariable String id, @RequestBody DeliveryPersonRequest request){
         return deliveryPersonService.addVehicleToDeliveryPerson(id, request);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("all")
+    public List<DeliveryPersonModel> getAllDeliveryPerson(){
+        return deliveryPersonService.getAllDeliveryPerson();
     }
 }

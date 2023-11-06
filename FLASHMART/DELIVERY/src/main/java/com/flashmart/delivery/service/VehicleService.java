@@ -2,6 +2,7 @@ package com.flashmart.delivery.service;
 
 import com.flashmart.delivery.dto.VehicleRequest;
 import com.flashmart.delivery.dto.VehicleResponse;
+import com.flashmart.delivery.model.DeliveryPersonModel;
 import com.flashmart.delivery.model.VehicleModel;
 import com.flashmart.delivery.repository.VehicleRepository;
 import lombok.RequiredArgsConstructor;
@@ -36,5 +37,9 @@ public class VehicleService {
             return ("Vehicle color is Changed to "+request.getColor());
         }
         return "Error occurred";
+    }
+
+    public List<VehicleModel> getAllDeliveryPerson() {
+        return vehicleRepository.findAll();
     }
 }
