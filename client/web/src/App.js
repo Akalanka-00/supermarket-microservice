@@ -14,6 +14,7 @@ import Delivery from "./components/admin/dashboard/content/Delivery";
 import Dashboard from "./components/admin/dashboard/content/Dashboard";
 import LocateOnMap from "./components/admin/dashboard/content/LocateOnMap";
 import LoadingScreen from "./components/shared/LoadingScreen";
+import Discount from "./components/admin/dashboard/content/Discount";
 
 function App() {
   return (
@@ -32,10 +33,16 @@ function App() {
         <Route path="/admin/login" element={<AdminLogin/>}/>
         <Route path="/admin/dashboard/*" element={<AdminDashBoard/>}>
         <Route index element={<Dashboard/>}/>
+
         <Route path="category/" element={<Category/>}/>
         <Route path="category/:id" element={<Products/>}/>
+
         <Route path="delivery/" element={<Delivery/>}/>
         <Route path="delivery/map" element={<LocateOnMap/>}/>
+
+        <Route path="discounts/" element={<Discount/>}/>
+
+
         </Route>
       </Route>
       <Route path="/loading" element={<LoadingScreen/>}/>

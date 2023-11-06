@@ -7,7 +7,7 @@ import CategoryModal from "../../../modals/CategoryModal";
 
 const Category = () => {
   const navigate = useNavigate();
-  const [modalOpen, setModalOpen] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
   const openCategoryModal = ()=>setModalOpen(true);
 
   const closeCategoryModal = ()=>setModalOpen(false);
@@ -24,7 +24,7 @@ const Category = () => {
             <div className="info">
             <img src={item.image} />
             <div className="data">
-              <div className="value category-type">Food</div>
+              <div className="value category-type">{item.name}</div>
             </div>
             </div>
 
@@ -35,7 +35,10 @@ const Category = () => {
 
           
               <div className="options">
-              <div className="btn option"><span>Edit</span> </div>
+              <div className="btn option" onClick={()=>{
+                setCategory(item);
+                openCategoryModal();
+              }}><span>Edit</span> </div>
               <div className="btn option" onClick={()=>navigate(`/admin/dashboard/category/${index}`)}><span>View</span> </div>
               </div>
           </div>

@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { categoryItems, productItems } from '../../../../context/Products';
+import ProductModal from '../../../modals/ProductModal';
 
 const Products = () => {
   const {id} = useParams();
@@ -9,6 +10,13 @@ const Products = () => {
     background: `url(${category.image}) no-repeat center center fixed`,
     backgroundSize: 'cover',
   };
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [product, setProduct] = useState({name:"", image: null, price:0, category:0})
+  const openProductModal = ()=>setModalOpen(true);
+
+  const closeProductModal = ()=>setModalOpen(false);
+
   return (
     <section className="product-container">
       <div className="header" style={containerStyle}>
@@ -50,7 +58,7 @@ const Products = () => {
                   </div>
 
                   <div className="options">
-                    <div className="btn option">Update Details</div>
+                    <div className="btn option" onClick={openProductModal}>Update Details</div>
                     <div className="btn-warning option">Remove</div>
 
 
@@ -60,6 +68,8 @@ const Products = () => {
           }
         })}
       </div>
+      {modalOpen && <ProductModal closeModal={closeProductModal} data={product}/>}
+
     </section>
   )
 }

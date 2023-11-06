@@ -2,13 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import "../../styles/modal.css";
 import ImagePlaceHolder from "../shared/ImagePlaceHolder";
 import ImageUpload from "../shared/ImageUpload";
+import onUpload from "../../helper/upload";
 
 const CategoryModal = ({ closeModal, data }) => {
-  const [status, setStatus] = useState(-10);
   const [progress, setProgress] = useState(0);
   const fileInputRef = useRef(null);
   const [file, setFile] = useState();
-
+  const [downloadLink, setDownloadLink] = useState(null);
+  const {name, image, noOfProducts} = data;
 
   const handleFileChange = (event) => {
     const newFile = event.target.files[0];
@@ -17,18 +18,13 @@ const CategoryModal = ({ closeModal, data }) => {
       // Handle the selected file here
       setFile(newFile);
       setProgress(0);
+      onUpload(newFile,"/category",setProgress, setDownloadLink);
     }
   };
 
   const handleImageSelect = () => {
     fileInputRef.current.click();
   };
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (status <= 100) setStatus(status + 1);
-    }, 20);
-  });
 
   return (
     <div className="modal-container">
@@ -42,8 +38,10 @@ const CategoryModal = ({ closeModal, data }) => {
       <div className="modal-body">
         <div className="left">
          <div className="figure" onClick={handleImageSelect}>
-         {data.image || file ? (
-            <div><img ref={fileInputRef}  src={URL.createObjectURL(file) || data.image} /></div>
+         {data.image || downloadLink ? (
+            // <div><img ref={fileInputRef}  src={URL.createObjectURL(file) || data.image} /></div>
+            <div><img ref={fileInputRef}  src={ downloadLink || data.image} /></div>
+
           ) : (
             <div ref={fileInputRef}>
               <ImagePlaceHolder />
@@ -62,10 +60,10 @@ const CategoryModal = ({ closeModal, data }) => {
               
             />
 
-         {status>=0 && status <=100 &&  <ImageUpload
-            filename={"Test file. jpg"}
-            size={"15MB"}
-            precentage={status}
+         {progress>0 && progress <100 &&  <ImageUpload
+            filename={file.name}
+            size={file.size}
+            precentage={progress}
           />}
         </div>
         <div className="right-form">
@@ -79,6 +77,7 @@ const CategoryModal = ({ closeModal, data }) => {
             </div>
         </div>
       </div>
+      
     </div>
   );
 };
