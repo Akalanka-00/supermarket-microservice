@@ -12,7 +12,6 @@ const SideBar = () => {
   const currentPath = location.pathname;
   const parts = currentPath.split("/");
   const lastElement = parts[3];
-  console.log(lastElement);
 
   useEffect(()=>{
     SideBarItems.map((item,index)=>{

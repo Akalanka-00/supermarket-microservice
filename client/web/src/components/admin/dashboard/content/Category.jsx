@@ -1,17 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { categoryItems } from "../../../../context/Products";
 import {BsPencil} from "react-icons/bs";
 import {AiOutlineEye} from "react-icons/ai"
 import { useNavigate } from "react-router-dom";
+import CategoryModal from "../../../modals/CategoryModal";
 
 const Category = () => {
   const navigate = useNavigate();
-  cate
+  const [modalOpen, setModalOpen] = useState(false);
+  const openCategoryModal = ()=>setModalOpen(true);
+
+  const closeCategoryModal = ()=>setModalOpen(false);
+  const [category, setCategory] = useState({ name: "", image: null, noOfProducts:0})
   return (
     <section className="category-container">
       <div className="header">
         <div className="title">Product Categories</div>
-        <div className="btn">Add Category</div>
+        <div className="btn" onClick={openCategoryModal}>Add Category</div>
       </div>
       <div className="category-list">
         {categoryItems.map((item, index) => (
@@ -19,8 +24,7 @@ const Category = () => {
             <div className="info">
             <img src={item.image} />
             <div className="data">
-              <div className="name">Name: </div>
-              <div className="value">Food</div>
+              <div className="value category-type">Food</div>
             </div>
             </div>
 
@@ -37,6 +41,7 @@ const Category = () => {
           </div>
         ))}
       </div>
+      {modalOpen && <CategoryModal closeModal={closeCategoryModal} data={category}/>}
     </section>
   );
 };

@@ -59,6 +59,11 @@
   justify-content: space-between;
   gap: 1rem;
 }
+
+.category-container .category-list .category-item .category-type{
+  font-weight: 2rem;
+  font-weight: 700;
+}
 .category-container .category-list .category-item .options {
   display: flex;
   flex-direction: column;
