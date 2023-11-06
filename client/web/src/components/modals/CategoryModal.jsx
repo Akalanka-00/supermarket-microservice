@@ -38,6 +38,11 @@ const CategoryModal = ({ closeModal, data }) => {
           />}
         </div>
         <div className="right">
+        <div className="input-item">
+              <div className="label">Category Name</div>
+              <input type="text" placeholder="Category Name" className="field" />
+            </div>
+
             
         </div>
       </div>
