@@ -1,5 +1,6 @@
 package com.flashmart.delivery.controller;
 
+import com.flashmart.delivery.dto.DeliveryPersonAllDetailsResponse;
 import com.flashmart.delivery.dto.DeliveryPersonRequest;
 import com.flashmart.delivery.model.DeliveryPersonModel;
 import com.flashmart.delivery.service.DeliveryPersonService;
@@ -45,5 +46,15 @@ public class DeliveryPersonController {
     @GetMapping("{id}")
     public ResponseEntity<DeliveryPersonModel> getDeliveryPersonById(@PathVariable String id) {
         return deliveryPersonService.getDeliveryPersonById(id);
+    }
+
+    @GetMapping("allDetails/{id}")
+    public ResponseEntity<DeliveryPersonAllDetailsResponse> getDeliveryPersonDetailsById(@PathVariable String id){
+        return deliveryPersonService.getDeliveryPersonDetailsById(id);
+    }
+
+    @GetMapping("allDetails")
+    public List<DeliveryPersonAllDetailsResponse> getAllDeliveryPersonsDetails(){
+        return deliveryPersonService.getAllDeliveryPersonsDetails();
     }
 }
