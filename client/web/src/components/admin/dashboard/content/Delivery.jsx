@@ -1,7 +1,9 @@
 import React from 'react'
 import Avatar from "../../../../assets/icons/profile.png"
 import deliveryPersons from '../../../../context/DeliveryPersons'
+import { useNavigate } from 'react-router-dom'
 const Delivery = () => {
+  const navigate = useNavigate();
   return (
     <section className='delivery-container' >
       <div className="header">
@@ -28,7 +30,7 @@ const Delivery = () => {
           </div>
 
           <div className="options">
-              <div className="btn option"><span>View on Map</span> </div>
+              <div className="btn option" onClick={()=>navigate("map/")}><span>View on Map</span> </div>
               {/* <div className="btn option" ><span>View</span> </div> */}
               </div>
         </div>

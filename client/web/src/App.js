@@ -12,6 +12,7 @@ import Category from "./components/admin/dashboard/content/Category";
 import Products from "./components/admin/dashboard/content/Products";
 import Delivery from "./components/admin/dashboard/content/Delivery";
 import Dashboard from "./components/admin/dashboard/content/Dashboard";
+import LocateOnMap from "./components/admin/dashboard/content/LocateOnMap";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="category/" element={<Category/>}/>
         <Route path="category/:id" element={<Products/>}/>
         <Route path="delivery/" element={<Delivery/>}/>
+        <Route path="delivery/map" element={<LocateOnMap/>}/>
         </Route>
        
 
