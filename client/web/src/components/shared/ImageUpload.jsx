@@ -8,10 +8,10 @@ const ImageUpload = ({filename,size, precentage, onHide}) => {
   return (
     <div className='image-upload-container'>
       <div className="info">
-        <div className="left">
+        <div className="image-upload-left">
             <BsCardImage className='icon'/>
         </div>
-        <div className="right">
+        <div className="image-upload-right">
             <div className="name">{filename}</div>
             <div className="size">{size}</div>
         </div>

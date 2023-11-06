@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../../styles/modal.css";
 import ImagePlaceHolder from "../shared/ImagePlaceHolder";
 import ImageUpload from "../shared/ImageUpload";
 
 const CategoryModal = ({ closeModal, data }) => {
   const [status, setStatus] = useState(-10);
+  const [progress, setProgress] = useState(0);
+  const imageRef = useRef(null);
 
 
   useEffect(() => {
@@ -37,13 +39,15 @@ const CategoryModal = ({ closeModal, data }) => {
             precentage={status}
           />}
         </div>
-        <div className="right">
+        <div className="right-form">
         <div className="input-item">
               <div className="label">Category Name</div>
               <input type="text" placeholder="Category Name" className="field" />
             </div>
 
-            
+            <div className="input-item">
+              <button className="btn">Submit</button>
+            </div>
         </div>
       </div>
     </div>

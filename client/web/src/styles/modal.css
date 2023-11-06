@@ -50,12 +50,12 @@
     padding: 1rem;
 }
 
-.modal-container .modal-body .right .input-item .label{
+.modal-container .modal-body .right-form .input-item .label{
     font-size: 1.1rem;
     font-weight: 700;
 }
 
-.modal-container .modal-body .right .input-item .field{
+.modal-container .modal-body .right-form .input-item .field{
     outline: none;
     border: var(--color-primary-v1) 1px solid;
     border-radius: 5px;
@@ -64,4 +64,10 @@
     margin-top: 0.5rem;
     width: 20rem;
 
+}
+
+.modal-container .modal-body .right-form{
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
 }

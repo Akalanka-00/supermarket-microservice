@@ -13,6 +13,7 @@ import Products from "./components/admin/dashboard/content/Products";
 import Delivery from "./components/admin/dashboard/content/Delivery";
 import Dashboard from "./components/admin/dashboard/content/Dashboard";
 import LocateOnMap from "./components/admin/dashboard/content/LocateOnMap";
+import LoadingScreen from "./components/shared/LoadingScreen";
 
 function App() {
   return (
@@ -36,11 +37,9 @@ function App() {
         <Route path="delivery/" element={<Delivery/>}/>
         <Route path="delivery/map" element={<LocateOnMap/>}/>
         </Route>
-       
-
-
-
       </Route>
+      <Route path="/loading" element={<LoadingScreen/>}/>
+
 
       <Route path="/*" element={<PageNotFound/>}/>
       </Routes></BrowserRouter>
