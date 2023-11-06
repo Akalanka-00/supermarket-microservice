@@ -27,6 +27,7 @@ const Products = () => {
           if(item.category+"" === id){
             return(
               <div className="product-item" key={index}>
+                <div className="product-header">
                 <img src={item.image}/>
                 <div className="product-info">
                 <div className="data">
@@ -42,9 +43,17 @@ const Products = () => {
                     <div className="value"> 1532 </div>
                   </div>
                 </div>
+                </div>
                 <div className="status">
                     <div className="name">Status: </div>
-                    <div className="value">In progress</div>
+                    <div className="value">In Stock</div>
+                  </div>
+
+                  <div className="options">
+                    <div className="btn option">Update Details</div>
+                    <div className="btn-warning option">Remove</div>
+
+
                   </div>
               </div>
             )

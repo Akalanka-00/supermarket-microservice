@@ -65,6 +65,43 @@ body {
   transition: all 0.4s ease-in-out;
 }
 
+
+.btn-warning {
+  border: none;
+  border-radius: 5px;
+  background-image: linear-gradient(
+    180.71deg,
+    #FF5733 3.31%, 
+    #f35526 57.44%, 
+    #FF5733 108.12%);
+  background-size: 300% 100%;
+  color: white;
+  cursor: pointer;
+  font-size: inherit;
+  outline: none;
+  padding: 7px 30px;
+  transition: all 0.2s ease-in;
+  text-align: center;
+}
+
+.btn-warning:hover {
+  border: none;
+  border-radius: 5px;
+  background-image: linear-gradient(
+    180.71deg,
+    #FF5733 3.31%, 
+    #c2451f 57.44%, 
+    #FF5733 108.12%);
+  background-size: 300% 100%;
+  color: white;
+  cursor: pointer;
+  font-size: inherit;
+  outline: none;
+  padding: 7px 30px;
+  transition: all 0.2s ease-in;
+}
+
+
 section{
   margin: 1rem 2rem;
 }

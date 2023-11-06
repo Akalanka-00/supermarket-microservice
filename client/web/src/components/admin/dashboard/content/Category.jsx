@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const Category = () => {
   const navigate = useNavigate();
+  cate
   return (
     <section className="category-container">
       <div className="header">

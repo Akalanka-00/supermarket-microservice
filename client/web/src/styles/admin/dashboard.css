@@ -193,10 +193,19 @@
   
 }
 
+.product-container .product-list .product-header{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
 .product-container .product-list .product-item .product-info{
   display: flex;
   flex-direction: column;
 }
+
 
 .product-container .product-list .product-item .product-info .data{
   display: flex;
@@ -219,4 +228,10 @@
   padding: 0.5rem 1rem;
   border-radius: 20px;
   color: white;
+}
+
+.product-container .product-list .product-item .options{
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
 }
