@@ -31,4 +31,6 @@ public class Feedback implements Serializable {
 
     @JsonIgnore
     public void setCustomer(Customer customer) { this.customer = customer; }
+
+    public Long getCustomerId() { return customer.getCustomerId(); }
 }

@@ -10,6 +10,5 @@ import lombok.NoArgsConstructor;
 public class FeedbackDTO {
 
     private int rating;
-
     private String description;
 }
