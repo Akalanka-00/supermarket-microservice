@@ -5,6 +5,7 @@ import com.flashmart.delivery.model.DeliveryPersonModel;
 import com.flashmart.delivery.service.DeliveryPersonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,5 +40,10 @@ public class DeliveryPersonController {
     @GetMapping("all")
     public List<DeliveryPersonModel> getAllDeliveryPerson(){
         return deliveryPersonService.getAllDeliveryPerson();
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<DeliveryPersonModel> getDeliveryPersonById(@PathVariable String id) {
+        return deliveryPersonService.getDeliveryPersonById(id);
     }
 }

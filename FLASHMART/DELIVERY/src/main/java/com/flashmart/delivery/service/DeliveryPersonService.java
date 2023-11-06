@@ -2,12 +2,15 @@ package com.flashmart.delivery.service;
 
 
 import com.flashmart.delivery.Consts.DELIVER_AVAILABILITY;
+import com.flashmart.delivery.dto.DeliveryEntryResponse;
 import com.flashmart.delivery.dto.DeliveryPersonRequest;
+import com.flashmart.delivery.exception.ResourceNotFoundException;
 import com.flashmart.delivery.model.DeliveryPersonModel;
 import com.flashmart.delivery.repository.DeliveryPersonRepository;
 import com.flashmart.delivery.repository.VehicleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -67,6 +70,11 @@ public class DeliveryPersonService {
 
      public List<DeliveryPersonModel> getAllDeliveryPerson(){
         return deliveryPersonRepository.findAll();
+     }
+
+     public ResponseEntity<DeliveryPersonModel> getDeliveryPersonById(String id){
+        DeliveryPersonModel model = deliveryPersonRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Delivery Person does not exist with id: " + id));
+        return ResponseEntity.ok(model);
      }
 }
 
