@@ -50,6 +50,10 @@
     padding: 1rem;
 }
 
+.modal-container .modal-body .left img{
+    width: 15rem;
+}
+
 .modal-container .modal-body .right-form .input-item .label{
     font-size: 1.1rem;
     font-weight: 700;
