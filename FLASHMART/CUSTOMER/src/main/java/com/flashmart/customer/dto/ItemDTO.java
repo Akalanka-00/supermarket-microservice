@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class ItemDTO {
 
-    private int rating;
-
-    private String description;
+    private long itemCode;
+    private int quantity;
 }

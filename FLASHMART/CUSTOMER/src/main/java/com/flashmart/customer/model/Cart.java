@@ -7,9 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Data
@@ -29,22 +27,16 @@ public class Cart implements Serializable {
     @JoinColumn(name = "customerId", nullable = false)
     private Customer customer;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(
-            name = "cartItems",
-            joinColumns = { @JoinColumn(name = "cartId") },
-            inverseJoinColumns = { @JoinColumn(name = "itemCode") })
-    private List<Item> items;
+    @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<CartItem> cartItems = new ArrayList<>();
 
     @JsonIgnore
     public Customer getCustomer() { return customer; }
-
     @JsonIgnore
     public void setCustomer(Customer customer) { this.customer = customer; }
+    public Long getCustomerId() { return customer.getCustomerId(); }
 
-    @JsonIgnore
-    public List<Item> getItems() { return items; }
+    public List<CartItem> getCartItems() { return cartItems; }
 
-    @JsonIgnore
-    public void setItems(List<Item> items) { this.items = items; }
+    public void setCartItems(List<CartItem> cartItems) { this.cartItems = cartItems; }
 }

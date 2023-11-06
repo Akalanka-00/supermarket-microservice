@@ -1,6 +1,6 @@
 package com.flashmart.customer.service;
 
-import com.flashmart.customer.repository.CustomerPointRepository;
+import com.flashmart.customer.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 public class CustomerPointService {
 
     @Autowired
-    private final CustomerPointRepository customerPointRepository;
+    private final CustomerRepository customerRepository;
 
-    public CustomerPointService(CustomerPointRepository customerPointRepository) {
-        this.customerPointRepository = customerPointRepository;
+    public CustomerPointService(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
     }
 }

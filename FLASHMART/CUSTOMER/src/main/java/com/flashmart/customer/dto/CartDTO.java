@@ -12,8 +12,9 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class CartDTO {
+    private long cartId;
     private int noOfItem;
     private double totalPrice;
-    private Customer customer;
-    private List<Item> items;
+    private long customerId;
+    private List<CartItemDTO> items;
 }

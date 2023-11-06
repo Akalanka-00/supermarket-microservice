@@ -6,9 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
@@ -27,8 +24,5 @@ public class Item implements Serializable {
     private double price;
 
     private String category;
-
-    @ManyToMany(mappedBy = "items")
-    private Set<Cart> carts = new HashSet<>();
 
 }
