@@ -42,8 +42,26 @@
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
+    background-color: #fbfbff;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .modal-container .modal-body .left{
     padding: 1rem;
+}
+
+.modal-container .modal-body .right .input-item .label{
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.modal-container .modal-body .right .input-item .field{
+    outline: none;
+    border: var(--color-primary-v1) 1px solid;
+    border-radius: 5px;
+    padding: 0.2rem 0.4rem;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    width: 20rem;
+
 }

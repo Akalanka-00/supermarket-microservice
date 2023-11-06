@@ -7,7 +7,7 @@ import CategoryModal from "../../../modals/CategoryModal";
 
 const Category = () => {
   const navigate = useNavigate();
-  const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(true);
   const openCategoryModal = ()=>setModalOpen(true);
 
   const closeCategoryModal = ()=>setModalOpen(false);

@@ -1,7 +1,7 @@
 import Food from "../assets/images/catrgory/food.jpg"
 
 const categoryItems = [
-    { name: "Food", image: Food, noOfProducts:10},
+    { name: "Rice and Curry special", image: Food, noOfProducts:10},
     { name: "Food", image: Food, noOfProducts:15},
     { name: "Food", image: Food, noOfProducts:13},
     { name: "Food", image: Food, noOfProducts:51},
