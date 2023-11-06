@@ -13,7 +13,7 @@ const NavBar = () => {
   const navigate = useNavigate();
   return (
     <div className="navbar-container">
-      <div className="nav-logo">
+      <div className="nav-logo" onClick={()=>navigate("/")}>
         <img src={LOGO}/>
         <span>FlashMart</span>
       </div>
