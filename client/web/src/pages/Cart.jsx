@@ -8,7 +8,7 @@ import CheckOut from '../components/customer/cart/CheckOut'
 const Cart = () => {
   return (
     <div>
-      <NavBar/>
+      <NavBar title={"Cart"}/>
       <section>
       <div className="cart-container">
       <div className="cart-list-container">

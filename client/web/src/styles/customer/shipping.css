@@ -1,0 +1,69 @@
+.ongoing-order-container{
+    margin-top: 2rem;
+   
+}
+
+.ongoing-order-container .header .heading .title{
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-secondary-v3);
+}
+
+.ongoing-order-container .header .heading{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ongoing-order-container .header .heading span{
+    padding: 0.2rem 0.5rem;
+    background-color: var(--color-primary);
+    border-radius: 50%;
+    color: white;
+    font-weight: 500;
+    font-size: 0.7rem;
+}
+
+.ongoing-order-container .ongoing-order-body{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    border: var(--color-primary) 1px solid;
+    border-radius: 10px;
+    width: 30%;
+    margin: 2rem 6rem;
+    gap: 2rem;
+    cursor: default;
+}
+
+.ongoing-order-container .ongoing-order-body img{
+    width: 3rem;
+}
+
+.ongoing-order-container .ongoing-order-body .order-header{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.ongoing-order-container .ongoing-order-body .order-info .order-id{
+    font-size: 0.6rem;
+    font-weight: 400;
+    color: gray;
+}
+
+.ongoing-order-container .ongoing-order-body .order-info .data{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+
+}
+

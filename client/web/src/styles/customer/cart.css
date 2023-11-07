@@ -141,10 +141,10 @@ margin-left: 5rem;
 position: fixed;
 background-color: #f6f6ff;
 width: 35rem;
-height: 70vh;
+height: 80vh;
 padding: 1rem 3rem;
 border-radius: 10px;
-margin-top: 4rem;
+margin-top: 2rem;
 }
 
 .checkout-container{
@@ -191,4 +191,41 @@ margin-top: 4rem;
     .checkout-container .pay-btn{
         font-weight: 600;
         margin-top: 5rem;
+    }
+
+    .checkout-shipping-container{
+        margin: 1rem;
+        padding: 0.5rem;
+        border: var(--color-primary) 1px solid;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 2rem;
+        width: max-content;
+        cursor:default;
+    }
+
+    .checkout-shipping-container img{
+        width: 5rem;
+    }
+
+    .checkout-shipping-container .shiping-info .city{
+        font-size: 1.2rem;
+        font-weight: 700;
+
+    }
+
+    .checkout-shipping-container .shiping-info .data{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        width: 12rem;
+    }
+
+    .checkout-shipping-container  .btn-change{
+        height: fit-content;
+        margin-left: -0.5rem;
     }

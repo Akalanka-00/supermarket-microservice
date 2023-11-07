@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import navItems from '../../context/HomepageNavItems'
-import { SiSourceengine } from "react-icons/si";
+import { MdOutlineLocalShipping } from "react-icons/md";
 import LOGO from "../../assets/icons/logo.png"
 import {BsCartCheck} from "react-icons/bs"
 import Avatar from "../../assets/icons/profile.png"
@@ -28,6 +28,11 @@ const NavBar = () => {
 
       <div className="corner">
         {isUser?<div className='registered-user-container'>
+        <div className="cart" onClick={()=>navigate("/customer/shipping")}>
+            <MdOutlineLocalShipping className='cart-icon' />
+            <span>1</span>
+          </div>
+
           <div className="cart" onClick={()=>navigate("/customer/cart")}>
             <BsCartCheck className='cart-icon' />
             <span>1</span>

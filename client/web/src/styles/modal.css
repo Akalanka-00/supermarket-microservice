@@ -87,3 +87,9 @@
     margin-top: 0.5rem;
     width: 20rem;
 }
+
+.modal-container .modal-map{
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}

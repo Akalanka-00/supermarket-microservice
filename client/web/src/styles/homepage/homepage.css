@@ -39,6 +39,12 @@
   text-decoration: none;
   color: black;
 }
+
+.navbar-container .heading{
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+}
 .navbar-container .registered-user-container {
   display: flex;
   flex-direction: row;
@@ -164,6 +170,15 @@
   justify-content: space-evenly;
   width: 150%;
   font-size: 1.1rem;
+}
+
+.add-to-category{
+  color: var(--color-primary);
+  font-weight: 700;
+  margin-left: 10rem;
+  float: top;
+  z-index: 99;
+  font-size: 3rem;
 }
 
 .productModel-container{

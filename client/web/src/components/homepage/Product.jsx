@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Food from "../../assets/images/catrgory/food.jpg"
 import {categoryItems, productItems} from '../../context/Products'
+import {BsCartCheck} from "react-icons/bs"
 import ProductModel from './ProductModal';
 const Product = () => {
 
@@ -30,6 +31,7 @@ const Product = () => {
                 setSelectedProduct(item);
                 setOpenProductModel(true);
               }}>
+                <BsCartCheck className='add-to-category'/>
               <img src={Food}/>
               <div className="tag">
               <span>Rice</span>
