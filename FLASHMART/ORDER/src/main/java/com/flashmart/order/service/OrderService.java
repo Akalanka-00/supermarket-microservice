@@ -1,21 +1,28 @@
 package com.flashmart.order.service;
 
+import com.flashmart.order.dto.OrderedItem;
 import com.flashmart.order.model.orderModel;
+import com.flashmart.order.model.Product; // Import the Product entity
 import com.flashmart.order.repository.OrderRepository;
+import com.flashmart.order.repository.ProductRepository;
 import com.flashmart.order.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.*;
 
 @Service
 public class OrderService {
     private final OrderRepository orderRepository;
+    private final ProductRepository productRepository;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository) {
+    public OrderService(OrderRepository orderRepository,ProductRepository productRepository) {
+
         this.orderRepository = orderRepository;
+        this.productRepository=productRepository;
     }
 
     public orderModel createOrder(orderModel order) {
@@ -64,5 +71,46 @@ public class OrderService {
             // You can use a custom exception type or any appropriate error handling mechanism
         }
     }
+
+
+    public List<OrderedItem> getOrderedItems(Long orderId) {
+        // Retrieve ordered items by order ID, you can implement this logic
+        // based on how you have structured your data and relationships.
+        // For example, you can fetch ordered items associated with the given order.
+        // Here, I assume there's a method getOrderById in the repository.
+        orderModel order = orderRepository.findById(orderId).orElse(null);
+
+        if (order != null) {
+            return order.getOrderedItems();
+        } else {
+            // Handle the case where the order with the specified ID does not exist
+            throw new EntityNotFoundException(orderId);
+        }
+    }
+
+    public orderModel addOrderedItemToOrder(Long orderId, Long productId, Integer quantity) {
+        orderModel order = orderRepository.findById(orderId).orElse(null);
+        Product product = productRepository.findById(productId).orElse(null);
+
+        if (order != null && product != null) {
+            OrderedItem orderedItem = new OrderedItem();
+            orderedItem.setOrder(order);
+            orderedItem.setProduct(product);
+            orderedItem.setQuantity(quantity);
+
+            order.getOrderedItems().add(orderedItem);
+            // Update total price or any other relevant order information
+            return orderRepository.save(order);
+        } else {
+            // Handle the case where the order or product with the specified IDs do not exist
+            throw new EntityNotFoundException(orderId);
+        }
+    }
+
+    public List<orderModel> getOrdersByCustomerId(String customerId) {
+        // Implement logic to retrieve orders by customer ID
+        return orderRepository.findByCustomerId(customerId);
+    }
+
 
 }

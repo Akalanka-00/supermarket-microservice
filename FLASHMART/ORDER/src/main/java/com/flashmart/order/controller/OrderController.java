@@ -1,5 +1,6 @@
 package com.flashmart.order.controller;
 
+import com.flashmart.order.dto.OrderedItem;
 import com.flashmart.order.model.orderModel;
 import com.flashmart.order.dto.OrderObject;
 import com.flashmart.order.service.OrderService;
@@ -20,7 +21,8 @@ public class OrderController {
 
     @PostMapping("/createOrder")
     public orderModel createOrder(@RequestBody orderModel order) {
-        return orderService.createOrder(order);
+        orderService.createOrder(order);
+        return order;
     }
 
     @GetMapping("/getAllOrders")
@@ -43,4 +45,23 @@ public class OrderController {
     public void deleteOrder(@PathVariable Long id) {
         orderService.deleteOrder(id);
     }
+
+
+    @GetMapping("/getOrderedItems/{orderId}")
+    public List<OrderedItem> getOrderedItems(@PathVariable Long orderId) {
+        // Call the service layer to retrieve ordered items by order ID
+        return orderService.getOrderedItems(orderId);
+    }
+
+    @PostMapping("/addOrderedItem/{orderId}")
+    public orderModel addOrderedItemToOrder(@PathVariable Long orderId, @RequestParam Long productId, @RequestParam Integer quantity) {
+        return orderService.addOrderedItemToOrder(orderId, productId, quantity);
+    }
+
+    @GetMapping("/getOrdersByCustomerId/{customerId}")
+    public List<orderModel> getOrdersByCustomerId(@PathVariable String customerId) {
+        return orderService.getOrdersByCustomerId(customerId);
+    }
+
+
 }

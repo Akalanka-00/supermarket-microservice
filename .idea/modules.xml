@@ -6,7 +6,6 @@
       <module fileurl="file://$PROJECT_DIR$/FLASHMART/CUSTOMER/CUSTOMER.iml" filepath="$PROJECT_DIR$/FLASHMART/CUSTOMER/CUSTOMER.iml" />
       <module fileurl="file://$PROJECT_DIR$/FLASHMART/DELIVERY/DELIVERY.iml" filepath="$PROJECT_DIR$/FLASHMART/DELIVERY/DELIVERY.iml" />
       <module fileurl="file://$PROJECT_DIR$/FLASHMART/DISCOVERY SERVER/DISCOVERY_SERVER.iml" filepath="$PROJECT_DIR$/FLASHMART/DISCOVERY SERVER/DISCOVERY_SERVER.iml" />
-      <module fileurl="file://$PROJECT_DIR$/FLASHMART/FLASHMART.iml" filepath="$PROJECT_DIR$/FLASHMART/FLASHMART.iml" />
       <module fileurl="file://$PROJECT_DIR$/FLASHMART/INVENTORY/INVENTORY.iml" filepath="$PROJECT_DIR$/FLASHMART/INVENTORY/INVENTORY.iml" />
       <module fileurl="file://$PROJECT_DIR$/FLASHMART/ORDER/ORDER.iml" filepath="$PROJECT_DIR$/FLASHMART/ORDER/ORDER.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/supermarket-microservice.iml" filepath="$PROJECT_DIR$/.idea/supermarket-microservice.iml" />
