@@ -14,6 +14,18 @@ import java.util.*;
 @Service
 public class otpservice {
 
+    private static otpservice instance;
+
+    private otpservice() {
+        // Private constructor to prevent instantiation
+    }
+
+    public static synchronized otpservice getInstance() {
+        if (instance == null) {
+            instance = new otpservice();
+        }
+        return instance;
+    }
     @Autowired
     private customerRepository customerRepository;
 
@@ -21,8 +33,8 @@ public class otpservice {
     private EmailService emailService;
 
     public void generateAndSaveOTP(customer customer) {
-        // Generate a 6-digit OTP
-        String otp = RandomStringUtils.randomNumeric(6);
+        // Generate a 5-digit OTP
+        String otp = RandomStringUtils.randomNumeric(5);
         customer.setOtp(otp);
         customerRepository.save(customer);
 
