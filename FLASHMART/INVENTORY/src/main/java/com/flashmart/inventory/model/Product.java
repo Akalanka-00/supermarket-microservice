@@ -15,9 +15,8 @@ import lombok.NoArgsConstructor;
 public class Product {
     @Id
     @GeneratedValue
-
     @Column(name = "Id")
-    private int id;
+    private long itemCode;
 
     @Column(name = "Sku_Code")
     private String skuCode;
@@ -31,6 +30,12 @@ public class Product {
     @Column(name = "Item_Name")
     private String itemName;
 
+    @Column(name = "Item")
+    private String item;
+
+    @Column(name = "Category")
+    private String category;
+
     @Column(name = "category_id")
     private int categoryId;
 
@@ -39,4 +44,5 @@ public class Product {
 
     @Column(name = "no_of_products")
     private int noOfProducts;
+
 }

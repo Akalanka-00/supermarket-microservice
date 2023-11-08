@@ -1,5 +1,6 @@
 package com.flashmart.inventory.service;
 
+import com.flashmart.inventory.dto.ProductDTO;
 import com.flashmart.inventory.model.Product;
 import com.flashmart.inventory.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class ProductService {
             return repository.findAll();
         }
 
-        public Product getProductId(int id){
+        public Product getProductId(Long id){
             return repository.findById(id).orElse(null);    //return by Id
         }
 
@@ -33,13 +34,13 @@ public class ProductService {
             return repository.findBySkuCode(skuCode);      //manually written method. So this method is written in product repository
         }
 
-        public String deleteProduct(int id){
+        public String deleteProduct(Long id){
             repository.deleteById(id);
             return "product removed" +id;
         }
 
         public Product updateProduct(Product product){
-            Product existingProduct=repository.findById(product.getId()).orElse(null);
+            Product existingProduct=repository.findById(product.getItemCode()).orElse(null);
             existingProduct.setSkuCode(product.getSkuCode());
             existingProduct.setItemName(product.getItemName());
             existingProduct.setQuantity(product.getQuantity());
@@ -50,4 +51,26 @@ public class ProductService {
 
             return repository.save(existingProduct);
         }
+
+
+//    public void decreaseItemQuantities(List<Product> products) {
+//        for (Product product : products) {
+//            Product storedProduct = repository.findBySkuCode(product.getSkuCode()).orElse(null);
+//            if (storedProduct != null && storedProduct.getNoOfProducts() >= product.getNoOfProducts()) {
+//                storedProduct.setNoOfProducts(storedProduct.getNoOfProducts() - product.getNoOfProducts());
+//                repository.save(storedProduct);
+//            }
+//        }
+//    }
+
+    public void decreaseItemQuantities(List<ProductDTO> products) {
+        for (ProductDTO product : products) {
+            Product storedProduct = repository.findById(product.getItemCode()).orElse(null);
+            if (storedProduct != null && storedProduct.getNoOfProducts() >= product.getNoOfProducts()) {
+                storedProduct.setNoOfProducts(storedProduct.getNoOfProducts() - product.getNoOfProducts());
+                repository.save(storedProduct);
+            }
+        }
+    }
+
 }

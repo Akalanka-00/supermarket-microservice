@@ -1,5 +1,6 @@
 package com.flashmart.inventory.controller;
 
+import com.flashmart.inventory.dto.ProductDTO;
 import com.flashmart.inventory.model.Product;
 import com.flashmart.inventory.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = {"*"})
 @RestController
+@RequestMapping("api/inventory")
 public class ProductController {
 
 
@@ -31,12 +34,12 @@ public class ProductController {
             return service.getProducts();
         }
 
-        @GetMapping("/product/{id}")
-        public Product findProductById(@PathVariable int id){
+        @GetMapping("/productById/{id}")
+        public Product findProductById(@PathVariable Long id){
             return service.getProductId(id);
         }
 
-        @GetMapping("/product/{skuCode}")
+        @GetMapping("/productBySKU/{skuCode}")
         public Product findProductBySkuCode(@PathVariable String skuCode){
             return service.getProductSkuCode(skuCode);
         }
@@ -47,9 +50,12 @@ public class ProductController {
         }
 
         @DeleteMapping("/delete/{id}")
-        public String deleteProduct(@PathVariable int id){
+        public String deleteProduct(@PathVariable Long id){
             return service.deleteProduct(id);
         }
 
-
+        @PostMapping("/decrease")
+        public void decreaseItemQuantities(@RequestBody List<ProductDTO> products) {
+        service.decreaseItemQuantities(products);
     }
+}
