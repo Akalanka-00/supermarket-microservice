@@ -24,6 +24,8 @@ const CurrentOrder = () => {
 
 
             </div>
+
+            
            </div>
 
             <div className="btn">Items</div>
