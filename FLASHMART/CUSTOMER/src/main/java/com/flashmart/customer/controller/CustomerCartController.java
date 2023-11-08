@@ -65,4 +65,10 @@ public class CustomerCartController {
         return customerCartService.updateCartItemDecreasingByOne(cartId, itemCode);
     }
 
+    //check availability of cart items with inventory
+    @GetMapping("/checkAvailability/{customerId}")
+    public List<String> checkCartAvailability( @PathVariable Long customerId) {
+        return customerCartService.checkCartAvailability(customerId);
+    }
+
 }

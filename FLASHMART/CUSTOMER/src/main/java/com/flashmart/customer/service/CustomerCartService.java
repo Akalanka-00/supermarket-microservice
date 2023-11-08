@@ -6,10 +6,12 @@ import com.flashmart.customer.dto.ItemDTO;
 import com.flashmart.customer.exception.ResourceNotFoundException;
 import com.flashmart.customer.model.Cart;
 import com.flashmart.customer.model.CartItem;
+import com.flashmart.customer.model.Customer;
 import com.flashmart.customer.model.Item;
 import com.flashmart.customer.repository.CustomerCartItemRepository;
 import com.flashmart.customer.repository.CustomerItemRepository;
 import com.flashmart.customer.repository.CustomerCartRepository;
+import com.flashmart.customer.repository.CustomerRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,10 +31,14 @@ public class CustomerCartService {
     @Autowired
     private final CustomerCartItemRepository customerCartItemRepository;
 
-    public CustomerCartService(CustomerCartRepository customerCartRepositoryRepository, CustomerItemRepository customerItemRepository, CustomerCartItemRepository customerCartItemRepository) {
+    @Autowired
+    private final CustomerRepository customerRepository;
+
+    public CustomerCartService(CustomerCartRepository customerCartRepositoryRepository, CustomerItemRepository customerItemRepository, CustomerCartItemRepository customerCartItemRepository, CustomerRepository customerRepository) {
         this.customerCartRepository = customerCartRepositoryRepository;
         this.customerItemRepository = customerItemRepository;
         this.customerCartItemRepository = customerCartItemRepository;
+        this.customerRepository = customerRepository;
     }
 
     public List<CartDTO> getAllCarts(){
@@ -333,6 +339,30 @@ public class CustomerCartService {
             cartDTOs.add(mapCartToDTO(cart));
         }
         return cartDTOs;
+    }
+
+    public List<String> checkCartAvailability(Long customerId ) {
+        List<String> unavailableItems = new ArrayList<>();
+        List<String> allItemsAvailable = new ArrayList<>();
+        Customer customer = customerRepository.findById(customerId ).orElse(null);
+        CartDTO cartDTO = getCartById(customer.getCart().getCartId()).getBody();
+        List<CartItemDTO> cartItemsDTOS = cartDTO.getItems();
+
+        for (CartItemDTO cartItemDTO : cartItemsDTOS) {
+
+            Item item = customerItemRepository.findById(cartItemDTO.getItemCode()).orElse(null);
+            if (item == null) {
+                unavailableItems.add(item.getItemName() + ": Item not found in inventory");
+            } else if (item.getQuantity() < cartItemDTO.getQuantity()) {
+                unavailableItems.add(item.getItemName() + ": Insufficient quantity in inventory");
+            }
+        }
+
+        if (!unavailableItems.isEmpty()) {
+            return unavailableItems;
+        }
+        allItemsAvailable.add("All Items are Available. Proceed to checkout");
+        return allItemsAvailable;
     }
 
 }
