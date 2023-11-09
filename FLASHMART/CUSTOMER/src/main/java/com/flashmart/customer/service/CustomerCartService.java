@@ -34,6 +34,22 @@ public class CustomerCartService {
         this.customerCartItemRepository = customerCartItemRepository;
     }
 
+    public String setCart(Long customerId){
+        List<CartDTO> cartDTOS = getAllCarts();
+        for(CartDTO cartDTO:cartDTOS) {
+          if(cartDTO.getCustomerId() == customerId){
+              return "Cart is already added to " + customerId;
+          }
+        }
+        Cart cart = new Cart();
+        cart.setCartId(customerId);
+        cart.setCustomerId(customerId);
+        cart.setNoOfItem(0);
+        cart.setTotalPrice(0);
+        customerCartRepository.save(cart);
+        return "New Cart added to " + customerId;
+    }
+
     public List<CartDTO> getAllCarts(){
         List<Cart> carts = customerCartRepository.findAll();
         return mapCartsToDTOs(carts);
@@ -43,6 +59,19 @@ public class CustomerCartService {
         Cart cart = customerCartRepository.findById(cartId)
                 .orElseThrow(() -> new ResourceNotFoundException("The Cart does not exist with Cart ID: " + cartId ));
         return ResponseEntity.ok(mapCartToDTO(cart));
+    }
+
+    public ResponseEntity<CartDTO> getCartByCustomerId(Long customerId) {
+        List<CartDTO> cartDTOS = getAllCarts();
+        for(CartDTO cartDTO:cartDTOS){
+            if(cartDTO.getCustomerId() == customerId){
+                long cartId = cartDTO.getCartId();
+                Cart cart = customerCartRepository.findById(cartId)
+                        .orElseThrow(() -> new ResourceNotFoundException("The Cart does not exist with Cart ID: " + cartId ));
+                return ResponseEntity.ok(mapCartToDTO(cart));
+            }
+        }
+        return null;
     }
 
     public ResponseEntity<CartDTO> updateCart(Long cartId, List<ItemDTO> itemDTOList) {
@@ -115,7 +144,7 @@ public class CustomerCartService {
         Cart cart = customerCartRepository.findById(cartId)
                 .orElseThrow(() -> new ResourceNotFoundException("The Cart does not exist with Cart ID: " + cartId ));
 
-        List<CartItem> updatedCartItems = new ArrayList<>();
+        List<CartItem> updatedCartItems = cart.getCartItems();
 
         // Map to keep track of item codes and their corresponding cart items
         Map<Long, CartItem> itemCodeToCartItemMap = new HashMap<>();
@@ -132,7 +161,6 @@ public class CustomerCartService {
                 if (existingCartItem.getQuantity() + 1 <= productDTO.getNoOfProducts()) {
                     existingCartItem.setQuantity(existingCartItem.getQuantity() + 1);
                 }
-                updatedCartItems.add(existingCartItem);
             } else {
                 CartItem cartItem = new CartItem();
                 cartItem.setItemCode(productDTO.getItemCode());
@@ -171,7 +199,7 @@ public class CustomerCartService {
         Cart cart = customerCartRepository.findById(cartId)
                 .orElseThrow(() -> new ResourceNotFoundException("The Cart does not exist with Cart ID: " + cartId));
 
-        List<CartItem> updatedCartItems = new ArrayList<>();
+        List<CartItem> updatedCartItems = cart.getCartItems();
 
         Map<Long, CartItem> itemCodeToCartItemMap = new HashMap<>();
         for (CartItem cartItem : cart.getCartItems()) {
@@ -186,7 +214,6 @@ public class CustomerCartService {
                 if (existingCartItem.getQuantity() + 1 <= productDTO.getNoOfProducts()) {
                     existingCartItem.setQuantity(existingCartItem.getQuantity() + 1);
                 }
-                updatedCartItems.add(existingCartItem);
             } else {
                 CartItem cartItem = new CartItem();
                 cartItem.setItemCode(productDTO.getItemCode());
@@ -229,7 +256,7 @@ public class CustomerCartService {
 
         List<CartItem> cartItems = cart.getCartItems();
 
-        List<CartItem> updatedCartItems = new ArrayList<>();
+        List<CartItem> updatedCartItems = cart.getCartItems();
 
         for (Long itemCode : itemCodes) {
             CartItem cartItemToRemove = null;
@@ -276,7 +303,7 @@ public class CustomerCartService {
         Cart cart = customerCartRepository.findById(cartId)
                 .orElseThrow(() -> new ResourceNotFoundException("The Cart does not exist with Cart ID: " + cartId));
         List<CartItem> cartItems = cart.getCartItems();
-        List<CartItem> updatedCartItems = new ArrayList<>();
+        List<CartItem> updatedCartItems = cart.getCartItems();
 
         for (CartItem cartItem : cartItems) {
             if (cartItem.getItemCode() == itemCode) {
@@ -313,7 +340,6 @@ public class CustomerCartService {
         Cart cart = customerCartRepository.findById(cartId)
                 .orElseThrow(() -> new ResourceNotFoundException("The Cart does not exist with Cart ID: " + cartId));
 
-        List<CartItem> updatedCartItems = new ArrayList<>();
         Map<Long, CartItem> itemCodeToCartItemMap = new HashMap<>();
         for (CartItem cartItem : cart.getCartItems()) {
             itemCodeToCartItemMap.put(cartItem.getItemCode(), cartItem);
@@ -324,9 +350,11 @@ public class CustomerCartService {
             if (existingCartItem.getQuantity() -1 >= 0) {
                 existingCartItem.setQuantity(existingCartItem.getQuantity() - 1);
             }
-            updatedCartItems.add(existingCartItem);
+            if (existingCartItem.getQuantity() == 0) {
+                updateCartbyDeletingOneItem(cartId,itemCode);
+            }
         }
-
+        List<CartItem> updatedCartItems = cart.getCartItems();
         double newTotalPrice = updatedCartItems.stream()
                 .mapToDouble(cartItem -> {
                     try {
@@ -349,7 +377,6 @@ public class CustomerCartService {
 
         return ResponseEntity.ok(updatedCartDTO);
     }
-
 
     public CartDTO mapCartToDTO(Cart cart) {
         CartDTO cartDTO = new CartDTO();
@@ -380,7 +407,7 @@ public class CustomerCartService {
         int noOfItem = itemCodes.size();
         cartDTO.setNoOfItem(noOfItem);
         cartDTO.setTotalPrice(totalPrice);
-        cartDTO.setCustomerId(cart.getCustomer().getCustomerId());
+        cartDTO.setCustomerId(cart.getCustomerId());
         cartDTO.setItems(itemDTOList);
 
         return cartDTO;

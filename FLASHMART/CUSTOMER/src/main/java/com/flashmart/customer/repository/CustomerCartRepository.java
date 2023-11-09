@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CustomerCartRepository extends JpaRepository<Cart, Long> {
-    @Query("SELECT SUM(c.totalPrice) FROM Cart c WHERE c.customer.customerId = :customerId")
-    Double findTotalPriceByCustomerId(@Param("customerId") Long customerId);
+//    @Query("SELECT SUM(c.totalPrice) FROM Cart c WHERE c.customer.customerId = :customerId")
+//    Double findTotalPriceByCustomerId(@Param("customerId") Long customerId);
 }

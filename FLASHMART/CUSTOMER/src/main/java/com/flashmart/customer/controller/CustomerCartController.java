@@ -17,6 +17,12 @@ public class CustomerCartController {
     @Autowired
     private CustomerCartService customerCartService;
 
+    //assign cart to a newly registered customer
+    @GetMapping("/setCart/{customerId}")
+        public String setCart(@PathVariable Long customerId){
+            return customerCartService.setCart(customerId);
+    }
+
     //get all cart details
     @GetMapping("/getCart")
     public List<CartDTO> getAllCarts(){
@@ -27,6 +33,12 @@ public class CustomerCartController {
     @GetMapping("/getCart/{cartId}")
     public ResponseEntity<CartDTO> getCartById(@PathVariable Long cartId){
         return customerCartService.getCartById(cartId);
+    }
+
+    // get cart by customerId
+    @GetMapping("/getCartByCustomerId/{customerId}")
+    public ResponseEntity<CartDTO> getCartByCustomerId(@PathVariable Long customerId){
+        return customerCartService.getCartByCustomerId(customerId);
     }
 
     //update cart by adding multiple Items
