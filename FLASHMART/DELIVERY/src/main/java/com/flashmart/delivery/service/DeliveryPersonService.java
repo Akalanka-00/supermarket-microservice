@@ -121,6 +121,12 @@ public class DeliveryPersonService {
                 })
                 .collect(Collectors.toList());
     }
+
+    public ResponseEntity<DeliveryPersonModel> getAvailableDeliveryPerson(){
+        List<DeliveryPersonModel> deliveryPersons = deliveryPersonRepository.findAll();
+
+
+    }
 }
 
 
