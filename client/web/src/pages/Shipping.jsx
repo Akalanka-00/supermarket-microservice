@@ -41,11 +41,25 @@ const Shipping = () => {
               <div className="item-header">
                 <img src={item.image}/>
                 <div className="shipping-item-info">
-                  <div className="name">{item.name}</div>
+                <div className="name">{item.name}</div>
+                <div className="unit-price">Rs. {item.price}</div>
                 </div>
+
               </div>
+
+              <div className="shipping-item-price-info">
+                <div className="name">Quantity: 3</div>
+                <div className="unit-price">Rs. {item.price*3}</div>
+                </div>
             </div>
           ))}
+
+          <div className="box-breaker">
+            <div className="total-bill-container">
+              <div className="name">Total Bill</div>
+              <div className="total-price">Rs. 10320</div>
+            </div>
+          </div>
         </Offcanvas.Body>
       </Offcanvas>
     </div>

@@ -75,8 +75,9 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: center;
-    gap: 2rem;
+    justify-content: flex-start;
+    gap: 1rem;
+    margin-top: 1rem;
 }
 .shipping-header{
     display: flex;
@@ -94,19 +95,58 @@
     width: 100%;
     border-radius: 10px;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 
 }
 
 .shipping-item-container .item-header{
     display: flex;
     flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0.2rem;
 }
 .shipping-item-container .item-header img{
 
     width: 5rem;
     border-radius: 5px;
 }
-.shipping-item-container .shipping-item-info {
+.shipping-item-container .item-header .shipping-item-info {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0.0;
+    text-align: start;
+}
+
+.shipping-item-container .item-header .shipping-item-info .name{
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.shipping-item-container .item-header .shipping-item-info .unit-price{
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+
+.shipping-item-offcanvas-body .box-breaker{
+    width: 100%;
+    height: 0.5rem;
+    background-color: var(--color-secondary);
+    border-radius: 10px;
+}
+.shipping-item-offcanvas-body .total-bill-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    margin-top: 2rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    
 }
