@@ -1,6 +1,7 @@
 package com.flashmart.auth.UserController;
 
 import com.flashmart.auth.Entity.User;
+import com.flashmart.auth.Repo.UserRepo;
 import com.flashmart.auth.Service.UserService;
 import com.flashmart.auth.UserDTO.UserDetailsDTO;
 import com.flashmart.auth.UserDTO.LoginDTO;
@@ -21,11 +22,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserRepo userRepo;
+
     @PostMapping(path = "/save")
     public String saveUser(@RequestBody UserDTO userDTO)
     {
-        String id = userService.addUser(userDTO);
-        return id;
+        userService.addUser(userDTO);
+        return ("Registration Successful. User ID: " + userDTO.getUserid());
     }
 
     @PostMapping(path = "/login")
@@ -54,19 +58,15 @@ public class UserController {
         return userNames;
     }
 
-    @GetMapping("/customerDetails/{customerId}")
-    public UserDetailsDTO getCustomerDetails(@PathVariable int customerId) {
-        List<User> userUsers = userService.findByType(1010);
+    @GetMapping("/userDetailsByID/{userId}")
+    public UserDetailsDTO getCustomerDetails(@PathVariable int userId) {
+        User user = userRepo.findById(userId).orElse(null);
         UserDetailsDTO userDetailsDTO = new UserDetailsDTO();
-        for (User user : userUsers) {
-            if(user.getUserid()==customerId){
                 userDetailsDTO.setUserid(user.getUserid());
                 userDetailsDTO.setUserfname(user.getUserfname());
                 userDetailsDTO.setUserlname(user.getUserlname());
                 userDetailsDTO.setMobile(user.getMobile());
                 userDetailsDTO.setEmail(user.getEmail());
-            }
-        }
         return userDetailsDTO;
     }
 
