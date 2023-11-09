@@ -9,7 +9,7 @@ public class User {
     @Id
     @Column(name="user_id", length = 45)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int userid;
+    private long userid;
     @Column(name = "userType",length = 10)
     private int type;//1000- admin , 1010- normalUser
     @Column(name="user_fname", length = 255)
@@ -23,7 +23,7 @@ public class User {
     @Column(name="password", length = 255)
     private String password;
 
-    public User(int userid, int userType, String userfname, String userlname, String mobile, String email, String password) {
+    public User(long userid, int userType, String userfname, String userlname, String mobile, String email, String password) {
         this.userid = userid;
         this.type = userType;
         this.userfname = userfname;
@@ -36,11 +36,11 @@ public class User {
     public User() {
     }
 
-    public int getUserid() {
+    public long getUserid() {
         return userid;
     }
 
-    public void setUserid(int userid) {
+    public void setUserid(long userid) {
         this.userid = userid;
     }
 

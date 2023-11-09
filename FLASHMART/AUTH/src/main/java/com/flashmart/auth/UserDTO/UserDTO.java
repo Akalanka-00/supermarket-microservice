@@ -2,7 +2,7 @@ package com.flashmart.auth.UserDTO;
 
 public class UserDTO {
 
-    private int userid;
+    private long userid;
     private int type;
     private String userfname;
     private String userlname;
@@ -10,7 +10,7 @@ public class UserDTO {
     private String email;
     private String password;
 
-    public UserDTO(int userid, int userType, String userfname, String userlname, String mobile, String email, String password) {
+    public UserDTO(long userid, int userType, String userfname, String userlname, String mobile, String email, String password) {
         this.userid = userid;
         this.type = userType;
         this.userfname = userfname;
@@ -23,11 +23,11 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public int getUserid() {
+    public long getUserid() {
         return userid;
     }
 
-    public void setUserid(int userid) {
+    public void setUserid(long userid) {
         this.userid = userid;
     }
 

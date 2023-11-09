@@ -59,7 +59,7 @@ public class UserController {
     }
 
     @GetMapping("/userDetailsByID/{userId}")
-    public UserDetailsDTO getCustomerDetails(@PathVariable int userId) {
+    public UserDetailsDTO getCustomerDetails(@PathVariable long userId) {
         User user = userRepo.findById(userId).orElse(null);
         UserDetailsDTO userDetailsDTO = new UserDetailsDTO();
                 userDetailsDTO.setUserid(user.getUserid());
