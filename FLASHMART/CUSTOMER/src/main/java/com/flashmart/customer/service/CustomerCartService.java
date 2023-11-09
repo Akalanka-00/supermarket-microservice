@@ -1,6 +1,5 @@
 package com.flashmart.customer.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flashmart.customer.dto.CartDTO;
 import com.flashmart.customer.dto.CartItemDTO;
 import com.flashmart.customer.dto.ItemDTO;
@@ -16,8 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.*;
 
 @Service
@@ -29,9 +26,13 @@ public class CustomerCartService {
     @Autowired
     private final CustomerCartItemRepository customerCartItemRepository;
 
-    public CustomerCartService(CustomerCartRepository customerCartRepositoryRepository, CustomerCartItemRepository customerCartItemRepository) {
+    @Autowired
+    private  final MicroServicesConnectorService microServicesConnectorService;
+
+    public CustomerCartService(CustomerCartRepository customerCartRepositoryRepository, CustomerCartItemRepository customerCartItemRepository, MicroServicesConnectorService microServicesConnectorService) {
         this.customerCartRepository = customerCartRepositoryRepository;
         this.customerCartItemRepository = customerCartItemRepository;
+        this.microServicesConnectorService = microServicesConnectorService;
     }
 
     public String setCart(Long customerId){
@@ -92,7 +93,7 @@ public class CustomerCartService {
             int quantity = itemDTO.getQuantity();
 
             try {
-                ProductDTO productDTO = fetchAPI("http://localhost:8082/api/inventory/productById",itemCode, ProductDTO.class);
+                ProductDTO productDTO = microServicesConnectorService.fetchAPI("http://localhost:8082/api/inventory/productById",itemCode, ProductDTO.class);
 
                 if (itemCodeToCartItemMap.containsKey(itemCode)) {
                     CartItem existingCartItem = itemCodeToCartItemMap.get(itemCode);
@@ -121,7 +122,7 @@ public class CustomerCartService {
                 .mapToDouble(cartItem -> {
                     try {
                         return cartItem.getQuantity() *
-                                fetchAPI("http://localhost:8082/api/inventory/productById", cartItem.getItemCode(), ProductDTO.class).getPrice();
+                                microServicesConnectorService.fetchAPI("http://localhost:8082/api/inventory/productById", cartItem.getItemCode(), ProductDTO.class).getPrice();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -154,7 +155,7 @@ public class CustomerCartService {
 
         // Update/ add items
         try {
-            ProductDTO productDTO = fetchAPI("http://localhost:8082/api/inventory/productById", itemCode, ProductDTO.class);
+            ProductDTO productDTO = microServicesConnectorService.fetchAPI("http://localhost:8082/api/inventory/productById", itemCode, ProductDTO.class);
 
             if (itemCodeToCartItemMap.containsKey(itemCode)) {
                 CartItem existingCartItem = itemCodeToCartItemMap.get(itemCode);
@@ -176,7 +177,7 @@ public class CustomerCartService {
                 .mapToDouble(cartItem -> {
                     try {
                         return cartItem.getQuantity() *
-                                fetchAPI("http://localhost:8082/api/inventory/productById", cartItem.getItemCode(), ProductDTO.class).getPrice();
+                                microServicesConnectorService.fetchAPI("http://localhost:8082/api/inventory/productById", cartItem.getItemCode(), ProductDTO.class).getPrice();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -207,7 +208,7 @@ public class CustomerCartService {
         }
 
         try {
-            ProductDTO productDTO = fetchAPI("http://localhost:8082/api/inventory/productById",itemCode, ProductDTO.class);
+            ProductDTO productDTO = microServicesConnectorService.fetchAPI("http://localhost:8082/api/inventory/productById",itemCode, ProductDTO.class);
 
             if (itemCodeToCartItemMap.containsKey(itemCode)) {
                 CartItem existingCartItem = itemCodeToCartItemMap.get(itemCode);
@@ -229,7 +230,7 @@ public class CustomerCartService {
                 .mapToDouble(cartItem -> {
                     try {
                         return cartItem.getQuantity() *
-                                fetchAPI("http://localhost:8082/api/inventory/productById", cartItem.getItemCode(), ProductDTO.class).getPrice();
+                                microServicesConnectorService.fetchAPI("http://localhost:8082/api/inventory/productById", cartItem.getItemCode(), ProductDTO.class).getPrice();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -277,7 +278,7 @@ public class CustomerCartService {
                 .mapToDouble(cartItem -> {
                     try {
                         return cartItem.getQuantity() *
-                                fetchAPI("http://localhost:8082/api/inventory/productById", cartItem.getItemCode(), ProductDTO.class).getPrice();
+                                microServicesConnectorService.fetchAPI("http://localhost:8082/api/inventory/productById", cartItem.getItemCode(), ProductDTO.class).getPrice();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -317,7 +318,7 @@ public class CustomerCartService {
                 .mapToDouble(cartItem -> {
                     try {
                         return cartItem.getQuantity() *
-                                fetchAPI("http://localhost:8082/api/inventory/productById", cartItem.getItemCode(), ProductDTO.class).getPrice();
+                                microServicesConnectorService.fetchAPI("http://localhost:8082/api/inventory/productById", cartItem.getItemCode(), ProductDTO.class).getPrice();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -359,7 +360,7 @@ public class CustomerCartService {
                 .mapToDouble(cartItem -> {
                     try {
                         return cartItem.getQuantity() *
-                                fetchAPI("http://localhost:8082/api/inventory/productById", cartItem.getItemCode(), ProductDTO.class).getPrice();
+                                microServicesConnectorService.fetchAPI("http://localhost:8082/api/inventory/productById", cartItem.getItemCode(), ProductDTO.class).getPrice();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -388,7 +389,7 @@ public class CustomerCartService {
 
         for (CartItem cartItem : cart.getCartItems()) {
             try {
-                ProductDTO productDTO = fetchAPI("http://localhost:8082/api/inventory/productById",cartItem.getItemCode(), ProductDTO.class);
+                ProductDTO productDTO = microServicesConnectorService.fetchAPI("http://localhost:8082/api/inventory/productById",cartItem.getItemCode(), ProductDTO.class);
                 CartItemDTO cartItemDTO = new CartItemDTO();
                 cartItemDTO.setItemCode(cartItem.getItemCode());
                 cartItemDTO.setItemName(productDTO.getItemName());
@@ -419,22 +420,6 @@ public class CustomerCartService {
             cartDTOs.add(mapCartToDTO(cart));
         }
         return cartDTOs;
-    }
-
-    public static <T> T fetchAPI(URL url, Class<T> type) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(url, type);
-    }
-
-    public static <T> T fetchAPI(String baseUrl, Long pathVariable, Class<T> type) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        String fullUrl = baseUrl + "/" + pathVariable;
-        try {
-            URL url = new URL(fullUrl);
-            return mapper.readValue(url, type);
-        } catch (MalformedURLException e) {
-            throw new IOException("Malformed URL: " + fullUrl, e);
-        }
     }
 
 }

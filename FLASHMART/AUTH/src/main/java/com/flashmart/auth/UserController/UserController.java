@@ -29,6 +29,7 @@ public class UserController {
     public String saveUser(@RequestBody UserDTO userDTO)
     {
         userService.addUser(userDTO);
+
         return ("Registration Successful. User ID: " + userDTO.getUserid());
     }
 

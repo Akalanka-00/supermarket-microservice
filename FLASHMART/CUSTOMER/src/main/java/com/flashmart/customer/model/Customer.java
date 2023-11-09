@@ -33,11 +33,6 @@ public class Customer implements Serializable {
 
     private double points;
 
-//    @OneToOne(fetch = FetchType.LAZY,
-//            cascade =  CascadeType.ALL,
-//            mappedBy = "customer")
-//    private Cart cart;
-
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private Set<Feedback> feedback = new HashSet<>();
 }

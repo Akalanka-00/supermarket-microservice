@@ -22,6 +22,7 @@ public class CartItem {
     @JsonIgnore
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn (name = "cartId", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Cart cart;
 
     private long itemCode;
