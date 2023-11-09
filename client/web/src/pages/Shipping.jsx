@@ -3,6 +3,7 @@ import NavBar from '../components/customer/cart/NavBar'
 import CurrentOrder from '../components/customer/shipping/CurrentOrder'
 import LoadingScreen from '../components/shared/LoadingScreen';
 import "../styles/customer/shipping.css"
+import OrderHistory from '../components/customer/shipping/OrderHistory';
 
 const Shipping = () => {
   const [isLoading, setAsLoading] = useState(false);
@@ -16,6 +17,7 @@ const Shipping = () => {
       <div className="">
       <NavBar title={"Shipping"}/>
       <CurrentOrder/>
+      <OrderHistory/>
       </div>
 
       

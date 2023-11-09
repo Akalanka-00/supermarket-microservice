@@ -1,16 +1,19 @@
 import React from "react";
 import { RiCoupon4Fill } from "react-icons/ri";
 import OrderImage from "../../../assets/icons/order.png";
+import orderList from "../../../context/Order";
 
-const CurrentOrder = () => {
+const OrderHistory = () => {
   return (
     <section className="ongoing-order-container">
       <div className="header">
         <div className="heading">
-          <div className="title">Ongoing Orders </div>
+          <div className="title">Previous Orders </div>
           <span>02</span>
         </div>
-        <div className="ongoing-order-body">
+       <div className="order-list">
+       {orderList.map((item, index)=>(
+          <div className="ongoing-order-body">
           <div className="order-header">
             <img src={OrderImage} />
             <div className="order-info">
@@ -26,7 +29,6 @@ const CurrentOrder = () => {
                 <div className="name">Ordered Time</div>
                 <div className="value">20:10:18</div>
               </div>
-
               <div className="data">
                 <div className="name">Bill amount</div>
                 <div className="value">Rs. 5600</div>
@@ -35,20 +37,7 @@ const CurrentOrder = () => {
 
             
           </div>
-          <div className="deliver-status">
-          <div className="data">
-                <div className="name">Vehicle Type</div>
-                <div className="value">Three wheel</div>
-              </div>
-              <div className="data">
-                <div className="name">Deliver name</div>
-                <div className="value">Ajith Muthukumarana</div>
-              </div>
-              <div className="data">
-                <div className="name">VContact No.</div>
-                <div className="value">0 723 987 456</div>
-              </div>
-            </div>
+         
 
             <div className="order-status">
               Picked Up
@@ -56,9 +45,11 @@ const CurrentOrder = () => {
 
           <div className="btn">Items</div>
         </div>
+        ))}
+       </div>
       </div>
     </section>
   );
 };
 
-export default CurrentOrder;
+export default OrderHistory;
