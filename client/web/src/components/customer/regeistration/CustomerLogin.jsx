@@ -11,21 +11,29 @@ const CustomerLogin = () => {
 
     const handleEmailChange = (event) => {
       const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i; // A basic regex for email validation
-      const email = event.target.value;
-  
-      if (emailRegex.test(email)) {
+      const enteredEmail = event.target.value;
+
+      if (emailRegex.test(enteredEmail)) {
         setEmailValid(true);
-        email=event.target.value
-        setEmail(email);
+        setEmail(enteredEmail);
       } else {
         setEmailValid(false);
       }
     };
 
     const handlePasswordChange = (event) => {
-      password=event.target.value
-      setPassword(password);
+      const enteredPassword = event.target.value;
+      setPassword(enteredPassword);
     };
+
+    const handleLoginClick = () =>{
+      const data = {
+        email,
+        password,
+      };
+
+      console.log(data);
+    }
 
     // const handleSubmit = async (event) => {
     //   event.preventDefault();
@@ -68,9 +76,9 @@ const CustomerLogin = () => {
       </div>
 
       <form action="" className="login-form">
-        <input type="email" className="field" required placeholder='Enter your email'onChange={handleEmailChange}/>
-        <input type="password" className="field" required placeholder='Enter your password'onChange={handlePasswordChange}/>
-        <button type="submit" className="btn input-btn" >Login</button>
+        <input type="email" name="email" className="field" required placeholder='Enter your email'onChange={handleEmailChange}/>
+        <input type="password" name="password" className="field" required placeholder='Enter your password'onChange={handlePasswordChange}/>
+        <button type="submit" className="btn input-btn" onClick={handleLoginClick}>Login</button>
         <div className="login-options">Don't have an FLashMart account? <span onClick={()=>navigate("/customer/register")}>Register</span></div>
       </form>
       </div>
