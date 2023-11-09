@@ -1,20 +1,23 @@
 package com.flashmart.customer.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flashmart.customer.dto.CartDTO;
 import com.flashmart.customer.dto.CartItemDTO;
 import com.flashmart.customer.dto.ItemDTO;
+import com.flashmart.customer.dto.ProductDTO;
 import com.flashmart.customer.exception.ResourceNotFoundException;
 import com.flashmart.customer.model.Cart;
 import com.flashmart.customer.model.CartItem;
-import com.flashmart.customer.model.Item;
 import com.flashmart.customer.repository.CustomerCartItemRepository;
-import com.flashmart.customer.repository.CustomerItemRepository;
 import com.flashmart.customer.repository.CustomerCartRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 
 @Service
@@ -24,14 +27,10 @@ public class CustomerCartService {
     private final CustomerCartRepository customerCartRepository;
 
     @Autowired
-    private final CustomerItemRepository customerItemRepository;
-
-    @Autowired
     private final CustomerCartItemRepository customerCartItemRepository;
 
-    public CustomerCartService(CustomerCartRepository customerCartRepositoryRepository, CustomerItemRepository customerItemRepository, CustomerCartItemRepository customerCartItemRepository) {
+    public CustomerCartService(CustomerCartRepository customerCartRepositoryRepository, CustomerCartItemRepository customerCartItemRepository) {
         this.customerCartRepository = customerCartRepositoryRepository;
-        this.customerItemRepository = customerItemRepository;
         this.customerCartItemRepository = customerCartItemRepository;
     }
 
@@ -55,7 +54,7 @@ public class CustomerCartService {
         // Map to keep track of item codes and their corresponding cart items
         Map<Long, CartItem> itemCodeToCartItemMap = new HashMap<>();
         for (CartItem cartItem : cart.getCartItems()) {
-            itemCodeToCartItemMap.put(cartItem.getItem().getItemCode(), cartItem);
+            itemCodeToCartItemMap.put(cartItem.getItemCode(), cartItem);
         }
 
         // Update/ add items
@@ -63,32 +62,43 @@ public class CustomerCartService {
             long itemCode = itemDTO.getItemCode();
             int quantity = itemDTO.getQuantity();
 
-            Item item = customerItemRepository.findById(itemCode)
-                    .orElseThrow(() -> new ResourceNotFoundException("The Item does not exist with Item Code: " + itemCode));
+            try {
+                ProductDTO productDTO = fetchAPI("http://localhost:8082/api/inventory/productById",itemCode, ProductDTO.class);
 
-            if (itemCodeToCartItemMap.containsKey(itemCode)) {
-                CartItem existingCartItem = itemCodeToCartItemMap.get(itemCode);
-                if (quantity <= existingCartItem.getItem().getQuantity()) {
-                    existingCartItem.setQuantity(quantity);
-                }
-                updatedCartItems.add(existingCartItem);
+                if (itemCodeToCartItemMap.containsKey(itemCode)) {
+                    CartItem existingCartItem = itemCodeToCartItemMap.get(itemCode);
+                    if (quantity <= productDTO.getNoOfProducts()) {
+                        existingCartItem.setQuantity(quantity);
+                    }
+                    updatedCartItems.add(existingCartItem);
 
-            } else {
-                CartItem cartItem = new CartItem();
-                cartItem.setItem(item);
-                cartItem.setCart(cart);
-                if (quantity <= item.getQuantity()) {
-                    cartItem.setQuantity(quantity);
                 } else {
-                    cartItem.setQuantity(item.getQuantity());
+                    CartItem cartItem = new CartItem();
+                    cartItem.setItemCode(productDTO.getItemCode());
+                    cartItem.setCart(cart);
+                    if (quantity <= productDTO.getNoOfProducts()) {
+                        cartItem.setQuantity(quantity);
+                    } else {
+                        cartItem.setQuantity(productDTO.getNoOfProducts());
+                    }
+                    updatedCartItems.add(cartItem);
                 }
-                updatedCartItems.add(cartItem);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
 
         double newTotalPrice = updatedCartItems.stream()
-                .mapToDouble(cartItem -> cartItem.getQuantity() * cartItem.getItem().getPrice())
+                .mapToDouble(cartItem -> {
+                    try {
+                        return cartItem.getQuantity() *
+                                fetchAPI("http://localhost:8082/api/inventory/productById", cartItem.getItemCode(), ProductDTO.class).getPrice();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
                 .sum();
+
         int newNoOfItem = updatedCartItems.size();
 
         cart.setCartItems(updatedCartItems);
@@ -110,31 +120,41 @@ public class CustomerCartService {
         // Map to keep track of item codes and their corresponding cart items
         Map<Long, CartItem> itemCodeToCartItemMap = new HashMap<>();
         for (CartItem cartItem : cart.getCartItems()) {
-            itemCodeToCartItemMap.put(cartItem.getItem().getItemCode(), cartItem);
+            itemCodeToCartItemMap.put(cartItem.getItemCode(), cartItem);
         }
 
         // Update/ add items
+        try {
+            ProductDTO productDTO = fetchAPI("http://localhost:8082/api/inventory/productById", itemCode, ProductDTO.class);
 
-        Item item = customerItemRepository.findById(itemCode)
-                .orElseThrow(() -> new ResourceNotFoundException("The Item does not exist with Item Code: " + itemCode));
-
-        if (itemCodeToCartItemMap.containsKey(itemCode)) {
-            CartItem existingCartItem = itemCodeToCartItemMap.get(itemCode);
-            if (existingCartItem.getQuantity() + 1 <= item.getQuantity()) {
-                existingCartItem.setQuantity(existingCartItem.getQuantity() + 1);
+            if (itemCodeToCartItemMap.containsKey(itemCode)) {
+                CartItem existingCartItem = itemCodeToCartItemMap.get(itemCode);
+                if (existingCartItem.getQuantity() + 1 <= productDTO.getNoOfProducts()) {
+                    existingCartItem.setQuantity(existingCartItem.getQuantity() + 1);
+                }
+                updatedCartItems.add(existingCartItem);
+            } else {
+                CartItem cartItem = new CartItem();
+                cartItem.setItemCode(productDTO.getItemCode());
+                cartItem.setCart(cart);
+                cartItem.setQuantity(1);
+                updatedCartItems.add(cartItem);
             }
-            updatedCartItems.add(existingCartItem);
-        } else {
-            CartItem cartItem = new CartItem();
-            cartItem.setItem(item);
-            cartItem.setCart(cart);
-            cartItem.setQuantity(1);
-            updatedCartItems.add(cartItem);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         double newTotalPrice = updatedCartItems.stream()
-                .mapToDouble(cartItem -> cartItem.getQuantity() * cartItem.getItem().getPrice())
+                .mapToDouble(cartItem -> {
+                    try {
+                        return cartItem.getQuantity() *
+                                fetchAPI("http://localhost:8082/api/inventory/productById", cartItem.getItemCode(), ProductDTO.class).getPrice();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
                 .sum();
+
         int newNoOfItem = updatedCartItems.size();
 
         cart.setCartItems(updatedCartItems);
@@ -155,29 +175,40 @@ public class CustomerCartService {
 
         Map<Long, CartItem> itemCodeToCartItemMap = new HashMap<>();
         for (CartItem cartItem : cart.getCartItems()) {
-            itemCodeToCartItemMap.put(cartItem.getItem().getItemCode(), cartItem);
+            itemCodeToCartItemMap.put(cartItem.getItemCode(), cartItem);
         }
 
-        Item item = customerItemRepository.findById(itemCode)
-                .orElseThrow(() -> new ResourceNotFoundException("The Item does not exist with Item Code: " + itemCode));
+        try {
+            ProductDTO productDTO = fetchAPI("http://localhost:8082/api/inventory/productById",itemCode, ProductDTO.class);
 
-        if (itemCodeToCartItemMap.containsKey(itemCode)) {
-            CartItem existingCartItem = itemCodeToCartItemMap.get(itemCode);
-            if (existingCartItem.getQuantity() + 1 <= item.getQuantity()) {
-                existingCartItem.setQuantity(existingCartItem.getQuantity() + 1);
+            if (itemCodeToCartItemMap.containsKey(itemCode)) {
+                CartItem existingCartItem = itemCodeToCartItemMap.get(itemCode);
+                if (existingCartItem.getQuantity() + 1 <= productDTO.getNoOfProducts()) {
+                    existingCartItem.setQuantity(existingCartItem.getQuantity() + 1);
+                }
+                updatedCartItems.add(existingCartItem);
+            } else {
+                CartItem cartItem = new CartItem();
+                cartItem.setItemCode(productDTO.getItemCode());
+                cartItem.setCart(cart);
+                cartItem.setQuantity(1);
+                updatedCartItems.add(cartItem);
             }
-            updatedCartItems.add(existingCartItem);
-        } else {
-            CartItem cartItem = new CartItem();
-            cartItem.setItem(item);
-            cartItem.setCart(cart);
-            cartItem.setQuantity(1);
-            updatedCartItems.add(cartItem);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         double newTotalPrice = updatedCartItems.stream()
-                .mapToDouble(cartItem -> cartItem.getQuantity() * cartItem.getItem().getPrice())
+                .mapToDouble(cartItem -> {
+                    try {
+                        return cartItem.getQuantity() *
+                                fetchAPI("http://localhost:8082/api/inventory/productById", cartItem.getItemCode(), ProductDTO.class).getPrice();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
                 .sum();
+
         int newNoOfItem = updatedCartItems.size();
 
         cart.setCartItems(updatedCartItems);
@@ -203,7 +234,7 @@ public class CustomerCartService {
         for (Long itemCode : itemCodes) {
             CartItem cartItemToRemove = null;
             for (CartItem cartItem : cartItems) {
-                if (cartItem.getItem().getItemCode() == itemCode) {
+                if (cartItem.getItemCode() == itemCode) {
                     cartItemToRemove = cartItem;
                     break;
                 }
@@ -216,8 +247,17 @@ public class CustomerCartService {
         }
 
         double newTotalPrice = updatedCartItems.stream()
-                .mapToDouble(cartItem -> cartItem.getQuantity() * cartItem.getItem().getPrice())
+                .mapToDouble(cartItem -> {
+                    try {
+                        return cartItem.getQuantity() *
+                                fetchAPI("http://localhost:8082/api/inventory/productById", cartItem.getItemCode(), ProductDTO.class).getPrice();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
                 .sum();
+
+
         int newNoOfItem = updatedCartItems.size();
 
         cart.setCartItems(updatedCartItems);
@@ -239,7 +279,7 @@ public class CustomerCartService {
         List<CartItem> updatedCartItems = new ArrayList<>();
 
         for (CartItem cartItem : cartItems) {
-            if (cartItem.getItem().getItemCode() == itemCode) {
+            if (cartItem.getItemCode() == itemCode) {
                 cartItems.remove(cartItem);
                 customerCartItemRepository.delete(cartItem);
                 break;
@@ -247,8 +287,16 @@ public class CustomerCartService {
         }
 
         double newTotalPrice = updatedCartItems.stream()
-                .mapToDouble(cartItem -> cartItem.getQuantity() * cartItem.getItem().getPrice())
+                .mapToDouble(cartItem -> {
+                    try {
+                        return cartItem.getQuantity() *
+                                fetchAPI("http://localhost:8082/api/inventory/productById", cartItem.getItemCode(), ProductDTO.class).getPrice();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
                 .sum();
+
         int newNoOfItem = updatedCartItems.size();
 
         cart.setCartItems(updatedCartItems);
@@ -268,11 +316,8 @@ public class CustomerCartService {
         List<CartItem> updatedCartItems = new ArrayList<>();
         Map<Long, CartItem> itemCodeToCartItemMap = new HashMap<>();
         for (CartItem cartItem : cart.getCartItems()) {
-            itemCodeToCartItemMap.put(cartItem.getItem().getItemCode(), cartItem);
+            itemCodeToCartItemMap.put(cartItem.getItemCode(), cartItem);
         }
-
-        Item item = customerItemRepository.findById(itemCode)
-                .orElseThrow(() -> new ResourceNotFoundException("The Item does not exist with Item Code: " + itemCode));
 
         if (itemCodeToCartItemMap.containsKey(itemCode)) {
             CartItem existingCartItem = itemCodeToCartItemMap.get(itemCode);
@@ -283,8 +328,16 @@ public class CustomerCartService {
         }
 
         double newTotalPrice = updatedCartItems.stream()
-                .mapToDouble(cartItem -> cartItem.getQuantity() * cartItem.getItem().getPrice())
+                .mapToDouble(cartItem -> {
+                    try {
+                        return cartItem.getQuantity() *
+                                fetchAPI("http://localhost:8082/api/inventory/productById", cartItem.getItemCode(), ProductDTO.class).getPrice();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
                 .sum();
+
         int newNoOfItem = updatedCartItems.size();
 
         cart.setCartItems(updatedCartItems);
@@ -307,15 +360,21 @@ public class CustomerCartService {
         double totalPrice = 0.0;
 
         for (CartItem cartItem : cart.getCartItems()) {
-            CartItemDTO cartItemDTO = new CartItemDTO();
-            cartItemDTO.setItemCode(cartItem.getItem().getItemCode());
-            cartItemDTO.setItemName(cartItem.getItem().getItemName());
-            cartItemDTO.setPrice(cartItem.getItem().getPrice());
-            cartItemDTO.setQuantity(cartItem.getQuantity());
-            itemDTOList.add(cartItemDTO);
+            try {
+                ProductDTO productDTO = fetchAPI("http://localhost:8082/api/inventory/productById",cartItem.getItemCode(), ProductDTO.class);
+                CartItemDTO cartItemDTO = new CartItemDTO();
+                cartItemDTO.setItemCode(cartItem.getItemCode());
+                cartItemDTO.setItemName(productDTO.getItemName());
+                cartItemDTO.setPrice(productDTO.getPrice());
+                cartItemDTO.setQuantity(cartItem.getQuantity());
+                itemDTOList.add(cartItemDTO);
 
-            itemCodes.add(cartItem.getItem().getItemCode());
-            totalPrice += cartItem.getQuantity() * cartItem.getItem().getPrice();
+                itemCodes.add(productDTO.getItemCode());
+                totalPrice += cartItem.getQuantity() * productDTO.getPrice();
+            } catch (IOException e) {
+                // Handle the IOException, log it, or provide an error message
+                e.printStackTrace();
+            }
         }
 
         int noOfItem = itemCodes.size();
@@ -333,6 +392,22 @@ public class CustomerCartService {
             cartDTOs.add(mapCartToDTO(cart));
         }
         return cartDTOs;
+    }
+
+    public static <T> T fetchAPI(URL url, Class<T> type) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(url, type);
+    }
+
+    public static <T> T fetchAPI(String baseUrl, Long pathVariable, Class<T> type) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        String fullUrl = baseUrl + "/" + pathVariable;
+        try {
+            URL url = new URL(fullUrl);
+            return mapper.readValue(url, type);
+        } catch (MalformedURLException e) {
+            throw new IOException("Malformed URL: " + fullUrl, e);
+        }
     }
 
 }

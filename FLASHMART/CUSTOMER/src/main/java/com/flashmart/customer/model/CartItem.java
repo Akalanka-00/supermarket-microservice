@@ -22,21 +22,11 @@ public class CartItem {
     @JsonIgnore
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn (name = "cartId", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Cart cart;
 
-    @JsonIgnore
-    @ManyToOne (fetch = FetchType.LAZY)
-    @JoinColumn (name = "itemCode", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Item item;
+    private long itemCode;
 
     private int quantity;
-
-    @JsonIgnore
-    public Item getItem() { return item; }
-    @JsonIgnore
-    public void setItem(Item item) { this.item = item; }
 
     @JsonIgnore
     public Cart getCart() { return cart; }

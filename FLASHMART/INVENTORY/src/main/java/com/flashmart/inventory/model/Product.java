@@ -15,9 +15,8 @@ import lombok.NoArgsConstructor;
 public class Product {
     @Id
     @GeneratedValue
-
     @Column(name = "Id")
-    private int id;
+    private long itemCode;
 
     @Column(name = "Sku_Code")
     private String skuCode;
