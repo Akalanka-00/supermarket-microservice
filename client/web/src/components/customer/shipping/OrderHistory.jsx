@@ -3,7 +3,16 @@ import { RiCoupon4Fill } from "react-icons/ri";
 import OrderImage from "../../../assets/icons/order.png";
 import orderList from "../../../context/Order";
 
-const OrderHistory = () => {
+const OrderHistory = ({show, setShow}) => {
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => {
+    if(show){
+      handleClose();
+    }
+    setShow(true);
+  };
+
   return (
     <section className="ongoing-order-container">
       <div className="header">
@@ -43,7 +52,7 @@ const OrderHistory = () => {
               Picked Up
             </div>
 
-          <div className="btn">Items</div>
+          <div className="btn" onClick={handleShow}>Items</div>
         </div>
         ))}
        </div>

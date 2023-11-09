@@ -2,7 +2,15 @@ import React from "react";
 import { RiCoupon4Fill } from "react-icons/ri";
 import OrderImage from "../../../assets/icons/order.png";
 
-const CurrentOrder = () => {
+const CurrentOrder = ({show, setShow}) => {
+  const handleClose = () => setShow(false);
+  const handleShow = () => {
+    if(show){
+      handleClose();
+    }
+    setShow(true);
+  };
+
   return (
     <section className="ongoing-order-container">
       <div className="header">
@@ -54,7 +62,7 @@ const CurrentOrder = () => {
               Picked Up
             </div>
 
-          <div className="btn">Items</div>
+          <div className="btn" onClick={handleShow}>Items</div>
         </div>
       </div>
     </section>

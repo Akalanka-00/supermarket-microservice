@@ -5,7 +5,7 @@ import {MdOutlineLocalOffer} from "react-icons/md"
 const SideBarItems = [
     {title:"Dashboard", url:"/", icon:<RxDashboard/>},
     {title:"Category", url:"/category", icon:<TbSitemap/>},
-     {title:"Discounts", url:"/discounts", icon:<MdOutlineLocalOffer/>},
+    //  {title:"Discounts", url:"/discounts", icon:<MdOutlineLocalOffer/>},
     {title:"Delivery", url:"/delivery",icon:<TbTruckDelivery/>}
   
   ];
