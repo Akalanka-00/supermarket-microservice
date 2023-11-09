@@ -2,6 +2,7 @@ package com.flashmart.auth.UserController;
 
 import com.flashmart.auth.Entity.User;
 import com.flashmart.auth.Service.UserService;
+import com.flashmart.auth.UserDTO.CustomerDTO;
 import com.flashmart.auth.UserDTO.LoginDTO;
 import com.flashmart.auth.UserDTO.UserDTO;
 import com.flashmart.auth.response.LoginResponse;
@@ -51,6 +52,23 @@ public class UserController {
             userNames.add(user.getEmail());
         }
         return userNames;
+    }
+
+    @GetMapping("/customerDetails")
+    public List<CustomerDTO> getCustomerDetails() {
+        List<User> userUsers = userService.findByType(1010);
+        List<CustomerDTO> customerDTOS = new ArrayList<>();
+        CustomerDTO customerDTO = new CustomerDTO();
+        for (User user : userUsers) {
+            customerDTO.setUserid(user.getUserid());
+            customerDTO.setUserfname(user.getUserfname());
+            customerDTO.setUserlname(user.getUserlname());
+            customerDTO.setMobile(user.getMobile());
+            customerDTO.setEmail(user.getEmail());
+
+            customerDTOS.add(customerDTO);
+        }
+        return customerDTOS;
     }
 
 }
