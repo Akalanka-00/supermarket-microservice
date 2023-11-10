@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -13,6 +14,7 @@ public class NotificationBuilder {
    private String body;
    private int type;
    private String url;
+   private Date pushedDate;
    private boolean broadcast;
    private List<Integer> targetAudience;
    private List<String> targetUsers;

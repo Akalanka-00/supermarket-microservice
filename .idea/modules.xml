@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/FLASHMART/DISCOVERY SERVER/DISCOVERY_SERVER.iml" filepath="$PROJECT_DIR$/FLASHMART/DISCOVERY SERVER/DISCOVERY_SERVER.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/FLASHMART/API GATEWAY/API_GATEWAY.iml" filepath="$PROJECT_DIR$/FLASHMART/API GATEWAY/API_GATEWAY.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FLASHMART/AUTH/AUTH.iml" filepath="$PROJECT_DIR$/FLASHMART/AUTH/AUTH.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FLASHMART/CUSTOMER/CUSTOMER.iml" filepath="$PROJECT_DIR$/FLASHMART/CUSTOMER/CUSTOMER.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FLASHMART/DELIVERY/DELIVERY.iml" filepath="$PROJECT_DIR$/FLASHMART/DELIVERY/DELIVERY.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FLASHMART/DISCOVERY SERVER/DISCOVERY_SERVER.iml" filepath="$PROJECT_DIR$/FLASHMART/DISCOVERY SERVER/DISCOVERY_SERVER.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FLASHMART/FLASHMART.iml" filepath="$PROJECT_DIR$/FLASHMART/FLASHMART.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FLASHMART/INVENTORY/INVENTORY.iml" filepath="$PROJECT_DIR$/FLASHMART/INVENTORY/INVENTORY.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FLASHMART/KAFKA SERVICE/KAFKA_SERVICE.iml" filepath="$PROJECT_DIR$/FLASHMART/KAFKA SERVICE/KAFKA_SERVICE.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FLASHMART/ORDER/ORDER.iml" filepath="$PROJECT_DIR$/FLASHMART/ORDER/ORDER.iml" />
+      
+    </modules>
+  </component>
+</project>
