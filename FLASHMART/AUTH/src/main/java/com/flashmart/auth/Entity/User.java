@@ -1,7 +1,13 @@
 package com.flashmart.auth.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table (name = "User")
 public class User {
@@ -13,9 +19,9 @@ public class User {
     @Column(name = "userType",length = 10)
     private int type;//1000- admin , 1010- normalUser, 1011- deliveryPerson
     @Column(name="user_fname", length = 255)
-    private String userfname;
+    private String fname;
     @Column(name="user_lname", length = 255)
-    private String userlname;
+    private String lname;
     @Column(name="mobile", length = 10)
     private String mobile;
     @Column(name="email", length = 255, unique = true)
@@ -23,82 +29,13 @@ public class User {
     @Column(name="password", length = 255)
     private String password;
 
-    public User(long userid, int userType, String userfname, String userlname, String mobile, String email, String password) {
-        this.userid = userid;
-        this.type = userType;
-        this.userfname = userfname;
-        this.userlname = userlname;
-        this.mobile = mobile;
-        this.email = email;
-        this.password = password;
-    }
-
-    public User() {
-    }
-
-    public long getUserid() {
-        return userid;
-    }
-
-    public void setUserid(long userid) {
-        this.userid = userid;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public String getUserfname() {
-        return userfname;
-    }
-
-    public void setUserfname(String userfname) {
-        this.userfname = userfname;
-    }
-
-    public String getUserlname() {
-        return userlname;
-    }
-
-    public void setUserlname(String userlname) {
-        this.userlname = userlname;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     @Override
     public String toString() {
         return "User{" +
                 "userid=" + userid +
                 ", userType=" + type +
-                ", userfname='" + userfname + '\'' +
-                ", userlname='" + userlname + '\'' +
+                ", userfname='" + fname + '\'' +
+                ", userlname='" + lname + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +

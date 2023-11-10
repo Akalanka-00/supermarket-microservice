@@ -97,8 +97,8 @@ public class UserController {
         User user = userRepo.findById(userId).orElse(null);
         UserDetailsDTO userDetailsDTO = new UserDetailsDTO();
                 userDetailsDTO.setUserid(user.getUserid());
-                userDetailsDTO.setUserfname(user.getUserfname());
-                userDetailsDTO.setUserlname(user.getUserlname());
+                userDetailsDTO.setUserfname(user.getFname());
+                userDetailsDTO.setUserlname(user.getLname());
                 userDetailsDTO.setMobile(user.getMobile());
                 userDetailsDTO.setEmail(user.getEmail());
         return userDetailsDTO;
@@ -111,8 +111,8 @@ public class UserController {
         UserDetailsDTO userDetailsDTO = new UserDetailsDTO();
         for (User user : userUsers) {
             userDetailsDTO.setUserid(user.getUserid());
-            userDetailsDTO.setUserfname(user.getUserfname());
-            userDetailsDTO.setUserlname(user.getUserlname());
+            userDetailsDTO.setUserfname(user.getFname());
+            userDetailsDTO.setUserlname(user.getLname());
             userDetailsDTO.setMobile(user.getMobile());
             userDetailsDTO.setEmail(user.getEmail());
 
