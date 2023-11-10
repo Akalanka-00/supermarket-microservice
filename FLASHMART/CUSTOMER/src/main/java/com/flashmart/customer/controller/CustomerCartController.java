@@ -81,4 +81,10 @@ public class CustomerCartController {
         return customerCartService.updateCartItemDecreasingByOne(cartId, itemCode);
     }
 
+    //send cart to Order Service
+    @GetMapping("/ProceedCartToOrder/{customerId}")
+    public String proceedCartToOrder(@PathVariable Long customerId){
+        return customerCartService.proceedCartToOrder(customerId);
+    }
+
 }

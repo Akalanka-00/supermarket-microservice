@@ -15,23 +15,19 @@ import java.util.List;
 public class CustomerPointService {
 
     @Autowired
-    private final CustomerCartService customerCartService;
-
-    @Autowired
     private final PointRepository pointRepository;
 
     @Autowired
     private final CustomerCartRepository customerCartRepository;
 
-    public CustomerPointService(CustomerCartService customerCartService, PointRepository pointRepository, CustomerCartRepository customerCartRepository) {
-        this.customerCartService = customerCartService;
+    public CustomerPointService(PointRepository pointRepository, CustomerCartRepository customerCartRepository) {
         this.pointRepository = pointRepository;
         this.customerCartRepository = customerCartRepository;
     }
 
     public PointDTO getPointByCustomerId(Long customerId) {
-        CartDTO cartDTO = customerCartService.getCartByCustomerId(customerId).getBody();
-        double customerPoints = cartDTO.getPoint();
+        Cart cart = customerCartRepository.findById(customerId).orElse(null);
+        double customerPoints = cart.getPoint();
 
         List<PointData> points = pointRepository.findAll();
         int applicableDiscount = 0;
@@ -53,7 +49,6 @@ public class CustomerPointService {
 
         if (totalPrice >= 1000) {
             customerPoints += 5;
-            Cart cart = customerCartRepository.findById(cartDTO.getCartId()).orElse(null);
             cart.setPoint(customerPoints);
             customerCartRepository.save(cart);
         }

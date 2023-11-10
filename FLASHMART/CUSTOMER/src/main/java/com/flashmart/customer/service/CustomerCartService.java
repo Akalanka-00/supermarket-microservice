@@ -1,9 +1,8 @@
 package com.flashmart.customer.service;
 
-import com.flashmart.customer.dto.CartDTO;
-import com.flashmart.customer.dto.CartItemDTO;
-import com.flashmart.customer.dto.ItemDTO;
-import com.flashmart.customer.dto.ProductDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.flashmart.customer.dto.*;
 import com.flashmart.customer.exception.ResourceNotFoundException;
 import com.flashmart.customer.model.Cart;
 import com.flashmart.customer.model.CartItem;
@@ -15,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.*;
 
 @Service
@@ -29,10 +29,14 @@ public class CustomerCartService {
     @Autowired
     private  final MicroServicesConnectorService microServicesConnectorService;
 
-    public CustomerCartService(CustomerCartRepository customerCartRepositoryRepository, CustomerCartItemRepository customerCartItemRepository, MicroServicesConnectorService microServicesConnectorService) {
+    @Autowired
+    private  final CustomerPointService customerPointService;
+
+    public CustomerCartService(CustomerCartRepository customerCartRepositoryRepository, CustomerCartItemRepository customerCartItemRepository, MicroServicesConnectorService microServicesConnectorService, CustomerPointService customerPointService) {
         this.customerCartRepository = customerCartRepositoryRepository;
         this.customerCartItemRepository = customerCartItemRepository;
         this.microServicesConnectorService = microServicesConnectorService;
+        this.customerPointService = customerPointService;
     }
 
     public String setCart(Long customerId){
@@ -378,6 +382,48 @@ public class CustomerCartService {
         CartDTO updatedCartDTO = mapCartToDTO(updatedCart);
 
         return ResponseEntity.ok(updatedCartDTO);
+    }
+
+//    public String proceedCartToOrder(Long customerId) {
+//        CartDTO cartDTO = getCartByCustomerId(customerId).getBody();
+//        PointDTO pointDTO = customerPointService.getPointByCustomerId(customerId);
+//        try {
+//            String jsonInputString = "{" +
+//                    "\"cartId\": \"" + cartDTO.getCartId() + "\", \"customerId\": \"" + cartDTO.getCustomerId() + "\"" +
+//                    "\"noOfItem\": \"" + cartDTO.getNoOfItem() + "\", \"totalPrice\": \"" + cartDTO.getTotalPrice() + "\"" +
+//                    "\"discounts\": \"" + pointDTO.getDiscount() + "\", \"items\": \"" + cartDTO.getItems() + "\"" +
+//                    "}";
+//            String string = microServicesConnectorService.postAPI("http://localhost:8083/order/orderArrival", jsonInputString, String.class);
+//        } catch (URISyntaxException e) {
+//            throw new RuntimeException(e);
+//        }
+//        return "Your Cart is Proceed to Order";
+//    }
+
+    public String proceedCartToOrder(Long customerId) {
+        CartDTO cartDTO = getCartByCustomerId(customerId).getBody();
+        PointDTO pointDTO = customerPointService.getPointByCustomerId(customerId);
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            Map<String, Object> jsonMap = new HashMap<>();
+            jsonMap.put("cartId", cartDTO.getCartId());
+            jsonMap.put("customerId", cartDTO.getCustomerId());
+            jsonMap.put("noOfItem", cartDTO.getNoOfItem());
+            jsonMap.put("totalPrice", cartDTO.getTotalPrice());
+            jsonMap.put("discounts", pointDTO.getDiscount());
+            jsonMap.put("items", cartDTO.getItems());
+
+            String jsonInputString = objectMapper.writeValueAsString(jsonMap);
+
+            ResponseDTO responseDTO = microServicesConnectorService.postAPI("http://localhost:8083/order/orderArrival", jsonInputString, ResponseDTO.class);
+
+        } catch (JsonProcessingException | URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+
+        return "Your Cart is Proceed to Order";
     }
 
     public CartDTO mapCartToDTO(Cart cart) {
