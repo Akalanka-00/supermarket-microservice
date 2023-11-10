@@ -1,0 +1,178 @@
+.customer-login-container{
+    display: grid;
+    grid-template-columns: 60% 40%;
+    margin: 5rem 8rem;
+
+}
+
+.customer-login-container .left .left-title{
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--color-secondary-v3);
+    text-align: center;
+    margin-left: 6rem;
+}
+.customer-login-container .left img{
+    width: 35rem;
+}
+
+.customer-login-container .right .header{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+}
+
+.customer-login-container .right .header img{
+    width: 8rem;
+}
+
+.customer-login-container .right .header  span{
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--color-primary-v1);
+
+}
+
+.customer-login-container .right .sub-title{
+    display: flex;
+    flex-direction: row;
+    font-size: 1.2rem;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: -1.4rem;
+}
+
+.customer-login-container .right .sub-title span{
+    font-weight: 600;
+    color: var(--color-primary);
+    font-size: 1.4rem;
+
+}
+
+.customer-login-container .right  .login-form{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 5rem;
+}
+
+.customer-login-container .right  .login-form .field{
+    border: none;
+    border-bottom: var(--color-primary) 1px solid;
+    padding-left: 0.4rem;
+    width: 80%;
+}
+
+.customer-login-container .right  .login-form .field:focus{
+    outline: none;
+    border-bottom: var(--color-primary-v1) 2px solid;
+}
+
+.customer-login-container .right  .login-form .input-names{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 5rem;
+}
+
+.customer-login-container .right  .login-form .input-names .field{
+    width: 100%;
+}
+.customer-login-container .right  .login-form .input-btn{
+    width: 80%;
+}
+
+.customer-login-container .right  .login-form .login-options{
+    margin-top: -1.7rem;
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.customer-login-container .right  .login-form .login-options span{
+    color: var(--color-primary);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.otp-container{
+    margin: 4rem 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+}
+.otp-container .header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.otp-container .header img{
+    width: 25rem;
+}
+
+.otp-container .header span{
+    font-size: 3rem;
+    color: var(--color-secondary-v3);
+    font-weight: 700;
+}
+
+.otp-container .header .otp-field{
+    width: 25rem;
+    height: 5rem;
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    color: var(--color-secondary);
+    border: var(--color-secondary) 3px solid;
+    border-radius: 20px;
+    letter-spacing: 1em;
+    padding: 2rem;
+    font-weight: 700;
+    font-size: 3rem;
+}
+
+.otp-container .header .otp-field::placeholder{
+    color: var(--color-secondary);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-align: center;
+    padding-left: 0;
+
+   
+
+}
+.otp-container .header .otp-field:focus{
+    outline: none;
+    border: var(--color-primary) 3px solid;
+    color: var(--color-primary);
+    
+
+}
+.otp-container .header .otp-field:focus::placeholder{
+    content: "";
+    content-visibility: none;
+    color: transparent;
+}
+.otp-container .bottom{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.otp-container .bottom span{
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
+.otp-container .bottom .verify-otp{
+    width: 150%;
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 1.5rem;
+}

@@ -1,0 +1,19 @@
+.loading-container{
+    position: fixed;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    background-color: white;
+    z-index: 9999;
+}
+
+
+
+.loading-container .loading-bg-filter img{
+    width: 15rem;
+    border-radius: 50%;
+    background-color: var(--color-primary-v1);
+}

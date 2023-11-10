@@ -1,0 +1,107 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html,
+body {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+:root {
+  --color-primary: #00B250;
+  --color-primary-v1: #66bb6ab0;
+  --color-primary-v2: #388e3c;
+  --color-primary-v3: #43a047;
+
+  --color-secondary: #ff9800;
+  --color-secondary-v1: #ffa726;
+  --color-secondary-v2: #f57c00;
+  --color-secondary-v3: #ff5622;
+
+  --color-warning:#FF5733;
+}
+
+.btn {
+  border: none;
+  border-radius: 5px;
+  background-image: linear-gradient(
+    72.71deg,
+    #4caf50 3.31%,
+    #43a047 57.44%,
+    #66bb6a 108.12%
+  );
+  background-size: 300% 100%;
+  color: white;
+  cursor: pointer;
+  font-size: inherit;
+  outline: none;
+  padding: 7px 30px;
+  transition: all 0.2s ease-in;
+  transition: all 0.4s ease-in-out;
+  text-align: center;
+}
+
+.btn:hover {
+  border: none;
+  border-radius: 5px;
+  background-image: linear-gradient(
+    180.71deg,
+    #4caf50 3.31%, /* Initial color */
+    #5cc45b 57.44%, /* Middle color (lighter green for hover) */
+    #66bb6a 108.12% /* Ending color */
+  );
+  background-size: 300% 100%;
+  color: white;
+  cursor: pointer;
+  font-size: inherit;
+  outline: none;
+  padding: 7px 30px;
+  transition: all 0.2s ease-in;
+  transition: all 0.4s ease-in-out;
+}
+
+
+.btn-warning {
+  border: none;
+  border-radius: 5px;
+  background-image: linear-gradient(
+    180.71deg,
+    #FF5733 3.31%, 
+    #f35526 57.44%, 
+    #FF5733 108.12%);
+  background-size: 300% 100%;
+  color: white;
+  cursor: pointer;
+  font-size: inherit;
+  outline: none;
+  padding: 7px 30px;
+  transition: all 0.2s ease-in;
+  text-align: center;
+}
+
+.btn-warning:hover {
+  border: none;
+  border-radius: 5px;
+  background-image: linear-gradient(
+    180.71deg,
+    #FF5733 3.31%, 
+    #d33 57.44%, 
+    #FF5733 108.12%);
+  background-size: 300% 100%;
+  color: white;
+  cursor: pointer;
+  font-size: inherit;
+  outline: none;
+  padding: 7px 30px;
+  transition: all 0.2s ease-in;
+}
+
+
+section{
+  margin: 1rem 2rem;
+}

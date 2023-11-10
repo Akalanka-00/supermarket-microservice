@@ -1,0 +1,41 @@
+.image-upload-container{
+    display: flex;
+    flex-direction: column;
+    padding: 0.3rem 1rem;
+    border: var(--color-primary) 1px solid;
+    border-radius: 5px;
+    margin-top: 1rem;
+}
+
+.image-upload-container .info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+}
+
+.image-upload-container .info .image-upload-left .icon {
+    font-size: 2.3rem;
+    background-color: white;
+    padding: 0.3rem 0.3rem;
+    color: var(--color-primary);
+    border: var(--color-primary) 1px solid;
+    border-radius: 5px;
+}
+
+.image-upload-container .info .image-upload-right .name{
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.image-upload-container .info .image-upload-right .size{
+    font-weight: 400;
+    font-size: 0.75rem;
+}
+
+.image-upload-container .upload .status-bar {
+    margin-top: 0.2rem;
+    height: 0.5rem;
+    background-color: var(--color-primary-v1);
+    border-radius: 5px;
+}
