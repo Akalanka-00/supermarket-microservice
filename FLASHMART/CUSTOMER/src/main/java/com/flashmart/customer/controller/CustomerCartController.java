@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = {"*"})
 @RestController
@@ -19,8 +21,10 @@ public class CustomerCartController {
 
     //assign cart to a newly registered customer
     @GetMapping("/setCart/{customerId}")
-        public String setCart(@PathVariable Long customerId){
-            return customerCartService.setCart(customerId);
+    public ResponseEntity<Map<String, String>> setCart(@PathVariable Long customerId) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", customerCartService.setCart(customerId));
+        return ResponseEntity.ok(response);
     }
 
     //get all cart details

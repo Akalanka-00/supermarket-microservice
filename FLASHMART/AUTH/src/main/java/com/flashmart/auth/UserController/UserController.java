@@ -47,7 +47,7 @@ public class UserController {
             return ("Admin Registration Successful. User ID: " + newUser.getUserid());
         } else if (userDTO.getType() == 1011) {
             return ("Delivery Person Registration Successful. User ID: " + newUser.getUserid());
-        } else {
+        } else if (userDTO.getType() == 1010) {
             try {
                 ResponseDTO responseDTO = microServicesConnectorService.fetchAPI("http://localhost:8080/api/v1/cart/setCart", newUser.getUserid(), ResponseDTO.class);
                 return ("New Customer Registration Successful. Customer ID: " + newUser.getUserid() +
@@ -56,6 +56,7 @@ public class UserController {
                 throw new RuntimeException(e);
             }
         }
+        return null;
     }
 
 
