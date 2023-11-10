@@ -8,7 +8,7 @@ public class User {
 
     @Id
     @Column(name="user_id", length = 45)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long userid;
     @Column(name = "userType",length = 10)
     private int type;//1000- admin , 1010- normalUser
@@ -18,7 +18,7 @@ public class User {
     private String userlname;
     @Column(name="mobile", length = 10)
     private String mobile;
-    @Column(name="email", length = 255)
+    @Column(name="email", length = 255, unique = true)
     private String email;
     @Column(name="password", length = 255)
     private String password;

@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface UserService {
 
-    String addUser(UserDTO userDTO);
+    User addUser(UserDTO userDTO);
 
     LoginResponse logingUser(LoginDTO loginDTO);
 

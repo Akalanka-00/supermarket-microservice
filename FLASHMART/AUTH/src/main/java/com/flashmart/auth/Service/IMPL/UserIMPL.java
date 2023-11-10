@@ -26,7 +26,7 @@ public class UserIMPL implements UserService {
         this.userRepo = userRepo;
     }
     @Override
-    public String addUser(UserDTO userDTO) {
+    public User addUser(UserDTO userDTO) {
         User user = new User(
                 userDTO.getUserid(),
                 userDTO.getType(),
@@ -37,7 +37,7 @@ public class UserIMPL implements UserService {
                 this.passwordEncoder.encode(userDTO.getPassword())
         );
         userRepo.save(user);
-        return user.getUserfname();
+        return user;
     }
 
     @Override

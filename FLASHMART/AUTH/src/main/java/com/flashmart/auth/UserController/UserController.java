@@ -2,7 +2,9 @@ package com.flashmart.auth.UserController;
 
 import com.flashmart.auth.Entity.User;
 import com.flashmart.auth.Repo.UserRepo;
+import com.flashmart.auth.Service.MicroServicesConnectorService;
 import com.flashmart.auth.Service.UserService;
+import com.flashmart.auth.UserDTO.ResponseDTO;
 import com.flashmart.auth.UserDTO.UserDetailsDTO;
 import com.flashmart.auth.UserDTO.LoginDTO;
 import com.flashmart.auth.UserDTO.UserDTO;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,14 +26,32 @@ public class UserController {
     private UserService userService;
 
     @Autowired
+    private MicroServicesConnectorService microServicesConnectorService;
+
+    @Autowired
     private UserRepo userRepo;
 
     @PostMapping(path = "/save")
     public String saveUser(@RequestBody UserDTO userDTO)
     {
-        userService.addUser(userDTO);
+        User user = userService.addUser(userDTO);
 
-        return ("Registration Successful. User ID: " + userDTO.getUserid());
+        if(userDTO.getType()==1010){
+        try {
+            List<User> users = getAllUsers();
+            for(User newUser:users){
+                if(newUser.getEmail() == userDTO.getEmail()){
+                    return "Already Registered. User ID: " + user.getUserid();
+                }
+            }
+            ResponseDTO responseDTO = microServicesConnectorService.fetchAPI("http://localhost:8080/api/v1/cart/setCart", user.getUserid(), ResponseDTO.class);
+            return ("New Customer Registration Successful. Customer ID: " + user.getUserid() +
+                    "\n" + responseDTO.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        }
+        return ("Admin Registration Successful. User ID: " + user.getUserid());
     }
 
     @PostMapping(path = "/login")
@@ -47,6 +68,12 @@ public class UserController {
             adminNames.add(user.getEmail());
         }
         return adminNames;
+    }
+
+    @GetMapping(path = "/allUsers")
+    public List<User> getAllUsers() {
+        List<User> users = userRepo.findAll();
+        return users;
     }
 
     @GetMapping("/normalUsers")
