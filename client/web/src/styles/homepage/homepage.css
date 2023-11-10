@@ -169,6 +169,8 @@
   border: transparent 2px solid;
   width: fit-content;
   padding: 1rem;
+  text-align: center;
+
 }
 
 .product-container .category-card-container .category-card:hover {

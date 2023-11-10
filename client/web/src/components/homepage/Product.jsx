@@ -2,14 +2,10 @@ import React, { useState } from 'react'
 import Food from "../../assets/images/catrgory/food.jpg"
 import {categoryItems, productItems} from '../../context/Products'
 import {BsCartCheck} from "react-icons/bs"
-import ProductModel from './ProductModal';
 const Product = () => {
 
   const [activeCategory, setActiveCategory] = useState(0);
-  const [openProductModel, setOpenProductModel] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState({
-    name:"", image: null, price:0, category:0
-  })
+  
   return (
     <section className='product-container'>
       <div className="title">Categories</div>
@@ -27,10 +23,7 @@ const Product = () => {
         {productItems.map((item,index)=>{
           if(item.category === activeCategory){
             return (
-              <div className="product-card" key={index} onClick={()=>{
-                setSelectedProduct(item);
-                setOpenProductModel(true);
-              }}>
+              <div className="product-card" key={index}>
               <img src={Food}/>
               <div className="tag">
               <span>Rice</span>
@@ -45,7 +38,6 @@ const Product = () => {
           }
         })}
       </div>
-      {openProductModel && <ProductModel product={selectedProduct}/>}
     </section>
   )
 }
