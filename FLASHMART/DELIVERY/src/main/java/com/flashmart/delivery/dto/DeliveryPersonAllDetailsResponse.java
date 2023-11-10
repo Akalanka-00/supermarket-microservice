@@ -1,6 +1,5 @@
 package com.flashmart.delivery.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,13 +11,14 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @Data
-public class DeliveryPersonResponse {
-
+public class DeliveryPersonAllDetailsResponse {
     private String id;
     private int availability;
-    private String vehicleID;
+    private double rating;
     private double latitude;
     private double longitude;
     private Date lastUpdatedTime;
-    private int rating;
+    private String color;
+    private String vehicleNo;
+    private String vehicleType;
 }

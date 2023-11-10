@@ -13,12 +13,24 @@ import org.springframework.web.bind.annotation.*;
 
 public class DeliveryEntryController {
 
-    private  final DeliveryEntryService deliveryService;
+    private  final DeliveryEntryService deliveryEntryService;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping()
-    public void createDeliveryEntry(DeliveryEntryRequest request){
-        deliveryService.createDeliveryEntry(request);
+    public void createDeliveryEntry(@RequestBody DeliveryEntryRequest request){
+        deliveryEntryService.createDeliveryEntry(request);
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/setAsPicked/{id}")
+    public String MarkAsPicked(@PathVariable String id){
+        return deliveryEntryService.markAsPicked(id);
+    }
+
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/setAsDelivered/{id}")
+    public String MarkAsDelivered(@PathVariable String id){
+        return deliveryEntryService.markAsDelivered(id);
+    }
 }

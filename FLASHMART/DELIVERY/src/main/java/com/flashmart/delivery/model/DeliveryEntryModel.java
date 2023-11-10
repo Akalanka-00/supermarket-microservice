@@ -23,6 +23,7 @@ public class DeliveryEntryModel {
     @Id
     private String id;
     private String orderId;
+    private int status;
     private Date pickedUpTime;
     private Date deliveredTime;
 
