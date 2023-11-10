@@ -133,18 +133,31 @@ public class DeliveryPersonService {
                 .collect(Collectors.toList());
     }
 
-    public ResponseEntity<DeliveryPersonResponse> getAvailableDeliveryPerson(){
+    public ResponseEntity<DeliveryPersonAllDetailsResponse> getAvailableDeliveryPerson(){
         List<DeliveryPersonModel> deliveryPersons = deliveryPersonRepository.findAll();
 
-        for (int i = 0; i < deliveryPersons.size(); i++) {
-            DeliveryPersonModel model  = deliveryPersons.get(i);
-            if(model.getAvailability()==DELIVER_AVAILABILITY.AVAILABLE && model.st)
-        }
-        DeliveryPersonResponse response = DeliveryPersonResponse.builder()
-                .id(deliveryPersons.get(0).getId())
-                .build();
-        return ResponseEntity.ok(response);
+        for (DeliveryPersonModel model : deliveryPersons) {
+            if (model.getAvailability() == DELIVER_AVAILABILITY.AVAILABLE) {
+                VehicleModel vehicleModel = vehicleRepository.findById(model.getVehicleID())
+                        .orElseThrow(() -> new ResourceNotFoundException("Vehicle does not exist with id: " + model.getVehicleID()));
 
+                DeliveryPersonAllDetailsResponse response = DeliveryPersonAllDetailsResponse.builder()
+                        .id(model.getId())
+                        .availability(model.getAvailability())
+                        .rating((double) model.getTotal_rating() /model.getNo_of_rated_users())
+                        .latitude(model.getLatitude())
+                        .longitude(model.getLongitude())
+                        .lastUpdatedTime(model.getLastUpdatedTime())
+                        .color(vehicleModel.getColor())
+                        .vehicleNo(vehicleModel.getVehicleNo())
+                        .vehicleType(vehicleModel.getVehicleType())
+
+                        .build();
+
+                return ResponseEntity.ok(response);
+            }
+        }
+        return null;
     }
 }
 

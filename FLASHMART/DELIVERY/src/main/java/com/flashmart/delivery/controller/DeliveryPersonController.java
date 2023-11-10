@@ -2,6 +2,7 @@ package com.flashmart.delivery.controller;
 
 import com.flashmart.delivery.dto.DeliveryPersonAllDetailsResponse;
 import com.flashmart.delivery.dto.DeliveryPersonRequest;
+import com.flashmart.delivery.dto.DeliveryPersonResponse;
 import com.flashmart.delivery.model.DeliveryPersonModel;
 import com.flashmart.delivery.service.DeliveryPersonService;
 import lombok.RequiredArgsConstructor;
@@ -56,5 +57,10 @@ public class DeliveryPersonController {
     @GetMapping("allDetails")
     public List<DeliveryPersonAllDetailsResponse> getAllDeliveryPersonsDetails(){
         return deliveryPersonService.getAllDeliveryPersonsDetails();
+    }
+
+    @GetMapping("getAvailable")
+    public ResponseEntity<DeliveryPersonAllDetailsResponse> getAvailableDeliveryPerson(){
+        return deliveryPersonService.getAvailableDeliveryPerson();
     }
 }
