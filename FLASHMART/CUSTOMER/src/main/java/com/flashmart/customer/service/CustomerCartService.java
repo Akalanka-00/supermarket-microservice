@@ -418,12 +418,11 @@ public class CustomerCartService {
             String jsonInputString = objectMapper.writeValueAsString(jsonMap);
 
             ResponseDTO responseDTO = microServicesConnectorService.postAPI("http://localhost:8083/order/orderArrival", jsonInputString, ResponseDTO.class);
+            return responseDTO.getMessage();
 
         } catch (JsonProcessingException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
-
-        return "Your Cart is Proceed to Order";
     }
 
     public CartDTO mapCartToDTO(Cart cart) {
