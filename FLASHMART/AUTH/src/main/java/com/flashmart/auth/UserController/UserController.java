@@ -36,7 +36,7 @@ public class UserController {
 
         List<User> users = getAllUsers();
         for (User user : users) {
-            if (user.getEmail() == userDTO.getEmail()) {
+            if (user.getEmail().equals(userDTO.getEmail())) {
                 return "Already Registered";
             }
         }
