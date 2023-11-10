@@ -1,5 +1,6 @@
 package com.flashmart.inventory.controller;
 
+import com.flashmart.inventory.dto.ProductDTO;
 import com.flashmart.inventory.model.Product;
 import com.flashmart.inventory.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +51,8 @@ public class ProductController {
         return service.deleteProduct(id);
     }
 
-
+    @PostMapping("/decrease")
+    public void decreaseItemQuantities(@RequestBody List<ProductDTO> products) {
+        service.decreaseItemQuantities(products);
+    }
 }

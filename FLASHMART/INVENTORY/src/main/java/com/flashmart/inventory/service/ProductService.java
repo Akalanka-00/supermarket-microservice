@@ -1,5 +1,6 @@
 package com.flashmart.inventory.service;
 
+import com.flashmart.inventory.dto.ProductDTO;
 import com.flashmart.inventory.model.Product;
 import com.flashmart.inventory.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +50,15 @@ public class ProductService {
         existingProduct.setNoOfProducts(product.getNoOfProducts());
 
         return repository.save(existingProduct);
+    }
+
+    public void decreaseItemQuantities(List<ProductDTO> products) {
+        for (ProductDTO product : products) {
+            Product storedProduct = repository.findById(product.getItemCode()).orElse(null);
+            if (storedProduct != null && storedProduct.getNoOfProducts() >= product.getNoOfProducts()) {
+                storedProduct.setNoOfProducts(storedProduct.getNoOfProducts() - product.getNoOfProducts());
+                repository.save(storedProduct);
+            }
+        }
     }
 }

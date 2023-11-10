@@ -36,6 +36,12 @@ public class Product {
     @Column(name = "category_name")
     private String categoryName;
 
+    @Column(name = "category_icon")
+    private String categoryIcon;
+
     @Column(name = "no_of_products")
     private int noOfProducts;
+
+    @Column(name = "product_icon")
+    private String productIcon;
 }
