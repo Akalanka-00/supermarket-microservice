@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/FLASHMART/DISCOVERY SERVER/DISCOVERY_SERVER.iml" filepath="$PROJECT_DIR$/FLASHMART/DISCOVERY SERVER/DISCOVERY_SERVER.iml" />
+=======
       <module fileurl="file://$PROJECT_DIR$/FLASHMART/API GATEWAY/API_GATEWAY.iml" filepath="$PROJECT_DIR$/FLASHMART/API GATEWAY/API_GATEWAY.iml" />
       <module fileurl="file://$PROJECT_DIR$/FLASHMART/AUTH/AUTH.iml" filepath="$PROJECT_DIR$/FLASHMART/AUTH/AUTH.iml" />
       <module fileurl="file://$PROJECT_DIR$/FLASHMART/CUSTOMER/CUSTOMER.iml" filepath="$PROJECT_DIR$/FLASHMART/CUSTOMER/CUSTOMER.iml" />
@@ -11,7 +13,7 @@
       <module fileurl="file://$PROJECT_DIR$/FLASHMART/INVENTORY/INVENTORY.iml" filepath="$PROJECT_DIR$/FLASHMART/INVENTORY/INVENTORY.iml" />
       <module fileurl="file://$PROJECT_DIR$/FLASHMART/KAFKA SERVICE/KAFKA_SERVICE.iml" filepath="$PROJECT_DIR$/FLASHMART/KAFKA SERVICE/KAFKA_SERVICE.iml" />
       <module fileurl="file://$PROJECT_DIR$/FLASHMART/ORDER/ORDER.iml" filepath="$PROJECT_DIR$/FLASHMART/ORDER/ORDER.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/supermarket-microservice.iml" filepath="$PROJECT_DIR$/.idea/supermarket-microservice.iml" />
+      
     </modules>
   </component>
 </project>
