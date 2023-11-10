@@ -101,7 +101,6 @@ public class DeliveryPersonService {
                 .color(vehicleModel.getColor())
                 .vehicleNo(vehicleModel.getVehicleNo())
                 .vehicleType(vehicleModel.getVehicleType())
-
                 .build();
 
         return ResponseEntity.ok(response);
@@ -151,7 +150,6 @@ public class DeliveryPersonService {
                         .color(vehicleModel.getColor())
                         .vehicleNo(vehicleModel.getVehicleNo())
                         .vehicleType(vehicleModel.getVehicleType())
-
                         .build();
 
                 return ResponseEntity.ok(response);
