@@ -1,18 +1,23 @@
 package com.flashmart.delivery.dto;
 
+import com.mongodb.internal.connection.Time;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
 public class DeliveryEntryRequest {
-    private String deliverId;
     private String orderId;
-    private String customerId;
-    private int status;
+    private Date pickedUpTime;
+    private Date deliveredTime;
+
 
 }
