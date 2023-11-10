@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
 @Document(value = "deliveryPersonCollection")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,4 +21,9 @@ public class DeliveryPersonModel {
     private String id;
     private int availability;
     private String vehicleID;
+    private double latitude;
+    private double longitude;
+    private Date lastUpdatedTime;
+    private int total_rating;
+    private int no_of_rated_users;
 }

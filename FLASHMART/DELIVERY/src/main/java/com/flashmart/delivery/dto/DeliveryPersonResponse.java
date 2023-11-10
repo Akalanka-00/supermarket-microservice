@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -14,6 +16,9 @@ public class DeliveryPersonResponse {
 
     private String id;
     private int availability;
-    private int rating;
     private String vehicleID;
+    private double latitude;
+    private double longitude;
+    private Date lastUpdatedTime;
+    private int rating;
 }

@@ -5,6 +5,7 @@ import com.flashmart.delivery.Consts.DELIVER_AVAILABILITY;
 import com.flashmart.delivery.dto.DeliveryEntryResponse;
 import com.flashmart.delivery.dto.DeliveryPersonAllDetailsResponse;
 import com.flashmart.delivery.dto.DeliveryPersonRequest;
+import com.flashmart.delivery.dto.DeliveryPersonResponse;
 import com.flashmart.delivery.exception.ResourceNotFoundException;
 import com.flashmart.delivery.model.DeliveryPersonModel;
 import com.flashmart.delivery.model.VehicleModel;
@@ -29,6 +30,9 @@ public class DeliveryPersonService {
          DeliveryPersonModel model = DeliveryPersonModel.builder()
                      .availability(DELIVER_AVAILABILITY.UNAVAILABLE)
                      .vehicleID(request.getVehicleID())
+                 .latitude(0)
+                 .longitude(0)
+                 .lastUpdatedTime(null)
                      .build();
 
          deliveryPersonRepository.save(model);
@@ -90,10 +94,14 @@ public class DeliveryPersonService {
         DeliveryPersonAllDetailsResponse response = DeliveryPersonAllDetailsResponse.builder()
                 .id(deliveryPersonModel.getId())
                 .availability(deliveryPersonModel.getAvailability())
-                .vehicleID(deliveryPersonModel.getVehicleID())
+                .rating((double) deliveryPersonModel.getTotal_rating() /deliveryPersonModel.getNo_of_rated_users())
+                .latitude(deliveryPersonModel.getLatitude())
+                .longitude(deliveryPersonModel.getLongitude())
+                .lastUpdatedTime(deliveryPersonModel.getLastUpdatedTime())
                 .color(vehicleModel.getColor())
                 .vehicleNo(vehicleModel.getVehicleNo())
                 .vehicleType(vehicleModel.getVehicleType())
+
                 .build();
 
         return ResponseEntity.ok(response);
@@ -113,7 +121,10 @@ public class DeliveryPersonService {
                     return DeliveryPersonAllDetailsResponse.builder()
                             .id(deliveryPersonModel.getId())
                             .availability(deliveryPersonModel.getAvailability())
-                            .vehicleID(deliveryPersonModel.getVehicleID())
+                            .rating((double) deliveryPersonModel.getTotal_rating() /deliveryPersonModel.getNo_of_rated_users())
+                            .latitude(deliveryPersonModel.getLatitude())
+                            .longitude(deliveryPersonModel.getLongitude())
+                            .lastUpdatedTime(deliveryPersonModel.getLastUpdatedTime())
                             .color(vehicleModel != null ? vehicleModel.getColor() : null)
                             .vehicleNo(vehicleModel != null ? vehicleModel.getVehicleNo() : null)
                             .vehicleType(vehicleModel != null ? vehicleModel.getVehicleType() : null)
@@ -122,9 +133,17 @@ public class DeliveryPersonService {
                 .collect(Collectors.toList());
     }
 
-    public ResponseEntity<DeliveryPersonModel> getAvailableDeliveryPerson(){
+    public ResponseEntity<DeliveryPersonResponse> getAvailableDeliveryPerson(){
         List<DeliveryPersonModel> deliveryPersons = deliveryPersonRepository.findAll();
 
+        for (int i = 0; i < deliveryPersons.size(); i++) {
+            DeliveryPersonModel model  = deliveryPersons.get(i);
+            if(model.getAvailability()==DELIVER_AVAILABILITY.AVAILABLE && model.st)
+        }
+        DeliveryPersonResponse response = DeliveryPersonResponse.builder()
+                .id(deliveryPersons.get(0).getId())
+                .build();
+        return ResponseEntity.ok(response);
 
     }
 }
