@@ -31,12 +31,15 @@ const Product = () => {
                 setSelectedProduct(item);
                 setOpenProductModel(true);
               }}>
-                <BsCartCheck className='add-to-category'/>
               <img src={Food}/>
               <div className="tag">
               <span>Rice</span>
+              <div className="right-info">
               <span>Rs. 100</span>
+              <div className='add-to-cart'><span>Add to cart</span> <BsCartCheck/></div>
+             
               </div>
+               </div>
             </div>
             )
           }
