@@ -22,15 +22,8 @@ public class Feedback implements Serializable {
 
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "customerId")
-    private Customer customer;
+    private long customerId;
 
-    @JsonIgnore
-    public Customer getCustomer() { return customer; }
+    private long deliveryPersonId;
 
-    @JsonIgnore
-    public void setCustomer(Customer customer) { this.customer = customer; }
-
-    public Long getCustomerId() { return customer.getCustomerId(); }
 }

@@ -14,5 +14,6 @@ public class CartDTO {
     private int noOfItem;
     private double totalPrice;
     private long customerId;
+    private double point;
     private List<CartItemDTO> items;
 }

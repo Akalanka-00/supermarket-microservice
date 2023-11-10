@@ -1,10 +1,7 @@
 package com.flashmart.customer.controller;
 
-import com.flashmart.customer.dto.CartDTO;
 import com.flashmart.customer.dto.FeedbackDTO;
-import com.flashmart.customer.dto.ItemDTO;
 import com.flashmart.customer.model.Feedback;
-import com.flashmart.customer.service.CustomerCartService;
 import com.flashmart.customer.service.CustomerFeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,10 +35,16 @@ public class CustomerFeedbackController {
         return customerFeedbackService.getFeedbackByCustomerId(customerId);
     }
 
+    // get feedbacks by deliveryPersonId
+    @GetMapping("/getDeliveryPersonFeedback/{cdeliveryPersonId}")
+    public List<Feedback> getFeedbackByDeliveryPersonId(@PathVariable Long cdeliveryPersonId){
+        return customerFeedbackService.getFeedbackByDeliveryPersonId(cdeliveryPersonId);
+    }
+
     // give new feedback
-    @PostMapping("/giveFeedback/{customerId}")
-    public Feedback createFeedback( @PathVariable Long customerId, @RequestBody FeedbackDTO feedbackDTO ) {
-        return customerFeedbackService.createFeedback(customerId, feedbackDTO);
+    @PostMapping("/giveFeedback/{customerId}/{deliveryPersonId}")
+    public Feedback createFeedback( @PathVariable Long customerId, @PathVariable Long deliveryPersonId, @RequestBody FeedbackDTO feedbackDTO ) {
+        return customerFeedbackService.createFeedback(customerId, deliveryPersonId, feedbackDTO);
     }
 
     // Update an existing feedback

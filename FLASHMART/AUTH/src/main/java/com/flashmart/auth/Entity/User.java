@@ -11,7 +11,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long userid;
     @Column(name = "userType",length = 10)
-    private int type;//1000- admin , 1010- normalUser
+    private int type;//1000- admin , 1010- normalUser, 1011- deliveryPerson
     @Column(name="user_fname", length = 255)
     private String userfname;
     @Column(name="user_lname", length = 255)

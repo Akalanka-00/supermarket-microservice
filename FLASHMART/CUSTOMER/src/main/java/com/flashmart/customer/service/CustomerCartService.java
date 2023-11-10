@@ -47,6 +47,7 @@ public class CustomerCartService {
         cart.setCustomerId(customerId);
         cart.setNoOfItem(0);
         cart.setTotalPrice(0);
+        cart.setPoint(10);
         customerCartRepository.save(cart);
         return "New Cart added to " + customerId;
     }
@@ -409,6 +410,7 @@ public class CustomerCartService {
         cartDTO.setNoOfItem(noOfItem);
         cartDTO.setTotalPrice(totalPrice);
         cartDTO.setCustomerId(cart.getCustomerId());
+        cartDTO.setPoint(cart.getPoint());
         cartDTO.setItems(itemDTOList);
 
         return cartDTO;

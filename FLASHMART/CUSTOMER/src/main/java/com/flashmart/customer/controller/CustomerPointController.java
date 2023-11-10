@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/point")
 public class CustomerPointController {
 
-//    @Autowired
-//    private CustomerPointService customerPointService;
-//
-//    // get discounts by customerId
-//    @GetMapping("/getPoints/{customerId}")
-//    public PointDTO getPointByCustomerId(@PathVariable Long customerId){
-//        return customerPointService.getPointByCustomerId(customerId);
-//    }
+    @Autowired
+    private CustomerPointService customerPointService;
+
+    // get discounts by customerId
+    @GetMapping("/getPoints/{customerId}")
+    public PointDTO getPointByCustomerId(@PathVariable Long customerId){
+        return customerPointService.getPointByCustomerId(customerId);
+    }
 
 }

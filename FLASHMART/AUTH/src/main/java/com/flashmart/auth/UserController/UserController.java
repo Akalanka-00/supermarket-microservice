@@ -32,27 +32,32 @@ public class UserController {
     private UserRepo userRepo;
 
     @PostMapping(path = "/save")
-    public String saveUser(@RequestBody UserDTO userDTO)
-    {
-        User user = userService.addUser(userDTO);
+    public String saveUser(@RequestBody UserDTO userDTO) {
 
-        if(userDTO.getType()==1010){
-        try {
-            List<User> users = getAllUsers();
-            for(User newUser:users){
-                if(newUser.getEmail() == userDTO.getEmail()){
-                    return "Already Registered. User ID: " + user.getUserid();
-                }
+        List<User> users = getAllUsers();
+        for (User user : users) {
+            if (user.getEmail() == userDTO.getEmail()) {
+                return "Already Registered";
             }
-            ResponseDTO responseDTO = microServicesConnectorService.fetchAPI("http://localhost:8080/api/v1/cart/setCart", user.getUserid(), ResponseDTO.class);
-            return ("New Customer Registration Successful. Customer ID: " + user.getUserid() +
-                    "\n" + responseDTO.getMessage());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
+
+        User newUser = userService.addUser(userDTO);
+
+        if (userDTO.getType() == 1000) {
+            return ("Admin Registration Successful. User ID: " + newUser.getUserid());
+        } else if (userDTO.getType() == 1011) {
+            return ("Delivery Person Registration Successful. User ID: " + newUser.getUserid());
+        } else {
+            try {
+                ResponseDTO responseDTO = microServicesConnectorService.fetchAPI("http://localhost:8080/api/v1/cart/setCart", newUser.getUserid(), ResponseDTO.class);
+                return ("New Customer Registration Successful. Customer ID: " + newUser.getUserid() +
+                        "\n" + responseDTO.getMessage());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
-        return ("Admin Registration Successful. User ID: " + user.getUserid());
     }
+
 
     @PostMapping(path = "/login")
     public ResponseEntity<?> loginEmployee(@RequestBody LoginDTO loginDTO)

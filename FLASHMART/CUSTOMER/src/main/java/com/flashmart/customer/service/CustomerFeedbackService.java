@@ -2,10 +2,8 @@ package com.flashmart.customer.service;
 
 import com.flashmart.customer.dto.FeedbackDTO;
 import com.flashmart.customer.exception.ResourceNotFoundException;
-import com.flashmart.customer.model.Customer;
 import com.flashmart.customer.model.Feedback;
 import com.flashmart.customer.repository.CustomerFeedbackRepository;
-import com.flashmart.customer.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,12 +16,9 @@ public class CustomerFeedbackService {
     @Autowired
     private final CustomerFeedbackRepository customerFeedbackRepository;
 
-    @Autowired
-    private final CustomerRepository customerRepository;
 
-    public CustomerFeedbackService(CustomerFeedbackRepository customerFeedbackRepository, CustomerRepository customerRepository) {
+    public CustomerFeedbackService(CustomerFeedbackRepository customerFeedbackRepository) {
         this.customerFeedbackRepository = customerFeedbackRepository;
-        this.customerRepository = customerRepository;
     }
 
     public List<Feedback> getAllFeedbacks(){
@@ -42,14 +37,19 @@ public class CustomerFeedbackService {
         return feedbacks;
     }
 
-    public Feedback createFeedback(Long customerId, FeedbackDTO feedbackDTO) {
+    public List<Feedback> getFeedbackByDeliveryPersonId(Long customerId) {
+        List<Feedback> feedbacks = customerFeedbackRepository.findFeedbacksByDeliveryPersonId(customerId);
+        return feedbacks;
+    }
 
-        Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() -> new ResourceNotFoundException("The Customer does not exist with ID: " + customerId));;
+
+    public Feedback createFeedback(Long customerId, Long deliverPersonId, FeedbackDTO feedbackDTO) {
+
         Feedback newFeedback = new Feedback();
         newFeedback.setRating(feedbackDTO.getRating());
         newFeedback.setDescription(feedbackDTO.getDescription());
-        newFeedback.setCustomer(customer);
+        newFeedback.setCustomerId(customerId);
+        newFeedback.setDeliveryPersonId(deliverPersonId);
 
         return customerFeedbackRepository.save(newFeedback);
     }
