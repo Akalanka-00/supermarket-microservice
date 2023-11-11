@@ -13,6 +13,7 @@ import java.util.Date;
 @Data
 public class DeliveryPersonAllDetailsResponse {
     private String id;
+    private int userID;
     private int availability;
     private double rating;
     private double latitude;

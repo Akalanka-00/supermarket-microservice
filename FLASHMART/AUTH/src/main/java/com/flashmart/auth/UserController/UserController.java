@@ -51,25 +51,34 @@ public class UserController {
         if (userDTO.getType() == 1000) {
             return ("Admin Registration Successful. User ID: " + newUser.getUserid());
         } else if (userDTO.getType() == 1011) {
+//            try {
+//                ObjectMapper objectMapper = new ObjectMapper();
+//
+//                Map<String, Object> jsonMap = new HashMap<>();
+//                jsonMap.put("availability", 1000);
+//                jsonMap.put("vehicleID", null);
+//                jsonMap.put("latitude", 0);
+//                jsonMap.put("longitude", 0);
+//                jsonMap.put("lastUpdatedTime",null );
+//                jsonMap.put("total_rating", 0);
+//                jsonMap.put("no_of_rated_users", 0);
+//
+//                String jsonInputString = objectMapper.writeValueAsString(jsonMap);
+//                System.out.println(jsonInputString);
+//                //http://localhost:8084/api/delivery/user/newUser
+//                ResponseDTO responseDTO = microServicesConnectorService.fetchAPI("http://localhost:8084/api/delivery/user/newUser", newUser.getUserid(), ResponseDTO.class);
+//                return ("Delivery Person Registration Successful. User ID: " + newUser.getUserid() +
+//                        "\n" + responseDTO.getMessage());
+//
+//            } catch (Exception e) {
+//                throw new RuntimeException(e);
+//            }
+
             try {
-                ObjectMapper objectMapper = new ObjectMapper();
-
-                Map<String, Object> jsonMap = new HashMap<>();
-                jsonMap.put("availability", 1000);
-                jsonMap.put("vehicleID", null);
-                jsonMap.put("latitude", 0);
-                jsonMap.put("longitude", 0);
-                jsonMap.put("lastUpdatedTime",null );
-                jsonMap.put("total_rating", 0);
-                jsonMap.put("no_of_rated_users", 0);
-
-                String jsonInputString = objectMapper.writeValueAsString(jsonMap);
-
-                ResponseDTO responseDTO = microServicesConnectorService.postAPI("http://localhost:8080/api/delivery/user", jsonInputString, ResponseDTO.class);
-                return ("Delivery Person Registration Successful. User ID: " + newUser.getUserid() +
+                ResponseDTO responseDTO = microServicesConnectorService.fetchAPI("http://localhost:8084/api/delivery/user/newUser", newUser.getUserid(), ResponseDTO.class);
+                return ("New Delivery Registration Successful. Customer ID: " + newUser.getUserid() +
                         "\n" + responseDTO.getMessage());
-
-            } catch (JsonProcessingException | URISyntaxException e) {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 

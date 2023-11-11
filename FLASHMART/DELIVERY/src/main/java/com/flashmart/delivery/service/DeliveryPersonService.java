@@ -26,16 +26,18 @@ public class DeliveryPersonService {
 
     private final DeliveryPersonRepository deliveryPersonRepository;
     private final VehicleRepository vehicleRepository;
-     public void newDeliveryPerson(DeliveryPersonRequest request){
+     public String newDeliveryPerson(int id){
          DeliveryPersonModel model = DeliveryPersonModel.builder()
                      .availability(DELIVER_AVAILABILITY.UNAVAILABLE)
-                     .vehicleID(request.getVehicleID())
+                     .vehicleID(null)
+                 .userID(id)
                  .latitude(0)
                  .longitude(0)
                  .lastUpdatedTime(null)
                      .build();
 
          deliveryPersonRepository.save(model);
+         return "Delivery User saved";
      }
 
      public String changeAvailability(String id){
