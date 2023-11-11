@@ -30,11 +30,11 @@ public class KafkaServiceApplication {
         SpringApplication.run(KafkaServiceApplication.class, args);
 
     }
-@EventListener(ApplicationReadyEvent.class)
-    public void sendEmail(){
-        emailService.sendEmail("shenalakalanka513@gmail.com","hii","This is from the main class");
-        log.info("Email sent");
-}
+//@EventListener(ApplicationReadyEvent.class)
+//    public void sendEmail(){
+//        emailService.sendEmail("dularadinuli@gmail.com","hii","This is from the main class");
+//        log.info("Email sent");
+//}
 
 
     @KafkaListener(topics = KAFKA_HEADERS.NOTIFICATION)

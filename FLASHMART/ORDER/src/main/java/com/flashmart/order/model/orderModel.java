@@ -42,10 +42,10 @@ public class orderModel {
         return order_status;
     }
 
-    @JsonIgnore
+
     public payment getPayment() { return Payment; }
 
-    @JsonIgnore
+
     public void setPayment(payment payment) { Payment = payment; }
 
     public long getPaymentid() { return Payment.getPaymentId(); }
