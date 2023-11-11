@@ -1,6 +1,7 @@
 package com.flashmart.order.service;
 
 import com.flashmart.order.dto.PaymentDTO;
+import com.flashmart.order.model.orderModel;
 import com.flashmart.order.model.payment;
 import com.flashmart.order.repository.PaymentRepository;
 import com.flashmart.order.util.VarList;
@@ -10,6 +11,8 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +22,10 @@ public class PaymentService {
 
     @Autowired
     private PaymentRepository paymentRepository;
+
+    @Autowired
+    private OrderService orderService;
+
     @Autowired
     private ModelMapper modelMapper;
 
@@ -26,7 +33,16 @@ public class PaymentService {
         if(paymentRepository.existsById(paymentDTO.getPaymentId())) {
             return VarList.RSP_DUPLICATED;
         } else {
-            paymentRepository.save(modelMapper.map(paymentDTO, payment.class));
+            orderService.decreaseInventoryProducts(paymentDTO.getOrderId());
+            orderService.createDeliveryEntry(paymentDTO.getOrderId());
+            payment Payment = paymentRepository.save(modelMapper.map(paymentDTO, payment.class));
+            orderModel OrderModel = orderService.getOrderById(paymentDTO.getOrderId()).orElse(null);
+            OrderModel.setPayment(Payment);
+            OrderModel.setOrdered_date(String.valueOf(LocalDate.now()));
+            OrderModel.setOrdered_time(String.valueOf(LocalTime.now()));
+            OrderModel.setOrder_status(true);
+
+            orderService.updateOrder(OrderModel.getOrderid(),OrderModel);
             return VarList.RSP_SUCCESS;
         }
     }

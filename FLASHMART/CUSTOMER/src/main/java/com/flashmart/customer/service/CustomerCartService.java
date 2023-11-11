@@ -384,7 +384,39 @@ public class CustomerCartService {
         return ResponseEntity.ok(updatedCartDTO);
     }
 
+    public List<String> checkCartAvailability(Long customerId ) {
+        List<String> unavailableItems = new ArrayList<>();
+        List<String> allItemsAvailable = new ArrayList<>();
+        CartDTO cartDTO = getCartById(customerId).getBody();
+        List<CartItemDTO> cartItemsDTOS = cartDTO.getItems();
+
+        for (CartItemDTO cartItemDTO : cartItemsDTOS) {
+
+            try {
+                ProductDTO productDTO = microServicesConnectorService.fetchAPI("http://localhost:8082/api/inventory/productById",cartItemDTO.getItemCode(), ProductDTO.class);
+            if (productDTO == null) {
+                unavailableItems.add(productDTO.getItemName() + ": Item not found in inventory");
+            } else if (productDTO.getNoOfProducts() < cartItemDTO.getQuantity()) {
+                unavailableItems.add(productDTO.getItemName() + ": Insufficient quantity in inventory");
+            }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (!unavailableItems.isEmpty()) {
+            return unavailableItems;
+        }
+        allItemsAvailable.add("All Items are Available. Proceed to checkout");
+        return allItemsAvailable;
+    }
+
+
     public String proceedCartToOrder(Long customerId) {
+
+        List<String> response = checkCartAvailability(customerId);
+        if(response.contains("All Items are Available. Proceed to checkout")){
+
         CartDTO cartDTO = getCartByCustomerId(customerId).getBody();
         PointDTO pointDTO = customerPointService.getPointByCustomerId(customerId);
 
@@ -406,6 +438,9 @@ public class CustomerCartService {
 
         } catch (JsonProcessingException | URISyntaxException e) {
             throw new RuntimeException(e);
+        }
+        }else{
+            return "Some Products are Out of Stock";
         }
     }
 

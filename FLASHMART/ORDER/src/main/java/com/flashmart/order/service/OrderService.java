@@ -1,9 +1,8 @@
 package com.flashmart.order.service;
 
-import com.flashmart.order.dto.OrderDTO;
-import com.flashmart.order.dto.OrderedItem;
-import com.flashmart.order.dto.OrderedItemDTO;
-import com.flashmart.order.dto.ProductDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.flashmart.order.dto.*;
 import com.flashmart.order.model.orderModel;
 import com.flashmart.order.repository.OrderRepository;
 import com.flashmart.order.exception.EntityNotFoundException;
@@ -11,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
+import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.*;
 
 @Service
 public class OrderService {
@@ -30,7 +31,65 @@ public class OrderService {
 
 
     public String orderArrival(OrderDTO orderDTO) {
+        orderModel order = new orderModel();
+        List<OrderedItem> orderedItem = new ArrayList<>();
+        order.setCusid(orderDTO.getCustomerId());
+        order.setDeliver_address(null);
+        order.setPrice(orderDTO.getTotalPrice()-orderDTO.getDiscounts());
+        order.setDeliver_cost(0);
+        order.setOrder_status(false);
+        order.setDeliverid(null);
+
+        for(CartItemDTO cartItemDTO:orderDTO.getItems()){
+            OrderedItem newOrderedItem = new OrderedItem();
+            newOrderedItem.setProductId(cartItemDTO.getItemCode());
+            newOrderedItem.setQuantity(cartItemDTO.getQuantity());
+            orderedItem.add(newOrderedItem);
+        }
+
+        order.setOrderedItems(orderedItem);
+        createOrder(order);
+
         return "Order Received!";
+    }
+
+    public void decreaseInventoryProducts(Long orderId) {
+        orderModel order = getOrderById(orderId).orElse(null);
+        List<OrderedItem> orderedItems = order.getOrderedItems();
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            List<OrderedItemDTO> orderedItemDTOList = new ArrayList<>();
+            for (OrderedItem orderedItem : orderedItems) {
+                OrderedItemDTO orderedItemDTO = new OrderedItemDTO();
+                orderedItemDTO.setItemCode(orderedItem.getProductId());
+                orderedItemDTO.setNoOfProducts(orderedItem.getQuantity());
+                orderedItemDTOList.add(orderedItemDTO);
+            }
+
+            String jsonInputString = objectMapper.writeValueAsString(orderedItemDTOList);
+
+            microServicesConnectorService.postAPI("http://localhost:8082/api/inventory/decrease", jsonInputString, Void.class);
+
+        } catch (JsonProcessingException | URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void createDeliveryEntry(Long orderId) {
+        DeliveryEntryRequest request = new DeliveryEntryRequest();
+        request.setOrderId(String.valueOf(orderId));
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            String jsonInputString = objectMapper.writeValueAsString(request);
+
+            microServicesConnectorService.postAPI("http://localhost:8084/api/delivery", jsonInputString, Void.class);
+
+        } catch (JsonProcessingException | URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public orderModel createOrder(orderModel order) {
@@ -59,7 +118,6 @@ public class OrderService {
             orderToUpdate.setOrder_status(updatedOrder.isOrder_status());
             orderToUpdate.setOrdered_date(updatedOrder.getOrdered_date());
             orderToUpdate.setOrdered_time(updatedOrder.getOrdered_time());
-            orderToUpdate.setPaymentid(updatedOrder.getPaymentid());
             orderToUpdate.setDeliverid(updatedOrder.getDeliverid());
             return orderRepository.save(orderToUpdate);
         } else {
@@ -99,7 +157,7 @@ public class OrderService {
     public orderModel addOrderedItemToOrder(Long orderId, OrderedItemDTO orderedItemDTO) {
         orderModel order = orderRepository.findById(orderId).orElse(null);
         try {
-            ProductDTO productDTO = microServicesConnectorService.fetchAPI("http://localhost:8082/api/inventory/productById", orderedItemDTO.getProductId(), ProductDTO.class);
+            ProductDTO productDTO = microServicesConnectorService.fetchAPI("http://localhost:8082/api/inventory/productById", orderedItemDTO.getItemCode(), ProductDTO.class);
 
             if (order != null && productDTO != null) {
                 OrderedItem orderedItem = new OrderedItem();

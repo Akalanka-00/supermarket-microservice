@@ -30,7 +30,7 @@ public class DeliveryEntryService {
                 .orderId(request.getOrderId())
                 .pickedUpTime(null)
                 .deliveredTime(null)
-                .build();
+                .status(10120).build();
 
         deliveryEntryRepository.save(model);
 

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Data
 public class PaymentDTO {
     private int paymentId;
-    private int orderId;
+    private long orderId;
     private double paymentAmount;
     private String paymentType;
     private LocalDateTime dateAndTime;
