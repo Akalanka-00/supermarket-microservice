@@ -65,9 +65,8 @@ public class UserController {
 
                 String jsonInputString = objectMapper.writeValueAsString(jsonMap);
 
-                ResponseDTO responseDTO = microServicesConnectorService.postAPI("http://localhost:8080/api/delivery/user", jsonInputString, ResponseDTO.class);
-                return ("Delivery Person Registration Successful. User ID: " + newUser.getUserid() +
-                        "\n" + responseDTO.getMessage());
+                microServicesConnectorService.postAPI("http://localhost:8084/api/delivery/user", jsonInputString, Void.class);
+                return ("Delivery Person Registration Successful. User ID: " + newUser.getUserid());
 
             } catch (JsonProcessingException | URISyntaxException e) {
                 throw new RuntimeException(e);

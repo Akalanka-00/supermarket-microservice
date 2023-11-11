@@ -28,12 +28,12 @@ public class DeliveryPersonService {
     private final VehicleRepository vehicleRepository;
      public void newDeliveryPerson(DeliveryPersonRequest request){
          DeliveryPersonModel model = DeliveryPersonModel.builder()
-                     .availability(DELIVER_AVAILABILITY.UNAVAILABLE)
-                     .vehicleID(request.getVehicleID())
+                 .availability(DELIVER_AVAILABILITY.UNAVAILABLE)
+                 .vehicleID(request.getVehicleID())
                  .latitude(0)
                  .longitude(0)
                  .lastUpdatedTime(null)
-                     .build();
+                 .total_rating(0).no_of_rated_users(0).build();
 
          deliveryPersonRepository.save(model);
      }
