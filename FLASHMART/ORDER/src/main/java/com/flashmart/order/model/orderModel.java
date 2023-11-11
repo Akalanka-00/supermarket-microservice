@@ -48,6 +48,9 @@ public class orderModel {
     @JsonIgnore
     public void setPayment(payment payment) { Payment = payment; }
 
+    public long getPaymentid() { return Payment.getPaymentId(); }
+
+
     public List<OrderedItem> getOrderedItems() { return orderedItems; }
 
     public void setOrderedItems(List<OrderedItem> orderedItems) { this.orderedItems = orderedItems;}

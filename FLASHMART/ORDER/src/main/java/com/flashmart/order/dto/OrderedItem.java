@@ -20,7 +20,7 @@ public class OrderedItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
+
     @JoinColumn (name = "orderId", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne
@@ -31,10 +31,10 @@ public class OrderedItem {
 
     private Integer quantity;
 
-    @JsonIgnore
+
     public orderModel getOrder() {return order;}
 
-    @JsonIgnore
+
     public void setOrder(orderModel order) {this.order = order;}
 
 }

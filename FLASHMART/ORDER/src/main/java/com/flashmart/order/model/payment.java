@@ -26,10 +26,10 @@ public class payment {
     private String paymentType;
     private LocalDateTime dateAndTime;
 
-@JsonIgnore
+
     public orderModel getOrderModel() { return OrderModel;}
 
-@JsonIgnore
+
     public void setOrderModel(orderModel orderModel) { OrderModel = orderModel;}
 
 }
