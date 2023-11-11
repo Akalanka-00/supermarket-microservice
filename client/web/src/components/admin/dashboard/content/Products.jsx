@@ -5,7 +5,8 @@ import ProductModal from '../../../modals/ProductModal';
 
 const Products = () => {
   const {id} = useParams();
-  const category = categoryItems[id];
+  const category = categoryItems.find((element) => element.id === id);
+  console.log(category)
   const containerStyle = {
     background: `url(${category.image}) no-repeat center center fixed`,
     backgroundSize: 'cover',
@@ -23,8 +24,8 @@ const Products = () => {
         <div className="bg-filter">
          <div className="title"> {category.name}</div>
          <div className="product-info-header">
-          <div className="no-of-products"><div className="name">No. of Products:</div> <div className="value">{category.noOfProducts}</div></div>
-          <div className="no-of-products"><div className="name">No. of Products in Stock: </div><div className="value">{category.noOfProducts}</div></div>
+          <div className="no-of-products"><div className="name">No. of Products:</div> <div className="value">{productItems.filter((pitem)=>pitem.category===category.id).length}</div></div>
+          <div className="no-of-products"><div className="name">No. of Products in Stock: </div><div className="value">{productItems.filter((pitem)=>pitem.category===category.id && pitem.quantity>0).length}</div></div>
 
          </div>
         </div>
@@ -48,13 +49,13 @@ const Products = () => {
                   </div>
                   <div className="data">
                     <div className="name">Available Quantity: </div>
-                    <div className="value"> 1532 </div>
+                    <div className="value"> {item.quantity} </div>
                   </div>
                 </div>
                 </div>
                 <div className="status">
                     <div className="name">Status: </div>
-                    <div className="value">In Stock</div>
+                    <div className="value">{item.quantity?"In Stock":"Out of Stock"}</div>
                   </div>
 
                   <div className="options">

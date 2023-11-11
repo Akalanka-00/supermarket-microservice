@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { categoryItems } from "../../../../context/Products";
+import { categoryItems, productItems } from "../../../../context/Products";
 import {BsPencil} from "react-icons/bs";
 import {AiOutlineEye} from "react-icons/ai"
 import { useNavigate } from "react-router-dom";
@@ -11,7 +11,8 @@ const Category = () => {
   const openCategoryModal = ()=>setModalOpen(true);
 
   const closeCategoryModal = ()=>setModalOpen(false);
-  const [category, setCategory] = useState({ name: "", image: null, noOfProducts:0})
+  const [category, setCategory] = useState(  { name: "", image: "", id:""},
+  )
   return (
     <section className="category-container">
       <div className="header">
@@ -30,7 +31,7 @@ const Category = () => {
 
             <div className="data">
               <div className="name">No. of products: </div>
-              <div className="value">15 </div>
+              <div className="value">{productItems.filter((pitem)=>pitem.category===item.id).length} </div>
             </div>
 
           
@@ -39,7 +40,7 @@ const Category = () => {
                 setCategory(item);
                 openCategoryModal();
               }}><span>Edit</span> </div>
-              <div className="btn option" onClick={()=>navigate(`/admin/dashboard/category/${index}`)}><span>View</span> </div>
+              <div className="btn option" onClick={()=>navigate(`/admin/dashboard/category/${item.id}`)}><span>View</span> </div>
               </div>
           </div>
         ))}

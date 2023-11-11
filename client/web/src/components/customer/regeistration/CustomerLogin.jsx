@@ -3,6 +3,7 @@ import DeliveryPerson from "../../../assets/images/deliveryPerson1.jpg"
 import LOGO from "../../../assets/icons/logo.png"
 import "../../../styles/customer/login.css"
 import { useNavigate } from 'react-router-dom'
+import baseUrl from '../../../Apis/baseUrl'
 const CustomerLogin = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
@@ -26,13 +27,21 @@ const CustomerLogin = () => {
       setPassword(enteredPassword);
     };
 
-    const handleLoginClick = () =>{
+    const handleLoginClick = async (e) =>{
+      e.preventDefault();
       const data = {
         email,
         password,
       };
 
-      console.log(data);
+      try {
+        const res = await baseUrl.post("/user/login", data);
+        console.log(res.data);
+        console.log(res.status)
+      } catch (error) {
+        console.log(error);
+      }
+
     }
 
     // const handleSubmit = async (event) => {
@@ -75,10 +84,10 @@ const CustomerLogin = () => {
         <div><span>S</span>elect</div> <div><span>B</span>uy</div> <div><span>D</span>eliver</div>
       </div>
 
-      <form action="" className="login-form">
+      <form action="" className="login-form" onSubmit={handleLoginClick}>
         <input type="email" name="email" className="field" required placeholder='Enter your email'onChange={handleEmailChange}/>
         <input type="password" name="password" className="field" required placeholder='Enter your password'onChange={handlePasswordChange}/>
-        <button type="submit" className="btn input-btn" onClick={handleLoginClick}>Login</button>
+        <button type="submit" className="btn input-btn" >Login</button>
         <div className="login-options">Don't have an FLashMart account? <span onClick={()=>navigate("/customer/register")}>Register</span></div>
       </form>
       </div>

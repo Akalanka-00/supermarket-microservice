@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "**")
 @RequestMapping("user")
 
 public class UserController {
@@ -34,6 +34,7 @@ public class UserController {
     @PostMapping(path = "/save")
     public String saveUser(@RequestBody UserDTO userDTO) {
 
+        System.out.println(userDTO);
         List<User> users = getAllUsers();
         for (User user : users) {
             if (user.getEmail().equals(userDTO.getEmail())) {

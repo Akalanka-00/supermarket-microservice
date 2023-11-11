@@ -4,8 +4,8 @@ public class UserDTO {
 
     private long userid;
     private int type;
-    private String userfname;
-    private String userlname;
+    private String fname;
+    private String lname;
     private String mobile;
     private String email;
     private String password;
@@ -13,8 +13,8 @@ public class UserDTO {
     public UserDTO(long userid, int userType, String userfname, String userlname, String mobile, String email, String password) {
         this.userid = userid;
         this.type = userType;
-        this.userfname = userfname;
-        this.userlname = userlname;
+        this.fname = userfname;
+        this.lname = userlname;
         this.mobile = mobile;
         this.email = email;
         this.password = password;
@@ -40,19 +40,19 @@ public class UserDTO {
     }
 
     public String getUserfname() {
-        return userfname;
+        return fname;
     }
 
     public void setUserfname(String userfname) {
-        this.userfname = userfname;
+        this.fname = fname;
     }
 
     public String getUserlname() {
-        return userlname;
+        return lname;
     }
 
     public void setUserlname(String userlname) {
-        this.userlname = userlname;
+        this.lname = userlname;
     }
 
     public String getMobile() {
@@ -84,8 +84,8 @@ public class UserDTO {
         return "UserDTO{" +
                 "userid=" + userid +
                 ", userType=" + type +
-                ", userfname='" + userfname + '\'' +
-                ", userlname='" + userlname + '\'' +
+                ", userfname='" + lname + '\'' +
+                ", userlname='" + lname + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +

@@ -5,7 +5,7 @@ import MapICon from "../../../assets/icons/location.png";
 import estimateTravelTime, { FlashMartLocation } from "../../../helper/distance";
 import SelectLocationModal from "../../modals/SelectLocationModal";
 import Swal from "sweetalert2";
-const CheckOut = () => {
+const CheckOut = ({price}) => {
   const navigate = useNavigate();
   const [paymentMethod, setPaymentMethod] = useState("creditDebit");
   const [lat, setLat] = useState("");
@@ -17,6 +17,7 @@ const CheckOut = () => {
     averageSpeed: 0,
     estimatedTime: 0,
   });
+  const discount = 100;
   const API_key = "1b3f1718d7b11482ccd6e7166344da2f";
   const endPoint = `https://api.openweathermap.org/data/2.5/weather?`;
   const [modalOpen, setModalOpen] = useState(false);
@@ -158,17 +159,17 @@ const CheckOut = () => {
 
         <div className="name-value">
           <div className="name">Amount</div>
-          <div className="value">Rs. 1000</div>
+          <div className="value">Rs. {price}</div>
         </div>
 
         <div className="name-value">
           <div className="name">Discount</div>
-          <div className="value">Rs. 100</div>
+          <div className="value">Rs. {discount}</div>
         </div>
 
         <div className="name-value">
           <div className="name">Total Amount</div>
-          <div className="value">Rs. 900</div>
+          <div className="value">Rs. {price-discount}</div>
         </div>
 
         <div className="btn pay-btn" onClick={handlePayNowClick}>

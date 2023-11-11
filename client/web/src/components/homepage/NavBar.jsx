@@ -5,10 +5,11 @@ import LOGO from "../../assets/icons/logo.png"
 import {BsCartCheck} from "react-icons/bs"
 import Avatar from "../../assets/icons/profile.png"
 import { useNavigate, useParams } from "react-router-dom";
+import { getToken } from '../../helper/auth';
 
 const NavBar = () => {
 
-  const [isUser, setAsUser] = useState(true);
+  const isUser = !getToken();
 
   const navigate = useNavigate();
   return (

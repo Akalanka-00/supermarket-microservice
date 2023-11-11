@@ -1,0 +1,5 @@
+const USER_TYPES = 
+    {CUSTOMER:1010, DELIVERY_PERSON:1011, ADMIN:1012 }
+;
+
+export default USER_TYPES
