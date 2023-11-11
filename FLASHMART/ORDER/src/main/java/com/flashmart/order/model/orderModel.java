@@ -3,6 +3,7 @@ package com.flashmart.order.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.flashmart.order.dto.OrderedItem;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +19,7 @@ public class orderModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long orderid;
+
     private long cusid;
     private String deliver_address;
     private double price;
@@ -27,8 +29,8 @@ public class orderModel {
     private String ordered_time;
 
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "paymentId", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "paymentId")
     private payment Payment;
 
     private String deliverid;
@@ -40,11 +42,11 @@ public class orderModel {
         return order_status;
     }
 
+    @JsonIgnore
     public payment getPayment() { return Payment; }
 
+    @JsonIgnore
     public void setPayment(payment payment) { Payment = payment; }
-
-    public long getPaymentid() { return Payment.getPaymentId(); }
 
     public List<OrderedItem> getOrderedItems() { return orderedItems; }
 

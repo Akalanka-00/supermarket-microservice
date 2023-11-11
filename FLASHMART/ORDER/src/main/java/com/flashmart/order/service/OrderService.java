@@ -4,14 +4,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flashmart.order.dto.*;
 import com.flashmart.order.model.orderModel;
+import com.flashmart.order.model.payment;
 import com.flashmart.order.repository.OrderRepository;
 import com.flashmart.order.exception.EntityNotFoundException;
+import com.flashmart.order.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -35,12 +38,19 @@ public class OrderService {
         List<OrderedItem> orderedItem = new ArrayList<>();
         order.setCusid(orderDTO.getCustomerId());
         order.setDeliver_address(null);
-        order.setPrice(orderDTO.getTotalPrice()-orderDTO.getDiscounts());
+        order.setPrice(orderDTO.getTotalPrice() - orderDTO.getDiscounts());
         order.setDeliver_cost(0);
         order.setOrder_status(false);
         order.setDeliverid(null);
 
-        for(CartItemDTO cartItemDTO:orderDTO.getItems()){
+        payment payment = new payment();
+        payment.setPaymentAmount(orderDTO.getTotalPrice()-orderDTO.getDiscounts());
+        payment.setPaymentType(null);
+        payment.setDateAndTime(null);
+
+        order.setPayment(payment);
+
+        for (CartItemDTO cartItemDTO : orderDTO.getItems()) {
             OrderedItem newOrderedItem = new OrderedItem();
             newOrderedItem.setProductId(cartItemDTO.getItemCode());
             newOrderedItem.setQuantity(cartItemDTO.getQuantity());
@@ -52,6 +62,7 @@ public class OrderService {
 
         return "Order Received!";
     }
+
 
     public void decreaseInventoryProducts(Long orderId) {
         orderModel order = getOrderById(orderId).orElse(null);
@@ -93,7 +104,6 @@ public class OrderService {
     }
 
     public orderModel createOrder(orderModel order) {
-        // Implement order creation logic here
         return orderRepository.save(order);
     }
 
@@ -110,7 +120,7 @@ public class OrderService {
 
         if (existingOrder.isPresent()) {
             orderModel orderToUpdate = existingOrder.get();
-            // Update the order details
+
             orderToUpdate.setCusid(updatedOrder.getCusid());
             orderToUpdate.setDeliver_address(updatedOrder.getDeliver_address());
             orderToUpdate.setPrice(updatedOrder.getPrice());

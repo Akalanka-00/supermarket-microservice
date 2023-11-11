@@ -20,20 +20,21 @@ public class MicroServicesConnectorService {
         this.restTemplate = restTemplate;
     }
 
-    public <T> T postAPI(String apiUrl, Object request, Class<T> responseType) throws URISyntaxException {
+    public <T> T postAPI(String url, String requestBody, Class<T> responseType) throws URISyntaxException {
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
 
-        HttpEntity<Object> httpEntity = new HttpEntity<>(request, headers);
+        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
 
-        ResponseEntity<String> responseEntity = restTemplate.exchange(new URI(apiUrl), HttpMethod.POST, (org.springframework.http.HttpEntity<?>) httpEntity, String.class);
+        ResponseEntity<String> responseEntity = restTemplate.exchange(new URI(url), HttpMethod.POST, requestEntity, String.class);
 
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            return mapper.readValue(responseEntity.getBody(), responseType);
-        } catch (IOException e) {
-            throw new RuntimeException("Error parsing JSON response", e);
+        // Check if the response body is null
+        if (responseEntity.getBody() == null) {
+            return null;  // Or handle it according to your requirements
         }
+
+        // Deserialize the response body
+        return restTemplate.postForObject(url, requestEntity, responseType);
     }
 
     public static <T> T fetchAPI(URL url, Class<T> type) throws IOException {

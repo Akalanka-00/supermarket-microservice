@@ -19,7 +19,6 @@ public class payment {
     private int paymentId;
 
     @OneToOne(fetch = FetchType.LAZY,
-            cascade =  CascadeType.ALL,
             mappedBy = "Payment")
     private orderModel OrderModel;
 
@@ -27,10 +26,11 @@ public class payment {
     private String paymentType;
     private LocalDateTime dateAndTime;
 
-    @JsonIgnore
+@JsonIgnore
     public orderModel getOrderModel() { return OrderModel;}
 
-    @JsonIgnore
+@JsonIgnore
     public void setOrderModel(orderModel orderModel) { OrderModel = orderModel;}
+
 }
 
