@@ -1,5 +1,7 @@
 package com.flashmart.auth.UserController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flashmart.auth.Entity.User;
 import com.flashmart.auth.Repo.UserRepo;
 import com.flashmart.auth.Service.MicroServicesConnectorService;
@@ -14,8 +16,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -46,8 +51,30 @@ public class UserController {
         if (userDTO.getType() == 1000) {
             return ("Admin Registration Successful. User ID: " + newUser.getUserid());
         } else if (userDTO.getType() == 1011) {
-            return ("Delivery Person Registration Successful. User ID: " + newUser.getUserid());
+            try {
+                ObjectMapper objectMapper = new ObjectMapper();
+
+                Map<String, Object> jsonMap = new HashMap<>();
+                jsonMap.put("availability", 1000);
+                jsonMap.put("vehicleID", null);
+                jsonMap.put("latitude", 0);
+                jsonMap.put("longitude", 0);
+                jsonMap.put("lastUpdatedTime",null );
+                jsonMap.put("total_rating", 0);
+                jsonMap.put("no_of_rated_users", 0);
+
+                String jsonInputString = objectMapper.writeValueAsString(jsonMap);
+
+                ResponseDTO responseDTO = microServicesConnectorService.postAPI("http://localhost:8080/api/delivery/user", jsonInputString, ResponseDTO.class);
+                return ("Delivery Person Registration Successful. User ID: " + newUser.getUserid() +
+                        "\n" + responseDTO.getMessage());
+
+            } catch (JsonProcessingException | URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
+
         } else if (userDTO.getType() == 1010) {
+
             try {
                 ResponseDTO responseDTO = microServicesConnectorService.fetchAPI("http://localhost:8080/api/v1/cart/setCart", newUser.getUserid(), ResponseDTO.class);
                 return ("New Customer Registration Successful. Customer ID: " + newUser.getUserid() +

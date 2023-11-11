@@ -4,7 +4,6 @@ import com.flashmart.order.dto.OrderDTO;
 import com.flashmart.order.dto.OrderedItem;
 import com.flashmart.order.dto.OrderedItemDTO;
 import com.flashmart.order.model.orderModel;
-import com.flashmart.order.dto.OrderObject;
 import com.flashmart.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

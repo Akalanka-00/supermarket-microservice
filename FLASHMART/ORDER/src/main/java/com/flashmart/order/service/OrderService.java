@@ -3,32 +3,31 @@ package com.flashmart.order.service;
 import com.flashmart.order.dto.OrderDTO;
 import com.flashmart.order.dto.OrderedItem;
 import com.flashmart.order.dto.OrderedItemDTO;
+import com.flashmart.order.dto.ProductDTO;
 import com.flashmart.order.model.orderModel;
-import com.flashmart.order.model.Product; // Import the Product entity
 import com.flashmart.order.repository.OrderRepository;
-import com.flashmart.order.repository.ProductRepository;
 import com.flashmart.order.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.*;
 
 @Service
 public class OrderService {
 
     @Autowired
     private final OrderRepository orderRepository;
-    @Autowired
-    private final ProductRepository productRepository;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository,ProductRepository productRepository) {
+    private  final MicroServicesConnectorService microServicesConnectorService;
 
+    public OrderService(OrderRepository orderRepository, MicroServicesConnectorService microServicesConnectorService) {
         this.orderRepository = orderRepository;
-        this.productRepository=productRepository;
+        this.microServicesConnectorService = microServicesConnectorService;
     }
+
 
     public String orderArrival(OrderDTO orderDTO) {
         return "Order Received!";
@@ -99,23 +98,28 @@ public class OrderService {
 
     public orderModel addOrderedItemToOrder(Long orderId, OrderedItemDTO orderedItemDTO) {
         orderModel order = orderRepository.findById(orderId).orElse(null);
-        Product product = productRepository.findById(orderedItemDTO.getProductId()).orElse(null);
+        try {
+            ProductDTO productDTO = microServicesConnectorService.fetchAPI("http://localhost:8082/api/inventory/productById", orderedItemDTO.getProductId(), ProductDTO.class);
 
-        if (order != null && product != null) {
-            OrderedItem orderedItem = new OrderedItem();
-            orderedItem.setOrder(order);
-            orderedItem.setProduct(product);
-            orderedItem.setQuantity(orderedItem.getQuantity());
+            if (order != null && productDTO != null) {
+                OrderedItem orderedItem = new OrderedItem();
+                orderedItem.setOrder(order);
+                orderedItem.setProductId(productDTO.getItemCode());
+                orderedItem.setQuantity(orderedItem.getQuantity());
 
-            List<OrderedItem> orderedItems = order.getOrderedItems();
-            orderedItems.add(orderedItem);
-            order.setOrderedItems(orderedItems);
-            // Update total price or any other relevant order information
-            return orderRepository.save(order);
-        } else {
-            // Handle the case where the order or product with the specified IDs do not exist
-            throw new EntityNotFoundException(orderId);
+                List<OrderedItem> orderedItems = order.getOrderedItems();
+                orderedItems.add(orderedItem);
+                order.setOrderedItems(orderedItems);
+                // Update total price or any other relevant order information
+                return orderRepository.save(order);
+            } else {
+                // Handle the case where the order or product with the specified IDs do not exist
+                throw new EntityNotFoundException(orderId);
+            }
+        }catch (IOException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 
     public List<orderModel> getOrdersByCustomerId(String customerId) {

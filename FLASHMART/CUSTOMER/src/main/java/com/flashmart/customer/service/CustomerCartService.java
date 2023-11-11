@@ -384,22 +384,6 @@ public class CustomerCartService {
         return ResponseEntity.ok(updatedCartDTO);
     }
 
-//    public String proceedCartToOrder(Long customerId) {
-//        CartDTO cartDTO = getCartByCustomerId(customerId).getBody();
-//        PointDTO pointDTO = customerPointService.getPointByCustomerId(customerId);
-//        try {
-//            String jsonInputString = "{" +
-//                    "\"cartId\": \"" + cartDTO.getCartId() + "\", \"customerId\": \"" + cartDTO.getCustomerId() + "\"" +
-//                    "\"noOfItem\": \"" + cartDTO.getNoOfItem() + "\", \"totalPrice\": \"" + cartDTO.getTotalPrice() + "\"" +
-//                    "\"discounts\": \"" + pointDTO.getDiscount() + "\", \"items\": \"" + cartDTO.getItems() + "\"" +
-//                    "}";
-//            String string = microServicesConnectorService.postAPI("http://localhost:8083/order/orderArrival", jsonInputString, String.class);
-//        } catch (URISyntaxException e) {
-//            throw new RuntimeException(e);
-//        }
-//        return "Your Cart is Proceed to Order";
-//    }
-
     public String proceedCartToOrder(Long customerId) {
         CartDTO cartDTO = getCartByCustomerId(customerId).getBody();
         PointDTO pointDTO = customerPointService.getPointByCustomerId(customerId);

@@ -2,7 +2,7 @@ package com.flashmart.order.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.flashmart.order.model.orderModel;
-import com.flashmart.order.model.Product;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,11 +26,8 @@ public class OrderedItem {
     @ManyToOne
     private orderModel order;
 
-    @JsonIgnore
-    @JoinColumn (name = "productId", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @ManyToOne
-    private Product product; // Reference to the product ordered
+
+    private long productId;
 
     private Integer quantity;
 
@@ -40,9 +37,4 @@ public class OrderedItem {
     @JsonIgnore
     public void setOrder(orderModel order) {this.order = order;}
 
-    @JsonIgnore
-    public Product getProduct() {return product;}
-
-    @JsonIgnore
-    public void setProduct(Product product) {this.product = product;}
 }

@@ -32,6 +32,13 @@ public class DeliveryPersonController {
        return deliveryPersonService.changeAvailability(id);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
+    @PutMapping("updateFeedback/{id}")
+    public String UpdateFeedback(@PathVariable String id){
+        return deliveryPersonService.changeAvailability(id);
+    }
+
+
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("addVehicle/{id}")
     public String addVehicleToDeliveryPerson(@PathVariable String id, @RequestBody DeliveryPersonRequest request){
