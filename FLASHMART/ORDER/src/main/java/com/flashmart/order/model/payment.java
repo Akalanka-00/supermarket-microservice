@@ -20,7 +20,7 @@ public class payment {
 
     @OneToOne(fetch = FetchType.LAZY,
             cascade =  CascadeType.ALL,
-            mappedBy = "payment")
+            mappedBy = "Payment")
     private orderModel OrderModel;
 
     private double paymentAmount;
