@@ -14,7 +14,7 @@ import java.util.Date;
 @Data
 public class DeliveryPersonRequest {
 
-    private int userID;
+
     private int availability;
     private String vehicleID;
     private double latitude;

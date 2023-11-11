@@ -19,7 +19,6 @@ public class DeliveryPersonModel {
 
     @Id
     private String id;
-    private int userID;
     private int availability;
     private String vehicleID;
     private double latitude;

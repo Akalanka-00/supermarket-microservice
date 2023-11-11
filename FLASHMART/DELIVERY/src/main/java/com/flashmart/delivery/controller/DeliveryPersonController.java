@@ -19,10 +19,10 @@ public class DeliveryPersonController {
 
     private final DeliveryPersonService deliveryPersonService;
 
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/newUser/{id}")
-    public String newDeliveryPerson(@PathVariable int id){
-        return deliveryPersonService.newDeliveryPerson(id);
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping()
+    public void newDeliveryPerson(@RequestBody DeliveryPersonRequest request){
+        deliveryPersonService.newDeliveryPerson(request);
 
     }
 

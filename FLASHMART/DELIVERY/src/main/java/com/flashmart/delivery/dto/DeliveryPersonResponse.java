@@ -15,7 +15,6 @@ import java.util.Date;
 public class DeliveryPersonResponse {
 
     private String id;
-    private int userID;
     private int availability;
     private String vehicleID;
     private double latitude;
